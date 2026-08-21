@@ -114,6 +114,27 @@ def test_history_reaches_the_graph_without_system_or_tool_messages(client):
     assert all("fabricated" not in m.content for m in sent)
 
 
+def test_both_the_public_path_and_vercels_entry_point_serve_chat(client):
+    """Production never sees /api/chat: the rewrite delivers /api/index.
+
+    Regression: registering only the public path meant the deployed function
+    answered FastAPI's own 404 to every question.
+    """
+    for path in ("/api/chat", api.VERCEL_ENTRY):
+        install([token("ok")])
+        response = client.post(path, json={"messages": [{"role": "user", "content": "hi"}]})
+
+        assert response.status_code == 200, path
+        assert '"t": "ok"' in response.text, path
+
+
+def test_health_answers_on_both_paths_too(client):
+    for path in ("/api/health", api.VERCEL_ENTRY):
+        payload = client.get(path).json()
+
+        assert payload["documents"] >= 20, path
+
+
 def test_recursion_limit_is_always_passed(client):
     graph = install([token("ok")])
 

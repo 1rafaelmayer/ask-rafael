@@ -139,7 +139,6 @@ def _sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
 
 
-@app.post("/api/chat")
 async def chat(request: Request, body: ChatRequest):
     history = _to_langchain(body.messages)
 
@@ -216,7 +215,6 @@ async def chat(request: Request, body: ChatRequest):
     )
 
 
-@app.get("/api/health")
 async def health():
     from . import tools as corpus
 
@@ -246,25 +244,23 @@ async def page():
     return FileResponse(ROOT / "index.html")
 
 
-# --- routing diagnostic ------------------------------------------------------
+# --- routing ----------------------------------------------------------------
 #
-# TEMPORARY. Vercel's rewrite replaces the request path before it reaches this
-# function, so /api/chat arrived as something else and FastAPI answered its own
-# 404. This reports what actually arrives, so the fix can be the real path
-# rather than another guess. Remove once the routing is settled.
+# Vercel's rewrite replaces the request path: whatever the visitor asked for,
+# this function is invoked with the destination path, /api/index. Measured, not
+# assumed — an earlier deploy answered FastAPI's own 404 and a diagnostic route
+# reported what actually arrived.
+#
+# So each endpoint is registered twice: once at the public path, which is what
+# the page calls and what uvicorn serves locally with no rewrite in front of it,
+# and once at the path production really delivers. Registering both is what
+# makes the two environments behave identically instead of only one of them
+# working at a time.
 
+VERCEL_ENTRY = "/api/index"
 
-@app.api_route("/{unmatched:path}", methods=["GET", "POST"], include_in_schema=False)
-async def whatever_arrived(request: Request, unmatched: str):
-    return JSONResponse(
-        {
-            "diagnostic": "no route matched",
-            "received_path": request.url.path,
-            "method": request.method,
-            "root_path": request.scope.get("root_path", ""),
-            "known_routes": sorted(
-                r.path for r in app.routes if getattr(r, "path", "").startswith("/api")
-            ),
-        },
-        status_code=404,
-    )
+app.add_api_route("/api/chat", chat, methods=["POST"])
+app.add_api_route(VERCEL_ENTRY, chat, methods=["POST"])
+
+app.add_api_route("/api/health", health, methods=["GET"])
+app.add_api_route(VERCEL_ENTRY, health, methods=["GET"])
