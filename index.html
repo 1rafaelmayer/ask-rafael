@@ -4,567 +4,647 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rafael Mayer — AI/ML Engineer</title>
-<meta name="description" content="AI/ML Engineer building agentic systems in production. Ask an agent about my work, or read the summary below.">
+<meta name="description" content="AI/ML Engineer building agentic systems in production. Ask an agent about my work, or read the CV below.">
 <meta property="og:title" content="Rafael Mayer — AI/ML Engineer">
 <meta property="og:description" content="Ask an agent about my work.">
 <meta property="og:image" content="/rafael.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..400&display=swap">
 <style>
+/* ============================================================
+   Tokens. Light is the base; dark redefines only what changes.
+   ============================================================ */
 :root {
-  --bg: #fbfbfa;
-  --surface: #ffffff;
-  --ink: #17181a;
-  --ink-2: #55585e;
-  --ink-3: #8a8e96;
-  --line: #e4e4e1;
-  --accent: #1a5cff;
-  --accent-soft: #eaf0ff;
-  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --paper:      #fcfbf9;
+  --paper-2:    #f4f2ee;
+  --ink:        #14161a;
+  --ink-2:      #4e535c;
+  --ink-3:      #8d939e;
+  --rule:       #e2ded7;
+  --rule-2:     #cfcac1;
+  --accent:     #1e46c8;
+  --accent-bg:  #edf0fd;
+
+  --serif: "Newsreader", Iowan Old Style, Charter, Georgia, serif;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-  --radius: 12px;
-  --measure: 62ch;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* One typographic scale, used everywhere. */
+  --t-display: clamp(30px, 3.4vw, 40px);
+  --t-h2:      clamp(21px, 2vw, 27px);
+  --t-h3:      18px;
+  --t-body:    16.5px;
+  --t-small:   14.5px;
+  --t-micro:   12px;
+
+  --col: 296px;          /* the identity column */
+  --gap: clamp(28px, 5vw, 64px);
+  --measure: 64ch;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #101113;
-    --surface: #17191c;
-    --ink: #eceef1;
-    --ink-2: #a4a9b3;
-    --ink-3: #6f757f;
-    --line: #272a2f;
-    --accent: #6f9bff;
-    --accent-soft: #1a2440;
+    --paper:     #0e0f11;
+    --paper-2:   #16181c;
+    --ink:       #eef0f3;
+    --ink-2:     #a7adb8;
+    --ink-3:     #71777f;
+    --rule:      #262a2f;
+    --rule-2:    #363b42;
+    --accent:    #8aa8ff;
+    --accent-bg: #171d33;
   }
 }
+
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--paper);
   color: var(--ink);
-  font: 400 17px/1.65 var(--sans);
+  font: 400 var(--t-body)/1.6 var(--sans);
   -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
 }
-/* --- bilingual: one document, two languages, JS flips the root attribute --- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Bilingual: one document, two languages, JS flips the root attribute. */
 html[data-ui-lang="en"] [data-lang="pt"],
 html[data-ui-lang="pt"] [data-lang="en"] { display: none !important; }
 
-.wrap { max-width: 940px; margin: 0 auto; padding: 0 24px; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-h1, h2, h3 { line-height: 1.25; letter-spacing: -0.02em; margin: 0; }
-p { margin: 0 0 0.9em; max-width: var(--measure); }
+a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule-2); }
+a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+h1, h2, h3 { margin: 0; font-weight: 400; letter-spacing: -0.012em; line-height: 1.18; }
+p { margin: 0 0 0.85em; max-width: var(--measure); }
 p:last-child { margin-bottom: 0; }
-ul { margin: 0 0 0.9em; padding-left: 1.1em; max-width: var(--measure); }
-li { margin-bottom: 0.35em; }
+ul { margin: 0 0 0.85em; padding-left: 1.05em; max-width: var(--measure); }
+li { margin-bottom: 0.38em; }
 li::marker { color: var(--ink-3); }
+b, strong { font-weight: 560; }
 .muted { color: var(--ink-2); }
-.small { font-size: 15px; }
-.mono { font-family: var(--mono); font-size: 0.88em; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
 
-/* --- language switch --- */
-.langbar { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-.langbar .wrap { display: flex; justify-content: flex-end; align-items: center; height: 44px; gap: 2px; }
-.langbtn { font: 500 13px var(--sans); letter-spacing: 0.04em; background: none; border: 0; color: var(--ink-3); padding: 5px 9px; border-radius: 7px; cursor: pointer; }
-.langbtn[aria-pressed="true"] { color: var(--ink); background: var(--accent-soft); }
-
-/* --- hero --- */
-.hero { padding: 56px 0 64px; }
-.hero-grid { display: grid; grid-template-columns: 168px 1fr; gap: 34px; align-items: start; }
-.photo { width: 168px; height: 168px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
-.hero h1 { font-size: clamp(28px, 4.4vw, 40px); font-weight: 600; }
-.hero .role { color: var(--ink-2); margin: 8px 0 22px; font-size: 18px; }
-.hero .role b { color: var(--ink); font-weight: 500; }
-.links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; font-size: 15px; }
-
-/* --- ask box --- */
-.ask { margin-top: 4px; }
-form.askform { display: flex; gap: 8px; align-items: stretch; }
-input#q {
-  flex: 1; min-width: 0; font: 400 17px var(--sans); color: var(--ink);
-  background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: 14px 16px;
+/* Section label: the smallest, quietest type on the page. */
+.label {
+  font: 500 var(--t-micro)/1 var(--mono);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
-input#q:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
-input#q::placeholder { color: var(--ink-3); }
-button.send {
-  font: 500 15px var(--sans); color: #fff; background: var(--accent);
-  border: 0; border-radius: var(--radius); padding: 0 20px; cursor: pointer;
+
+/* ============================================================
+   Language switch
+   ============================================================ */
+.langs { position: absolute; top: 22px; right: clamp(20px, 4vw, 44px); z-index: 30; display: flex; gap: 3px; }
+.langbtn {
+  font: 500 var(--t-micro) var(--mono); letter-spacing: 0.1em;
+  background: none; border: 0; color: var(--ink-3);
+  padding: 5px 8px; border-radius: 6px; cursor: pointer;
 }
-button.send:disabled { opacity: 0.45; cursor: default; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.langbtn[aria-pressed="true"] { color: var(--ink); background: var(--paper-2); }
+
+/* ============================================================
+   Hero — exactly one viewport. Nothing here moves when a
+   question is asked: only the right column's content changes.
+   ============================================================ */
+#top {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(64px, 9vh, 104px) 0 0;
+}
+#top > .wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--col) minmax(0, 1fr);
+  gap: var(--gap);
+  /* The block of two columns is centred in the viewport, but the columns
+     themselves hang from a shared top edge. Centring each column instead —
+     which is what align-items alone does — floated the input above the top of
+     the photo and read as an accident rather than a composition. */
+  align-content: center;
+  align-items: start;
+  padding-bottom: clamp(20px, 4vh, 44px);
+}
+
+/* --- left: identity ------------------------------------------------------ */
+.me img {
+  display: block; width: 100%; max-width: var(--col); aspect-ratio: 1;
+  object-fit: cover; border-radius: 3px; background: var(--paper-2);
+  box-shadow: 0 0 0 1px var(--rule);
+}
+.me h1 {
+  font-family: var(--serif);
+  font-size: var(--t-display);
+  margin: 20px 0 0;
+}
+.me hr { border: 0; border-top: 1px solid var(--rule); margin: 16px 0; }
+.me .role { font-size: var(--t-small); color: var(--ink-2); line-height: 1.5; }
+.me .role em { font-style: normal; color: var(--ink); }
+.me .out { margin-top: 18px; display: flex; gap: 14px; font-size: var(--t-small); }
+.me .out a { border-bottom: 0; color: var(--ink-2); }
+.me .out a:hover { color: var(--accent); }
+
+/* --- right: the agent ---------------------------------------------------- */
+.agent { display: flex; flex-direction: column; min-height: 0; height: 100%; }
+
+form.ask { position: relative; flex: none; }
+form.ask input {
+  width: 100%;
+  font: 400 clamp(17px, 1.5vw, 19px) var(--sans);
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 18px 60px 18px 20px;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+form.ask input::placeholder { color: var(--ink-3); }
+form.ask input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--paper);
+}
+form.ask button {
+  position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 0; background: var(--ink); color: var(--paper);
+  font-size: 17px; line-height: 1; cursor: pointer;
+  transition: opacity 140ms ease;
+}
+form.ask button:disabled { opacity: 0.28; cursor: default; }
+
+/* Suggestions: visible until the first question, then gone for good. */
+.chips { margin-top: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
 .chip {
-  font: 400 14px var(--sans); color: var(--ink-2); background: var(--surface);
-  border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px; cursor: pointer; text-align: left;
+  font: 400 var(--t-small) var(--sans);
+  color: var(--ink-2); background: none; border: 0;
+  padding: 7px 0; cursor: pointer; text-align: left;
+  border-bottom: 1px solid transparent;
 }
-.chip:hover { border-color: var(--accent); color: var(--ink); }
-.notice { margin-top: 12px; font-size: 13px; color: var(--ink-3); max-width: var(--measure); }
+.chip { max-width: 100%; }
+.chip::before { content: "→ "; color: var(--ink-3); }
+.chip:hover { color: var(--accent); }
+body[data-state="active"] .chips { display: none; }
 
-/* --- conversation --- */
-#thread { margin-top: 26px; display: none; }
-#thread.on { display: block; }
-.turn { border-top: 1px solid var(--line); padding: 20px 0; }
-.turn .who { font: 500 12px var(--mono); letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
-.turn .body { white-space: pre-wrap; max-width: var(--measure); }
-.turn.me .body { color: var(--ink-2); }
-.trace { font: 400 12.5px var(--mono); color: var(--ink-3); margin-bottom: 10px; }
-.trace span { display: block; }
-.cursor { display: inline-block; width: 7px; height: 1.05em; background: var(--accent); vertical-align: -2px; animation: blink 1.05s steps(2, start) infinite; }
+/* The exchange. One at a time: a new question replaces the last. */
+.exchange {
+  display: none;
+  margin-top: 26px;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  animation: rise 260ms cubic-bezier(.2,.7,.3,1);
+}
+body[data-state="active"] .exchange { display: flex; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.q {
+  font-family: var(--serif);
+  font-size: var(--t-h3);
+  font-style: italic;
+  color: var(--ink-2);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  flex: none;
+}
+.trace { flex: none; padding-top: 10px; font: 400 var(--t-micro) var(--mono); color: var(--ink-3); }
+.trace span { display: block; padding-top: 2px; }
+.a {
+  padding-top: 14px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-width: var(--measure);
+  /* Fades the last line when there is more to scroll, so a cut-off
+     answer never looks like a finished one. */
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent);
+  scrollbar-width: thin;
+}
+.a > :first-child { margin-top: 0; }
+.a p { margin: 0 0 0.7em; }
+.a ul { margin: 0 0 0.7em; padding-left: 1.1em; }
+.a li { margin-bottom: 0.3em; }
+.cursor {
+  display: inline-block; width: 7px; height: 1.05em; background: var(--accent);
+  vertical-align: -2px; animation: blink 1.05s steps(2, start) infinite;
+}
 @keyframes blink { to { visibility: hidden; } }
-.err { color: #c0392b; }
-@media (prefers-color-scheme: dark) { .err { color: #ff8f7a; } }
+.err { color: #b3261e; }
+@media (prefers-color-scheme: dark) { .err { color: #ff9382; } }
 
-/* --- sections --- */
-section { padding: 52px 0; border-top: 1px solid var(--line); }
-.eyebrow { font: 500 12px var(--mono); letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
-section > .wrap > h2 { font-size: 23px; font-weight: 600; margin-bottom: 18px; }
+.notice { flex: none; padding-top: 18px; font-size: var(--t-micro); color: var(--ink-3); max-width: 56ch; }
 
-/* --- timeline diagram --- */
-.tl { border-left: 2px solid var(--line); margin-left: 7px; padding-left: 26px; }
-.tl-item { position: relative; padding-bottom: 30px; }
-.tl-item:last-child { padding-bottom: 0; }
-.tl-item::before {
-  content: ""; position: absolute; left: -34px; top: 7px; width: 12px; height: 12px;
-  border-radius: 50%; background: var(--bg); border: 2px solid var(--ink-3);
+/* --- the affordance down to the CV -------------------------------------- */
+.down { flex: none; padding: clamp(20px, 4vh, 40px) 0 26px; }
+.down a {
+  border: 0; font: 500 var(--t-micro) var(--mono); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-2);
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 18px 11px 15px; border-radius: 999px;
+  background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule);
 }
-.tl-item.now::before { background: var(--accent); border-color: var(--accent); }
-.tl-when { font: 500 13px var(--mono); color: var(--ink-3); }
-.tl-what { font-size: 18px; font-weight: 550; margin: 3px 0 2px; }
-.tl-where { color: var(--ink-2); font-size: 15px; margin-bottom: 8px; }
-.tl-phase { font: 500 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 4px 0 18px; }
+.down a:hover { color: var(--ink); box-shadow: 0 0 0 1px var(--rule-2); }
+.down .arrow { animation: nudge 2.6s ease-in-out infinite; }
+@keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
 
-/* --- cards --- */
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(272px, 1fr)); gap: 16px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
-.card h3 { font-size: 17px; font-weight: 550; margin-bottom: 6px; }
-.card .tag { font: 500 12px var(--mono); color: var(--ink-3); letter-spacing: 0.05em; }
-.card p { font-size: 15.5px; }
-.card ul { font-size: 15.5px; }
+/* ============================================================
+   The CV. No boxes: a two-column meta/content grid, hairlines
+   between rows, and the type scale doing the rest.
+   ============================================================ */
+section { border-top: 1px solid var(--rule); padding: clamp(46px, 7vh, 76px) 0; }
+section > .wrap > .label { margin-bottom: clamp(24px, 4vh, 38px); }
+h2 { font-family: var(--serif); font-size: var(--t-h2); max-width: 30ch; }
+.lede { font-family: var(--serif); font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 54ch; margin-top: 14px; }
 
-/* --- architecture diagram --- */
-figure { margin: 0 0 26px; }
-.diagram { width: 100%; overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
-.diagram svg { display: block; min-width: 700px; width: 100%; height: auto; }
-figcaption { font-size: 14px; color: var(--ink-3); margin-top: 10px; max-width: var(--measure); }
-svg .box { fill: var(--bg); stroke: var(--line); stroke-width: 1.5; }
-svg .box-a { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
-svg .lbl { fill: var(--ink); font: 500 13px var(--sans); }
-svg .lbl-s { fill: var(--ink-2); font: 400 11.5px var(--mono); }
-svg .flow { stroke: var(--ink-3); stroke-width: 1.4; fill: none; marker-end: url(#arrow); }
-svg .flow-d { stroke: var(--accent); stroke-width: 1.4; fill: none; stroke-dasharray: 4 3; marker-end: url(#arrow-a); }
+.row {
+  display: grid;
+  grid-template-columns: var(--col) minmax(0, 1fr);
+  gap: var(--gap);
+  padding: 26px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.row:last-child { border-bottom: 0; }
+.row > .k { padding-top: 2px; }
+.row .when { font: 500 var(--t-micro) var(--mono); letter-spacing: 0.06em; color: var(--ink-3); }
+.row .who { font-family: var(--serif); font-size: var(--t-h3); margin-top: 6px; }
+.row .where { font-size: var(--t-small); color: var(--ink-2); margin-top: 3px; }
+.row h3 { font-family: var(--serif); font-size: var(--t-h3); margin-bottom: 8px; }
+.row ul, .row p { font-size: var(--t-small); }
 
-/* --- stack table --- */
-.depth { display: grid; gap: 14px; }
-.depth-row { display: grid; grid-template-columns: 190px 1fr; gap: 18px; align-items: start; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-.depth-row:last-child { border-bottom: 0; }
-.depth-k { font: 500 13px var(--mono); letter-spacing: 0.04em; color: var(--ink-3); text-transform: uppercase; padding-top: 3px; }
-.pills { display: flex; flex-wrap: wrap; gap: 7px; }
-.pill { font: 400 14px var(--sans); border: 1px solid var(--line); background: var(--surface); border-radius: 7px; padding: 4px 10px; }
-.pill.hot { border-color: var(--accent); color: var(--accent); }
+.pills { display: flex; flex-wrap: wrap; gap: 6px 7px; }
+.pill { font-size: var(--t-small); color: var(--ink-2); border-bottom: 1px solid var(--rule); padding: 2px 0; }
+.pill + .pill::before { content: "·"; color: var(--ink-3); margin-right: 7px; border: 0; }
+.pill.hot { color: var(--ink); border-bottom-color: var(--rule-2); }
 
-/* --- quotes --- */
-blockquote { margin: 0; border-left: 2px solid var(--line); padding-left: 18px; font-size: 16px; color: var(--ink-2); }
+blockquote { margin: 0; font-family: var(--serif); font-size: 17px; line-height: 1.55; color: var(--ink-2); }
 blockquote p { max-width: none; }
-.attr { font-size: 14px; color: var(--ink-3); margin-top: 10px; }
-.attr b { color: var(--ink); font-weight: 550; }
+.attr { font-size: var(--t-small); color: var(--ink-3); margin-top: 12px; }
+.attr b { color: var(--ink); }
 
-/* --- footer --- */
-footer { border-top: 1px solid var(--line); padding: 44px 0 64px; color: var(--ink-2); }
-footer .small { max-width: var(--measure); }
+footer { border-top: 1px solid var(--rule); padding: clamp(46px, 7vh, 76px) 0 72px; }
+footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-small); }
+.colophon { font-size: var(--t-micro); color: var(--ink-3); max-width: 62ch; line-height: 1.65; }
 
-@media (max-width: 700px) {
-  body { font-size: 16.5px; }
-  .hero { padding: 34px 0 44px; }
-  .hero-grid { grid-template-columns: 1fr; gap: 22px; }
-  .photo { width: 116px; height: 116px; }
-  .depth-row { grid-template-columns: 1fr; gap: 8px; }
-  form.askform { flex-wrap: wrap; }
-  button.send { padding: 12px 20px; flex: 1; }
+/* ============================================================
+   Narrow screens. One column, and — deliberately — no nested
+   scrolling: on touch, a scroll area inside a scrolling page
+   steals the gesture. The answer grows and pushes the CV down.
+   ============================================================ */
+@media (max-width: 860px) {
+  :root { --col: 100%; }
+  #top { min-height: 0; padding-top: 74px; }
+  .stage { grid-template-columns: 1fr; gap: 30px; }
+  .me { display: grid; grid-template-columns: 92px 1fr; gap: 18px; align-items: center; }
+  .me img { max-width: 92px; border-radius: 3px; }
+  .me h1 { margin: 0; font-size: 27px; }
+  .me hr { display: none; }
+  .me .role { margin-top: 4px; }
+  .me .out { grid-column: 1 / -1; margin-top: 4px; }
+  .agent { height: auto; }
+  .exchange { min-height: 0; }
+  .a { overflow: visible; mask-image: none; }
+  .row { grid-template-columns: 1fr; gap: 10px; padding: 22px 0; }
 }
 </style>
 </head>
 <body>
 
-<div class="langbar"><div class="wrap">
+<div class="langs">
   <button class="langbtn" data-set-lang="en" aria-pressed="true">EN</button>
   <button class="langbtn" data-set-lang="pt" aria-pressed="false">PT</button>
-</div></div>
+</div>
 
-<header class="hero"><div class="wrap">
-  <div class="hero-grid">
-    <img class="photo" src="/rafael.jpg" alt="Rafael Mayer" width="168" height="168">
-    <div>
-      <h1>Rafael Mayer</h1>
-      <p class="role" data-lang="en"><b>AI/ML Engineer</b> — I build agentic AI systems that reach production. Ten years in experimental physics before that.</p>
-      <p class="role" data-lang="pt"><b>Engenheiro de IA/ML</b> — construo sistemas agentic que chegam à produção. Dez anos em física experimental antes disso.</p>
+<!-- ======================= THE AGENT — one viewport ======================= -->
+<header id="top"><div class="wrap">
+  <div class="stage">
 
-      <div class="ask">
-        <form class="askform" id="askform" autocomplete="off">
-          <input id="q" name="q" maxlength="500"
-                 data-ph-en="Ask something about me…"
-                 data-ph-pt="Pergunte algo sobre mim…">
-          <button class="send" type="submit" id="send">
-            <span data-lang="en">Ask</span><span data-lang="pt">Perguntar</span>
-          </button>
-        </form>
-
-        <div class="chips" id="chips" data-lang="en">
-          <button class="chip">What agent systems has he put in production?</button>
-          <button class="chip">How did he move from Physics into AI?</button>
-          <button class="chip">What's his experience with LangGraph and MCP?</button>
-          <button class="chip">What is he looking for in a next role?</button>
+    <div class="me">
+      <img src="/rafael.jpg" alt="Rafael Mayer" width="296" height="296">
+      <div>
+        <h1>Rafael Mayer</h1>
+        <hr>
+        <p class="role" data-lang="en"><em>AI/ML Engineer</em><br>Agentic systems in production.<br>Ten years in experimental physics before that.</p>
+        <p class="role" data-lang="pt"><em>Engenheiro de IA/ML</em><br>Sistemas agentic em produção.<br>Dez anos em física experimental antes disso.</p>
+        <div class="out">
+          <a href="https://www.linkedin.com/in/rafael-alves-mayer/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/1rafaelmayer" target="_blank" rel="noopener">GitHub</a>
         </div>
-        <div class="chips" id="chips-pt" data-lang="pt">
-          <button class="chip">Que sistemas de agentes ele já colocou em produção?</button>
-          <button class="chip">Como foi a transição da Física para IA?</button>
-          <button class="chip">Qual a experiência dele com LangGraph e MCP?</button>
-          <button class="chip">O que ele busca numa próxima posição?</button>
-        </div>
-
-        <p class="notice" data-lang="en">Answers come from an agent reading documents Rafael wrote about himself — it can be wrong, and conversations are logged so he can see what people ask. Nothing here is a substitute for talking to him.</p>
-        <p class="notice" data-lang="pt">As respostas vêm de um agente que lê documentos escritos pelo próprio Rafael — pode errar, e as conversas são registradas para ele saber o que as pessoas perguntam. Nada aqui substitui falar com ele.</p>
-
-        <div id="thread"></div>
-      </div>
-
-      <div class="links">
-        <a href="https://www.linkedin.com/in/rafael-alves-mayer/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="https://github.com/1rafaelmayer" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
+
+    <div class="agent">
+      <form class="ask" id="askform" autocomplete="off">
+        <label class="label" for="q" style="position:absolute;left:-9999px">Ask about Rafael</label>
+        <input id="q" name="q" maxlength="500"
+               data-ph-en="Ask something about me…"
+               data-ph-pt="Pergunte algo sobre mim…">
+        <button type="submit" id="send" aria-label="Send">↑</button>
+      </form>
+
+      <div class="chips" data-lang="en">
+        <button class="chip">What agent systems has he put in production?</button>
+        <button class="chip">How did he move from physics into AI?</button>
+        <button class="chip">What is his experience with LangGraph and MCP?</button>
+        <button class="chip">Where are the gaps in his stack?</button>
+      </div>
+      <div class="chips" data-lang="pt">
+        <button class="chip">Que sistemas de agentes ele já colocou em produção?</button>
+        <button class="chip">Como foi a transição da física para IA?</button>
+        <button class="chip">Qual a experiência dele com LangGraph e MCP?</button>
+        <button class="chip">Onde estão as lacunas da stack dele?</button>
+      </div>
+
+      <div class="exchange" id="exchange">
+        <div class="q" id="question"></div>
+        <div class="trace" id="trace"></div>
+        <div class="a" id="answer"></div>
+      </div>
+
+      <p class="notice" data-lang="en">An agent answers from documents Rafael wrote about himself. It can be wrong, it only speaks about him, and conversations are logged so he can see what people ask.</p>
+      <p class="notice" data-lang="pt">Um agente responde a partir de documentos escritos pelo próprio Rafael. Pode errar, só fala sobre ele, e as conversas são registradas para ele saber o que perguntam.</p>
+    </div>
+
+  </div>
+
+  <div class="down">
+    <a href="#cv"><span class="arrow">↓</span><span data-lang="en">Read the CV</span><span data-lang="pt">Ler o CV</span></a>
   </div>
 </div></header>
 
-<!-- ============================ SUMMARY ============================ -->
-<section><div class="wrap">
-  <p class="eyebrow" data-lang="en">Summary</p>
-  <p class="eyebrow" data-lang="pt">Resumo</p>
+<!-- ============================== SUMMARY ============================== -->
+<section id="cv"><div class="wrap">
+  <p class="label" data-lang="en">Summary</p>
+  <p class="label" data-lang="pt">Resumo</p>
 
-  <div data-lang="en">
-    <h2>Agentic systems in production, with a physicist's validation habits</h2>
-    <p>AI/ML Engineer at Distrito's AI Factory, building AI systems that go to production and serve real end users — currently across healthcare, education and marketing. My scope is the whole delivery: understanding an ill-defined business problem, choosing the architecture, writing the code, shipping it, and watching how it behaves on real data.</p>
-    <p>Before that, ten years in experimental physics — a PhD in Applied Physics, a research year at Stony Brook, peer-reviewed publications. I brought the method with me: explicit hypotheses, honest validation, and distrust of a convenient result.</p>
-    <ul>
-      <li><b>Multi-agent systems in production</b> — a WhatsApp check-in agent serving thousands of hospital patients a month.</li>
-      <li><b>End-to-end ownership</b> — sole AI engineer on client projects: architecture, implementation, deploy, observability, and the client conversation.</li>
-      <li><b>Where the hard part actually is</b> — not the model, but data quality, the boundary between what a system knows and what it invents, and the case nobody planned for.</li>
-      <li><b>Physics that still pays</b> — Nano Letters issue cover (2025), and an ML-accelerated microscopy technique built during the PhD.</li>
-    </ul>
-  </div>
+  <h2 data-lang="en">Agentic systems in production, with a physicist's validation habits</h2>
+  <h2 data-lang="pt">Sistemas agentic em produção, com hábitos de validação de físico</h2>
+  <p class="lede" data-lang="en">My scope is the whole delivery: taking an ill-defined business problem, choosing the architecture, writing the code, shipping it, and watching how it behaves on real data.</p>
+  <p class="lede" data-lang="pt">Meu escopo é a entrega inteira: pegar um problema de negócio mal definido, escolher a arquitetura, escrever o código, colocar no ar e acompanhar o comportamento com dado real.</p>
 
-  <div data-lang="pt">
-    <h2>Sistemas agentic em produção, com hábitos de validação de físico</h2>
-    <p>Engenheiro de IA/ML na AI Factory do Distrito, construindo sistemas de IA que vão para produção e atendem usuários finais — hoje em saúde, educação e marketing. Meu escopo é a entrega inteira: entender um problema de negócio mal definido, escolher a arquitetura, escrever o código, colocar no ar e acompanhar o comportamento com dado real.</p>
-    <p>Antes disso, dez anos em física experimental — doutorado em física aplicada, um ano de pesquisa em Stony Brook, publicações revisadas por pares. Trouxe o método junto: hipótese explícita, validação honesta e desconfiança de resultado conveniente.</p>
-    <ul>
-      <li><b>Sistemas multiagente em produção</b> — agente de check-in via WhatsApp atendendo milhares de pacientes por mês em um hospital de grande porte.</li>
-      <li><b>Responsabilidade fim a fim</b> — engenheiro de IA único em projeto de cliente: arquitetura, implementação, deploy, observabilidade e a conversa com o cliente.</li>
-      <li><b>Onde a dificuldade realmente está</b> — não no modelo, mas na qualidade do dado, na fronteira entre o que o sistema sabe e o que ele inventa, e no caso que ninguém previu.</li>
-      <li><b>Física que ainda rende</b> — capa da edição do Nano Letters (2025) e uma técnica de microscopia acelerada por ML feita no doutorado.</li>
-    </ul>
+  <div style="margin-top:34px">
+    <div class="row">
+      <div class="k"><span class="when" data-lang="en">Proof of work</span><span class="when" data-lang="pt">Prova de trabalho</span></div>
+      <div>
+        <ul data-lang="en" style="margin:0">
+          <li><b>Multi-agent systems in production</b> — a WhatsApp check-in agent serving thousands of hospital patients a month.</li>
+          <li><b>End-to-end ownership</b> — sole AI engineer on client projects: architecture, implementation, deploy, observability, and the client conversation itself.</li>
+          <li><b>Where the hard part actually is</b> — not the model, but data quality, the boundary between what a system knows and what it invents, and the case nobody planned for.</li>
+          <li><b>Ten years of research behind it</b> — PhD in Applied Physics, a year at Stony Brook, a Nano Letters issue cover, and an ML-accelerated microscopy technique.</li>
+        </ul>
+        <ul data-lang="pt" style="margin:0">
+          <li><b>Sistemas multiagente em produção</b> — agente de check-in via WhatsApp atendendo milhares de pacientes por mês.</li>
+          <li><b>Responsabilidade fim a fim</b> — engenheiro de IA único em projeto de cliente: arquitetura, implementação, deploy, observabilidade e a conversa com o cliente.</li>
+          <li><b>Onde a dificuldade realmente está</b> — não no modelo, mas na qualidade do dado, na fronteira entre o que o sistema sabe e o que ele inventa, e no caso que ninguém previu.</li>
+          <li><b>Dez anos de pesquisa por trás</b> — doutorado em física aplicada, um ano em Stony Brook, capa de edição do Nano Letters e uma técnica de microscopia acelerada por ML.</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div></section>
 
 <!-- ============================ EXPERIENCE ============================ -->
 <section><div class="wrap">
-  <p class="eyebrow" data-lang="en">Experience</p>
-  <p class="eyebrow" data-lang="pt">Experiência profissional</p>
-
+  <p class="label" data-lang="en">Experience</p>
+  <p class="label" data-lang="pt">Experiência</p>
   <h2 data-lang="en">Ten years of research, then applied AI</h2>
   <h2 data-lang="pt">Dez anos de pesquisa, depois IA aplicada</h2>
 
-  <p class="tl-phase" data-lang="en">Applied AI/ML · 2025 → now</p>
-  <p class="tl-phase" data-lang="pt">IA/ML aplicada · 2025 → hoje</p>
-  <div class="tl">
-    <div class="tl-item now">
-      <div class="tl-when" data-lang="en">Sep 2025 — present</div>
-      <div class="tl-when" data-lang="pt">set/2025 — presente</div>
-      <div class="tl-what">AI/ML Engineer · Distrito</div>
-      <div class="tl-where" data-lang="en">AI Factory · full-time · remote</div>
-      <div class="tl-where" data-lang="pt">AI Factory · tempo integral · remoto</div>
-      <ul data-lang="en">
-        <li>Agent systems in production across three sectors — healthcare, education, marketing — which means switching data domain often and never relying on prior familiarity with the business rules.</li>
-        <li>Sole AI engineer on the project: I decide the agent architecture. Teams are typically one engineer and a PO.</li>
-        <li>I talk to the client directly — translating business rules into agent behaviour, and explaining back what an LLM system can and cannot guarantee, including saying no when a request hides a risk the demo doesn't show.</li>
-      </ul>
-      <ul data-lang="pt">
-        <li>Sistemas de agentes em produção em três setores — saúde, educação, marketing — o que significa trocar de domínio de dado com frequência e não poder depender de familiaridade prévia com a regra de negócio.</li>
-        <li>Engenheiro de IA único no projeto: decido a arquitetura do sistema de agentes. Time normalmente de um engenheiro e um PO.</li>
-        <li>Falo direto com o cliente — traduzindo regra de negócio em comportamento de agente e, na direção inversa, explicando o que um sistema de LLM pode e não pode garantir, inclusive dizer não quando o pedido esconde um risco que a demo não mostra.</li>
-      </ul>
+  <div style="margin-top:30px">
+    <div class="row">
+      <div class="k">
+        <div class="when" data-lang="en">Sep 2025 — present</div>
+        <div class="when" data-lang="pt">set/2025 — presente</div>
+        <div class="who">Distrito</div>
+        <div class="where" data-lang="en">AI/ML Engineer · AI Factory<br>Full-time · remote</div>
+        <div class="where" data-lang="pt">Engenheiro de IA/ML · AI Factory<br>Tempo integral · remoto</div>
+      </div>
+      <div>
+        <ul data-lang="en" style="margin:0">
+          <li>Agent systems in production across three sectors — healthcare, education, marketing — which means switching data domain often and never relying on prior familiarity with the business rules.</li>
+          <li>Sole AI engineer on the project: I decide the agent architecture. Teams are typically one engineer and a PO.</li>
+          <li>I talk to the client directly — translating business rules into agent behaviour, and explaining back what an LLM system can and cannot guarantee, including saying no when a request hides a risk the demo doesn't show.</li>
+        </ul>
+        <ul data-lang="pt" style="margin:0">
+          <li>Sistemas de agentes em produção em três setores — saúde, educação, marketing — o que significa trocar de domínio de dado com frequência e não poder depender de familiaridade prévia com a regra de negócio.</li>
+          <li>Engenheiro de IA único no projeto: decido a arquitetura do sistema de agentes. Time normalmente de um engenheiro e um PO.</li>
+          <li>Falo direto com o cliente — traduzindo regra de negócio em comportamento de agente e, na direção inversa, explicando o que um sistema de LLM pode e não pode garantir, inclusive dizer não quando o pedido esconde um risco que a demo não mostra.</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="tl-item">
-      <div class="tl-when" data-lang="en">Apr 2025 — Aug 2025</div>
-      <div class="tl-when" data-lang="pt">abr/2025 — ago/2025</div>
-      <div class="tl-what">Senior AI Researcher · Samsung Electronics</div>
-      <div class="tl-where">Samsung R&amp;D Institute Brazil (SRBR)</div>
-      <ul data-lang="en">
-        <li>AI models for Samsung wearables, on the boundary between physical signal and model: the data comes from sensors in contact with the body.</li>
-        <li>Scalable data pipelines, signal analysis and feature engineering; segmented analysis of multitask networks to find the subpopulation a good average hides.</li>
-        <li>Sensor physics and detection theory applied to improve data quality <i>at the source</i>, instead of compensating for noise in the model.</li>
-        <li class="muted">Detail deliberately limited by Samsung's confidentiality agreement.</li>
-      </ul>
-      <ul data-lang="pt">
-        <li>Modelos de IA para os wearables da Samsung, na fronteira entre sinal físico e modelo: o dado vem de sensores em contato com o corpo.</li>
-        <li>Pipelines de dados escaláveis, análise de sinais e feature engineering; análise segmentada de redes multitarefa para achar a subpopulação que uma média boa esconde.</li>
-        <li>Física do sensor e teoria de detecção aplicadas para melhorar a qualidade do dado <i>na origem</i>, em vez de compensar ruído no modelo.</li>
-        <li class="muted">Detalhe deliberadamente limitado pelo contrato de sigilo com a Samsung.</li>
-      </ul>
+    <div class="row">
+      <div class="k">
+        <div class="when" data-lang="en">Apr — Aug 2025</div>
+        <div class="when" data-lang="pt">abr — ago/2025</div>
+        <div class="who">Samsung Electronics</div>
+        <div class="where" data-lang="en">Senior AI Researcher<br>Samsung R&amp;D Institute Brazil</div>
+        <div class="where" data-lang="pt">Senior AI Researcher<br>Samsung R&amp;D Institute Brazil</div>
+      </div>
+      <div>
+        <ul data-lang="en" style="margin:0">
+          <li>AI models for Samsung wearables, on the boundary between physical signal and model: the data comes from sensors in contact with the body.</li>
+          <li>Scalable data pipelines, signal analysis and feature engineering; segmented analysis of multitask networks to find the subpopulation a good average hides.</li>
+          <li>Sensor physics and detection theory applied to improve data quality <i>at the source</i>, instead of compensating for noise inside the model.</li>
+          <li class="muted">Detail deliberately limited by Samsung's confidentiality agreement.</li>
+        </ul>
+        <ul data-lang="pt" style="margin:0">
+          <li>Modelos de IA para os wearables da Samsung, na fronteira entre sinal físico e modelo: o dado vem de sensores em contato com o corpo.</li>
+          <li>Pipelines de dados escaláveis, análise de sinais e feature engineering; análise segmentada de redes multitarefa para achar a subpopulação que uma média boa esconde.</li>
+          <li>Física do sensor e teoria de detecção aplicadas para melhorar a qualidade do dado <i>na origem</i>, em vez de compensar ruído dentro do modelo.</li>
+          <li class="muted">Detalhe deliberadamente limitado pelo contrato de sigilo com a Samsung.</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="tl-item">
-      <div class="tl-when" data-lang="en">Jan 2025 — Apr 2025</div>
-      <div class="tl-when" data-lang="pt">jan/2025 — abr/2025</div>
-      <div class="tl-what">Data Scientist · Grupo Amil</div>
-      <div class="tl-where" data-lang="en">Contracted via Cuboconnect · remote</div>
-      <div class="tl-where" data-lang="pt">Terceirizado, via Cuboconnect · remoto</div>
-      <ul data-lang="en">
-        <li>OCR for medical and administrative documents — handwritten forms, stamps over text, skewed scans, layouts that change per issuing unit.</li>
-        <li>The real problem wasn't character recognition: it was deciding when recognition is <i>not</i> trustworthy and must go to human review.</li>
-        <li>Helped choose the OCR model that went into use; the project structured and supported fraud detection across thousands of medical reimbursement documents.</li>
-      </ul>
-      <ul data-lang="pt">
-        <li>OCR para documentos médicos e administrativos — formulário manuscrito, carimbo sobre texto, digitalização torta, layout que muda por unidade emissora.</li>
-        <li>O problema real não era reconhecimento de caractere: era decidir quando o reconhecimento <i>não</i> é confiável e precisa ir para revisão humana.</li>
-        <li>Ajudei a decidir o modelo de OCR que entrou em uso; o projeto estruturou e apoiou detecção de fraude em milhares de documentos de reembolso médico.</li>
-      </ul>
+    <div class="row">
+      <div class="k">
+        <div class="when" data-lang="en">Jan — Apr 2025</div>
+        <div class="when" data-lang="pt">jan — abr/2025</div>
+        <div class="who">Grupo Amil</div>
+        <div class="where" data-lang="en">Data Scientist<br>Via Cuboconnect · remote</div>
+        <div class="where" data-lang="pt">Cientista de Dados<br>Via Cuboconnect · remoto</div>
+      </div>
+      <div>
+        <ul data-lang="en" style="margin:0">
+          <li>OCR for medical and administrative documents — handwritten forms, stamps over text, skewed scans, layouts that change per issuing unit.</li>
+          <li>The real problem was never character recognition: it was deciding when recognition is <i>not</i> trustworthy and has to go to human review.</li>
+          <li>Helped choose the OCR model that went into use; the project structured and supported fraud detection across thousands of reimbursement documents.</li>
+        </ul>
+        <ul data-lang="pt" style="margin:0">
+          <li>OCR para documentos médicos e administrativos — formulário manuscrito, carimbo sobre texto, digitalização torta, layout que muda por unidade emissora.</li>
+          <li>O problema real nunca foi reconhecimento de caractere: era decidir quando o reconhecimento <i>não</i> é confiável e precisa ir para revisão humana.</li>
+          <li>Ajudei a decidir o modelo de OCR que entrou em uso; o projeto estruturou e apoiou detecção de fraude em milhares de documentos de reembolso.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="k">
+        <div class="when">2023</div>
+        <div class="who">Stony Brook University</div>
+        <div class="where" data-lang="en">Doctoral Researcher · New York<br>A year abroad inside the UNICAMP PhD</div>
+        <div class="where" data-lang="pt">Doctoral Researcher · Nova York<br>Ano no exterior dentro do doutorado</div>
+      </div>
+      <div>
+        <ul data-lang="en" style="margin:0">
+          <li>Commissioned and optimised a new magneto-sNOM. Standing up a new instrument is its own kind of work: nothing has a baseline, and every unexpected result is either physics or the equipment.</li>
+          <li>Resulted in a peer-reviewed <b>Nano Letters</b> paper that took the <b>front cover of the issue</b>.</li>
+        </ul>
+        <ul data-lang="pt" style="margin:0">
+          <li>Comissionamento e otimização de um magneto-sNOM novo. Colocar instrumento novo para funcionar é um tipo específico de trabalho: nada tem baseline, e todo resultado inesperado pode ser física ou pode ser o equipamento.</li>
+          <li>Resultou em publicação revisada por pares no <b>Nano Letters</b>, que ganhou a <b>capa da edição</b>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="k">
+        <div class="when">2017 — 2018</div>
+        <div class="who">CNPEM</div>
+        <div class="where" data-lang="en">Intern · Brazilian Synchrotron</div>
+        <div class="where" data-lang="pt">Estagiário · Síncrotron</div>
+      </div>
+      <div>
+        <p data-lang="en" style="margin:0">Two consecutive internships in different groups: benchmarking commercial nano-optics simulation software, and testing optical components against accelerator radiation. First contact with numerical simulation and Python data analysis — the technical base for everything after.</p>
+        <p data-lang="pt" style="margin:0">Dois estágios consecutivos em grupos diferentes: benchmark de softwares comerciais de simulação em nano-óptica e teste de componentes ópticos contra a radiação do acelerador. Primeiro contato com simulação numérica e análise de dados em Python — a base técnica de tudo que veio depois.</p>
+      </div>
     </div>
   </div>
+</div></section>
+<!-- ============================== PROJECTS ============================== -->
+<section><div class="wrap">
+  <p class="label" data-lang="en">Selected projects</p>
+  <p class="label" data-lang="pt">Projetos em destaque</p>
+  <h2 data-lang="en">Four systems, and the decision that shaped each</h2>
+  <h2 data-lang="pt">Quatro sistemas, e a decisão que moldou cada um</h2>
 
-  <p class="tl-phase" style="margin-top:34px" data-lang="en">PhD and international research · 2019 – 2025</p>
-  <p class="tl-phase" style="margin-top:34px" data-lang="pt">Doutorado e pesquisa internacional · 2019 – 2025</p>
-  <div class="tl">
-    <div class="tl-item">
-      <div class="tl-when" data-lang="en">Jan 2023 — Dec 2023</div>
-      <div class="tl-when" data-lang="pt">jan/2023 — dez/2023</div>
-      <div class="tl-what">Doctoral Researcher · Stony Brook University</div>
-      <div class="tl-where" data-lang="en">New York, USA · Prof. Mengkun Liu's group · a year abroad inside the UNICAMP PhD</div>
-      <div class="tl-where" data-lang="pt">Nova York, EUA · grupo do Prof. Mengkun Liu · ano no exterior dentro do doutorado na UNICAMP</div>
-      <ul data-lang="en">
-        <li>Commissioned and optimised a new magneto-sNOM. Standing up a new instrument is its own kind of work: nothing has a baseline, and every unexpected result is either physics or the equipment.</li>
-        <li>Resulted in a peer-reviewed <b>Nano Letters</b> paper that took the <b>front cover of the issue</b>.</li>
-      </ul>
-      <ul data-lang="pt">
-        <li>Comissionamento e otimização de um magneto-sNOM novo. Colocar instrumento novo para funcionar é um tipo específico de trabalho: nada tem baseline, e todo resultado inesperado pode ser física ou pode ser o equipamento.</li>
-        <li>Resultou em publicação revisada por pares no <b>Nano Letters</b>, que ganhou a <b>capa da edição</b>.</li>
-      </ul>
+  <div style="margin-top:30px">
+    <div class="row">
+      <div class="k">
+        <div class="when" data-lang="en">Distrito · in production</div>
+        <div class="when" data-lang="pt">Distrito · em produção</div>
+        <div class="who" data-lang="en">Hospital agents over WhatsApp</div>
+        <div class="who" data-lang="pt">Agentes hospitalares no WhatsApp</div>
+        <div class="where">LangGraph · FastAPI · PostgreSQL · LangSmith · Azure</div>
+      </div>
+      <div>
+        <p data-lang="en">A large São Paulo hospital needed routine services on WhatsApp. The dominant challenge isn't conversation: each service touches a different internal system with its own rules, and the patient doesn't know — and shouldn't have to know — which service they are asking for. They just write a sentence. Specialist agents cover the services, a coordinator routes on the patient's own words, and every message passes an input guardrail first.</p>
+        <p data-lang="en"><b>The decision that mattered:</b> the check-in agent — my main piece — is a state machine, not a free agent. The alternative was one ReAct agent holding every tool and a large prompt describing the process. I rejected it for unpredictability: in a flow with mandatory steps and side effects on hospital systems, the free agent skipped steps, called the wrong tool, or repeated a completed one. The cost is rigidity, and in a hospital flow that is the right side of the trade-off. In production, serving thousands of patients a month.</p>
+        <p data-lang="pt">Um hospital de grande porte em São Paulo precisava oferecer serviços de rotina por WhatsApp. O desafio dominante não é conversar: cada serviço toca um sistema interno diferente, com regra própria, e o paciente não sabe (nem deveria saber) qual serviço está pedindo. Ele escreve uma frase. Agentes especializados cobrem os serviços, um coordenador roteia pela linguagem do próprio paciente, e toda mensagem passa antes por um guardrail de entrada.</p>
+        <p data-lang="pt"><b>A decisão que importou:</b> o agente de check-in — minha parte principal — é uma máquina de estados, não um agente livre. A alternativa era um agente ReAct único com todas as ferramentas e um prompt grande descrevendo o processo. Descartei por imprevisibilidade: em fluxo com etapas obrigatórias e efeito em sistema do hospital, o agente livre pulava etapa, chamava a tool errada ou repetia uma já concluída. O custo é rigidez, e em fluxo hospitalar é o lado certo do trade-off. Em produção, atendendo milhares de pacientes por mês.</p>
+      </div>
     </div>
-    <div class="tl-item">
-      <div class="tl-when" data-lang="en">Jul 2017 — Dec 2018</div>
-      <div class="tl-when" data-lang="pt">jul/2017 — dez/2018</div>
-      <div class="tl-what">Intern · CNPEM / Brazilian Synchrotron</div>
-      <div class="tl-where" data-lang="en">Two consecutive internships, different groups · first contact with numerical simulation and Python data analysis</div>
-      <div class="tl-where" data-lang="pt">Dois estágios consecutivos, grupos diferentes · primeiro contato com simulação numérica e análise de dados em Python</div>
+
+    <div class="row">
+      <div class="k">
+        <div class="when" data-lang="en">Distrito · in development</div>
+        <div class="when" data-lang="pt">Distrito · em desenvolvimento</div>
+        <div class="who" data-lang="en">Academic coaching agent</div>
+        <div class="who" data-lang="pt">Agente de coaching acadêmico</div>
+        <div class="where">LangGraph · MCP · FastAPI · GCP</div>
+      </div>
+      <div>
+        <p data-lang="en">For an international education network: a conversational coach over a tool service that exposes institutional data by <b>REST and MCP</b> — the same access logic behind both, so other client systems consume it without going through the agent and the rules stay testable outside the LLM. Identity is verified before any data is returned, and escalation to a human is the LLM's own judgement rather than a keyword trigger. A LangGraph pipeline turns course syllabi in Word into structured JSON against an explicit schema.</p>
+        <p data-lang="en">Almost all the engineering here is boundary work: what the agent may assert, what it does not know, and when it has to stop and fetch a person.</p>
+        <p data-lang="pt">Para uma rede de ensino internacional: um coach conversacional sobre um serviço de tools que expõe dado institucional por <b>REST e MCP</b> — a mesma lógica de acesso atrás das duas, então outros sistemas do cliente consomem sem passar pelo agente e a regra fica testável fora do LLM. A identidade é verificada antes de qualquer dado, e o escalonamento para humano é julgamento do próprio LLM, não gatilho de palavra-chave. Uma pipeline em LangGraph converte syllabus em Word para JSON estruturado contra um schema explícito.</p>
+        <p data-lang="pt">Quase toda a engenharia aqui é trabalho de fronteira: o que o agente pode afirmar, o que ele não sabe, e quando ele tem que parar e chamar uma pessoa.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="k">
+        <div class="when" data-lang="en">Distrito · daily use</div>
+        <div class="when" data-lang="pt">Distrito · uso diário</div>
+        <div class="who" data-lang="en">Synthetic jury</div>
+        <div class="who" data-lang="pt">Júri sintético</div>
+        <div class="where">k-modes · UMAP · GenAI</div>
+      </div>
+      <div>
+        <p data-lang="en">A campaign research platform: clustering the audience base to find profiles that actually exist in the data, personas anchored to those clusters rather than invented, and simulated interviews against advertising stimuli. I own the entire AI flow, and model choice per step is treated as a cost decision as much as a quality one — a top model where quality decides the outcome, a fast one where volume dominates.</p>
+        <p data-lang="pt">Plataforma de pesquisa de campanha: clusterização da base de audiência para achar perfis que existem no dado, personas ancoradas nesses clusters em vez de inventadas, e entrevistas simuladas contra estímulos publicitários. Respondo pelo fluxo de IA inteiro, e a escolha de modelo por etapa é decisão de custo tanto quanto de qualidade — modelo de topo onde a qualidade define o resultado, modelo rápido onde o volume domina.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="k">
+        <div class="when" data-lang="en">PhD · published</div>
+        <div class="when" data-lang="pt">Doutorado · publicado</div>
+        <div class="who" data-lang="en">ML-accelerated microscopy</div>
+        <div class="who" data-lang="pt">Microscopia acelerada por ML</div>
+        <div class="where">Gaussian processes · sparse sampling</div>
+      </div>
+      <div>
+        <p data-lang="en">Sparse sampling plus Gaussian-process regression to reconstruct s-SNOM images from a fraction of the measurements — <i>Accelerated Nano-Optical Imaging through Sparse Sampling</i>, Nano Letters <b>24</b>(7), 2149 (2024).</p>
+        <p data-lang="en">Reconstructing what was never measured carries exactly the risk an LLM does: the result convinces without being true. I met that problem years before it became a GenAI topic, which is most of why I trust prompts less than tools.</p>
+        <p data-lang="pt">Amostragem esparsa com regressão por processo gaussiano para reconstruir imagens de s-SNOM a partir de uma fração das medidas — <i>Accelerated Nano-Optical Imaging through Sparse Sampling</i>, Nano Letters <b>24</b>(7), 2149 (2024).</p>
+        <p data-lang="pt">Reconstruir o que nunca foi medido carrega exatamente o risco de um LLM: o resultado convence sem ser verdadeiro. Enfrentei isso anos antes de virar assunto de GenAI, e é boa parte do motivo pelo qual eu confio menos em prompt do que em tool.</p>
+      </div>
     </div>
   </div>
 </div></section>
 
-<!-- ============================ PROJECTS ============================ -->
+<!-- ================================ STACK ================================ -->
 <section><div class="wrap">
-  <p class="eyebrow" data-lang="en">Selected projects</p>
-  <p class="eyebrow" data-lang="pt">Projetos em destaque</p>
-
-  <h2 data-lang="en">Multi-agent AI for hospital services over WhatsApp</h2>
-  <h2 data-lang="pt">IA multiagente para serviços hospitalares via WhatsApp</h2>
-
-  <p data-lang="en">A large hospital in São Paulo needed routine services on WhatsApp — the channel patients already use, with no app to install and no password to remember. The dominant challenge isn't conversation: each service touches a different internal system with its own rules, and the patient doesn't know — and shouldn't have to know — which service they are asking for. They just write a sentence.</p>
-  <p data-lang="pt">Um hospital de grande porte em São Paulo precisava oferecer serviços de rotina por WhatsApp — o canal onde o paciente já está, sem instalar aplicativo nem lembrar senha. O desafio dominante não é conversar: cada serviço toca um sistema interno diferente, com regra própria, e o paciente não sabe (nem deveria saber) qual serviço está pedindo. Ele escreve uma frase.</p>
-
-  <figure>
-    <div class="diagram">
-      <svg viewBox="0 0 880 470" role="img"
-           aria-label="Architecture of the multi-agent hospital system: WhatsApp to a synchronous FastAPI, through an input guardrail to a coordinator agent that routes to specialist agents, each with its own tools against hospital systems, with graph state checkpointed in PostgreSQL.">
-        <defs>
-          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill="currentColor" style="color: var(--ink-3)"/>
-          </marker>
-          <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill="currentColor" style="color: var(--accent)"/>
-          </marker>
-        </defs>
-
-        <!-- entry -->
-        <rect class="box" x="16" y="26" width="126" height="46" rx="9"/>
-        <text class="lbl" x="79" y="54" text-anchor="middle">WhatsApp</text>
-        <path class="flow" d="M148 49 H196"/>
-
-        <rect class="box" x="202" y="18" width="150" height="62" rx="9"/>
-        <text class="lbl" x="277" y="43" text-anchor="middle">FastAPI</text>
-        <text class="lbl-s" x="277" y="62" text-anchor="middle" data-lang="en">synchronous API</text>
-        <text class="lbl-s" x="277" y="62" text-anchor="middle" data-lang="pt">API síncrona</text>
-        <path class="flow" d="M358 49 H406"/>
-
-        <rect class="box" x="412" y="18" width="140" height="62" rx="9"/>
-        <text class="lbl" x="482" y="43" text-anchor="middle">Guardrail</text>
-        <text class="lbl-s" x="482" y="62" text-anchor="middle" data-lang="en">on every message</text>
-        <text class="lbl-s" x="482" y="62" text-anchor="middle" data-lang="pt">em toda mensagem</text>
-
-        <!-- coordinator -->
-        <path class="flow" d="M482 86 V128"/>
-        <rect class="box-a" x="332" y="132" width="220" height="64" rx="9"/>
-        <text class="lbl" x="442" y="157" text-anchor="middle" data-lang="en">Coordinator agent</text>
-        <text class="lbl" x="442" y="157" text-anchor="middle" data-lang="pt">Agente coordenador</text>
-        <text class="lbl-s" x="442" y="176" text-anchor="middle" data-lang="en">classifies intent, dispatches</text>
-        <text class="lbl-s" x="442" y="176" text-anchor="middle" data-lang="pt">classifica intenção e despacha</text>
-
-        <!-- stay-in-flow bypass -->
-        <path class="flow-d" d="M552 60 H700 Q722 60 722 84 V236 Q722 260 700 260 H262"/>
-        <text class="lbl-s" x="736" y="150" data-lang="en" style="fill: var(--accent)">in-flow flag</text>
-        <text class="lbl-s" x="736" y="150" data-lang="pt" style="fill: var(--accent)">flag de fluxo</text>
-        <text class="lbl-s" x="736" y="168" data-lang="en" style="fill: var(--accent)">skips the</text>
-        <text class="lbl-s" x="736" y="168" data-lang="pt" style="fill: var(--accent)">pula o</text>
-        <text class="lbl-s" x="736" y="186" data-lang="en" style="fill: var(--accent)">coordinator</text>
-        <text class="lbl-s" x="736" y="186" data-lang="pt" style="fill: var(--accent)">coordenador</text>
-
-        <!-- fan out -->
-        <path class="flow" d="M442 200 V222 H92 V250"/>
-        <path class="flow" d="M442 200 V222 H240 V250"/>
-        <path class="flow" d="M442 200 V222 H388 V250"/>
-        <path class="flow" d="M442 200 V222 H536 V250"/>
-        <path class="flow" d="M442 200 V222 H660 V250"/>
-
-        <rect class="box" x="30" y="254" width="124" height="58" rx="9"/>
-        <text class="lbl-s" x="92" y="279" text-anchor="middle" data-lang="en">Identity agent</text>
-        <text class="lbl-s" x="92" y="279" text-anchor="middle" data-lang="pt">Identificador</text>
-        <text class="lbl-s" x="92" y="297" text-anchor="middle" data-lang="en">authenticates first</text>
-        <text class="lbl-s" x="92" y="297" text-anchor="middle" data-lang="pt">autentica antes</text>
-
-        <rect class="box-a" x="178" y="254" width="124" height="58" rx="9"/>
-        <text class="lbl" x="240" y="279" text-anchor="middle">Check-in</text>
-        <text class="lbl-s" x="240" y="297" text-anchor="middle" data-lang="en">state machine</text>
-        <text class="lbl-s" x="240" y="297" text-anchor="middle" data-lang="pt">máquina de estados</text>
-
-        <rect class="box" x="326" y="254" width="124" height="58" rx="9"/>
-        <text class="lbl-s" x="388" y="286" text-anchor="middle" data-lang="en">Quotes</text>
-        <text class="lbl-s" x="388" y="286" text-anchor="middle" data-lang="pt">Orçamento</text>
-
-        <rect class="box" x="474" y="254" width="124" height="58" rx="9"/>
-        <text class="lbl-s" x="536" y="286" text-anchor="middle" data-lang="en">Exams · Visits</text>
-        <text class="lbl-s" x="536" y="286" text-anchor="middle" data-lang="pt">Exame · Consulta</text>
-
-        <rect class="box" x="622" y="254" width="124" height="58" rx="9"/>
-        <text class="lbl-s" x="684" y="286" text-anchor="middle" data-lang="en">General info</text>
-        <text class="lbl-s" x="684" y="286" text-anchor="middle" data-lang="pt">Informações</text>
-
-        <!-- tools -->
-        <path class="flow" d="M92 316 V344"/>
-        <path class="flow" d="M240 316 V344"/>
-        <path class="flow" d="M388 316 V344"/>
-        <path class="flow" d="M536 316 V344"/>
-        <path class="flow" d="M684 316 V344"/>
-        <rect class="box" x="30" y="348" width="716" height="54" rx="9" style="stroke-dasharray: 5 4"/>
-        <text class="lbl" x="388" y="371" text-anchor="middle" data-lang="en">Tools — the only source of what an agent may assert</text>
-        <text class="lbl" x="388" y="371" text-anchor="middle" data-lang="pt">Tools — única fonte do que um agente pode afirmar</text>
-        <text class="lbl-s" x="388" y="390" text-anchor="middle" data-lang="en">against the hospital's internal systems, per service</text>
-        <text class="lbl-s" x="388" y="390" text-anchor="middle" data-lang="pt">contra os sistemas internos do hospital, por serviço</text>
-
-        <!-- state -->
-        <rect class="box" x="30" y="418" width="350" height="42" rx="9"/>
-        <text class="lbl-s" x="205" y="444" text-anchor="middle" data-lang="en">PostgreSQL checkpointer — state per patient thread</text>
-        <text class="lbl-s" x="205" y="444" text-anchor="middle" data-lang="pt">Checkpointer em PostgreSQL — estado por thread do paciente</text>
-        <path class="flow" d="M240 316 V418" style="marker-end: none; stroke-dasharray: 3 3"/>
-
-        <rect class="box" x="396" y="418" width="350" height="42" rx="9"/>
-        <text class="lbl-s" x="571" y="444" text-anchor="middle" data-lang="en">LangSmith tracing — every agent decision inspectable</text>
-        <text class="lbl-s" x="571" y="444" text-anchor="middle" data-lang="pt">Tracing em LangSmith — cada decisão de agente inspecionável</text>
-      </svg>
-    </div>
-    <figcaption data-lang="en">LangGraph · FastAPI · PostgreSQL · LangSmith · Azure Container Apps. In production; the check-in agent — my main piece — serves thousands of patients a month.</figcaption>
-    <figcaption data-lang="pt">LangGraph · FastAPI · PostgreSQL · LangSmith · Azure Container Apps. Em produção; o agente de check-in — minha parte principal — atende milhares de pacientes por mês.</figcaption>
-  </figure>
-
-  <div class="cards">
-    <div class="card">
-      <p class="tag" data-lang="en">The decision that mattered</p>
-      <p class="tag" data-lang="pt">A decisão que importou</p>
-      <h3 data-lang="en">A state machine, not a free agent</h3>
-      <h3 data-lang="pt">Máquina de estados, não agente livre</h3>
-      <p data-lang="en">The alternative was one ReAct agent holding every tool and a large prompt describing the process. I rejected it for unpredictability: in a flow with mandatory steps and side effects on hospital systems, the free agent skipped steps, called the wrong tool, or repeated a completed one. The state machine decides, at each step, which tools exist and which prompt is assembled. The cost is rigidity — an unforeseen case isn't rescued by the model's creativity. In a hospital flow, that's the right side of the trade-off.</p>
-      <p data-lang="pt">A alternativa era um agente ReAct único com todas as ferramentas e um prompt grande descrevendo o processo. Descartei por imprevisibilidade: em fluxo com etapas obrigatórias e efeito em sistema do hospital, o agente livre pulava etapa, chamava a tool errada ou repetia uma já concluída. A máquina de estados determina, a cada passo, quais ferramentas existem e qual prompt é montado. O custo é rigidez — caso não previsto não é resolvido pela criatividade do modelo. Em fluxo hospitalar, é o lado certo do trade-off.</p>
-    </div>
-    <div class="card">
-      <p class="tag">Distrito · 2025</p>
-      <h3 data-lang="en">Academic coaching agent</h3>
-      <h3 data-lang="pt">Agente de coaching acadêmico</h3>
-      <p data-lang="en">For an international education network: a conversational agent over a tool service that exposes institutional data by <b>REST and MCP</b>, with identity verified before any data is returned and escalation to a human on the LLM's own judgement. Plus a LangGraph pipeline that extracts course content from unstructured documents into JSON.</p>
-      <p data-lang="pt">Para uma rede de ensino internacional: agente conversacional sobre um serviço de tools que expõe dado institucional por <b>REST e MCP</b>, com identidade verificada antes de qualquer dado e escalonamento para humano por julgamento do próprio LLM. Mais uma pipeline em LangGraph que extrai conteúdo de cursos de documentos não estruturados para JSON.</p>
-    </div>
-    <div class="card">
-      <p class="tag">Distrito · 2025</p>
-      <h3 data-lang="en">Synthetic jury for campaign research</h3>
-      <h3 data-lang="pt">Júri sintético para análise de campanhas</h3>
-      <p data-lang="en">Audience clustering to find profiles that actually exist in the data, personas anchored to those clusters, and simulated interviews against advertising stimuli. I own the entire AI flow. Model choice per step is treated as a cost decision as much as a quality one.</p>
-      <p data-lang="pt">Clusterização da base de audiência para identificar perfis que existem no dado, personas ancoradas nesses clusters e entrevistas simuladas contra estímulos publicitários. Respondo pelo fluxo de IA inteiro. A escolha de modelo por etapa é decisão de custo tanto quanto de qualidade.</p>
-    </div>
-    <div class="card">
-      <p class="tag" data-lang="en">PhD · public code</p>
-      <p class="tag" data-lang="pt">Doutorado · código público</p>
-      <h3 data-lang="en">ML-accelerated microscopy</h3>
-      <h3 data-lang="pt">Microscopia acelerada por ML</h3>
-      <p data-lang="en">Sparse sampling plus Gaussian-process regression to reconstruct s-SNOM images from a fraction of the measurements — <i>Accelerated Nano-Optical Imaging through Sparse Sampling</i>, Nano Letters 24(7), 2149 (2024). Reconstructing what wasn't measured carries exactly the risk an LLM does: the result convinces without being true. I met that problem before it became a GenAI topic.</p>
-      <p data-lang="pt">Amostragem esparsa com regressão por processo gaussiano para reconstruir imagens de s-SNOM a partir de uma fração das medidas — <i>Accelerated Nano-Optical Imaging through Sparse Sampling</i>, Nano Letters 24(7), 2149 (2024). Reconstruir o que não foi medido carrega exatamente o risco de um LLM: o resultado convence sem ser verdadeiro. Enfrentei essa questão antes de ela virar assunto de GenAI.</p>
-    </div>
-  </div>
-</div></section>
-
-<!-- ============================ STACK ============================ -->
-<section><div class="wrap">
-  <p class="eyebrow" data-lang="en">Technical stack</p>
-  <p class="eyebrow" data-lang="pt">Stack técnico</p>
-
+  <p class="label" data-lang="en">Stack</p>
+  <p class="label" data-lang="pt">Stack</p>
   <h2 data-lang="en">Grouped by depth, not by logo count</h2>
   <h2 data-lang="pt">Agrupado por profundidade, não por quantidade de logo</h2>
-  <p data-lang="en" class="muted">Split three ways on purpose. What I run in production, what I've worked alongside, and what I've only studied — because the difference is the whole point of a technical interview.</p>
-  <p data-lang="pt" class="muted">Dividido em três de propósito. O que rodo em produção, o que trabalhei ao lado, e o que só estudei — porque essa diferença é justamente o assunto de uma entrevista técnica.</p>
+  <p class="lede" data-lang="en">Split three ways on purpose: what I run in production, what I have worked alongside, and what I have only studied. That difference is the whole substance of a technical interview.</p>
+  <p class="lede" data-lang="pt">Dividido em três de propósito: o que rodo em produção, o que trabalhei ao lado e o que só estudei. Essa diferença é toda a substância de uma entrevista técnica.</p>
 
-  <div class="depth">
-    <div class="depth-row">
-      <div class="depth-k" data-lang="en">Agents &amp; GenAI<br><span class="muted">daily, in production</span></div>
-      <div class="depth-k" data-lang="pt">Agentes &amp; GenAI<br><span class="muted">diário, em produção</span></div>
+  <div style="margin-top:30px">
+    <div class="row">
+      <div class="k"><div class="who" data-lang="en">Agents &amp; GenAI</div><div class="who" data-lang="pt">Agentes &amp; GenAI</div>
+        <div class="where" data-lang="en">Daily, in production</div><div class="where" data-lang="pt">Diário, em produção</div></div>
       <div class="pills">
         <span class="pill hot">LangGraph</span><span class="pill hot">LangChain</span><span class="pill hot">MCP</span>
-        <span class="pill hot">LangSmith / Fuse</span><span class="pill">Langfuse</span>
-        <span class="pill">OpenAI</span><span class="pill">Gemini 2.5</span>
+        <span class="pill hot">LangSmith / Fuse</span><span class="pill">Langfuse</span><span class="pill">OpenAI</span><span class="pill">Gemini 2.5</span>
         <span class="pill" data-lang="en">Prompt engineering</span><span class="pill" data-lang="pt">Engenharia de prompt</span>
         <span class="pill" data-lang="en">LLM evaluation</span><span class="pill" data-lang="pt">Avaliação de LLM</span>
       </div>
     </div>
-    <div class="depth-row">
-      <div class="depth-k" data-lang="en">Backend &amp; data<br><span class="muted">I own it end to end</span></div>
-      <div class="depth-k" data-lang="pt">Backend &amp; dados<br><span class="muted">assumo fim a fim</span></div>
+    <div class="row">
+      <div class="k"><div class="who" data-lang="en">Backend &amp; data</div><div class="who" data-lang="pt">Backend &amp; dados</div>
+        <div class="where" data-lang="en">Owned end to end</div><div class="where" data-lang="pt">Assumo fim a fim</div></div>
       <div class="pills">
-        <span class="pill hot">Python <span class="muted">10+ yrs</span></span><span class="pill hot">FastAPI</span>
-        <span class="pill">Pydantic</span><span class="pill">Celery</span><span class="pill">Redis</span>
-        <span class="pill">PostgreSQL</span><span class="pill">SQLAlchemy</span><span class="pill">Alembic</span>
+        <span class="pill hot">Python</span><span class="pill hot">FastAPI</span><span class="pill">Pydantic</span><span class="pill">Celery</span>
+        <span class="pill">Redis</span><span class="pill">PostgreSQL</span><span class="pill">SQLAlchemy</span><span class="pill">Alembic</span>
         <span class="pill">pandas</span><span class="pill">NumPy</span><span class="pill">pytest</span><span class="pill">ruff</span>
       </div>
     </div>
-    <div class="depth-row">
-      <div class="depth-k" data-lang="en">ML<br><span class="muted">real use</span></div>
-      <div class="depth-k" data-lang="pt">ML<br><span class="muted">uso real</span></div>
+    <div class="row">
+      <div class="k"><div class="who">ML</div>
+        <div class="where" data-lang="en">Real use</div><div class="where" data-lang="pt">Uso real</div></div>
       <div class="pills">
         <span class="pill hot">scikit-learn</span>
         <span class="pill" data-lang="en">Clustering (k-modes)</span><span class="pill" data-lang="pt">Clusterização (k-modes)</span>
         <span class="pill" data-lang="en">Gaussian processes</span><span class="pill" data-lang="pt">Processos gaussianos</span>
         <span class="pill" data-lang="en">Feature engineering on signal</span><span class="pill" data-lang="pt">Feature engineering sobre sinal</span>
         <span class="pill">UMAP</span><span class="pill">OpenCV</span><span class="pill">EasyOCR</span>
-        <span class="pill">PyTorch <span class="muted" data-lang="en">exposure</span><span class="muted" data-lang="pt">exposição</span></span>
+        <span class="pill" data-lang="en">PyTorch (exposure)</span><span class="pill" data-lang="pt">PyTorch (exposição)</span>
       </div>
     </div>
-    <div class="depth-row">
-      <div class="depth-k" data-lang="en">Cloud &amp; delivery<br><span class="muted">managed services</span></div>
-      <div class="depth-k" data-lang="pt">Nuvem &amp; entrega<br><span class="muted">serviços gerenciados</span></div>
+    <div class="row">
+      <div class="k"><div class="who" data-lang="en">Cloud &amp; delivery</div><div class="who" data-lang="pt">Nuvem &amp; entrega</div>
+        <div class="where" data-lang="en">Managed services</div><div class="where" data-lang="pt">Serviços gerenciados</div></div>
       <div class="pills">
-        <span class="pill hot">Docker</span>
-        <span class="pill">GCP <span class="muted">Cloud Run · Cloud SQL · GCS</span></span>
-        <span class="pill">Azure <span class="muted">Container Apps · Document Intelligence</span></span>
-        <span class="pill">Databricks</span><span class="pill">Git</span>
+        <span class="pill hot">Docker</span><span class="pill">GCP · Cloud Run</span><span class="pill">Azure · Container Apps</span>
+        <span class="pill">Azure Document Intelligence</span><span class="pill">Databricks</span><span class="pill">Git</span>
       </div>
     </div>
-    <div class="depth-row">
-      <div class="depth-k" data-lang="en">Physics &amp; instrumentation<br><span class="muted">the differentiator</span></div>
-      <div class="depth-k" data-lang="pt">Física &amp; instrumentação<br><span class="muted">o diferencial</span></div>
+    <div class="row">
+      <div class="k"><div class="who" data-lang="en">Physics &amp; instrumentation</div><div class="who" data-lang="pt">Física &amp; instrumentação</div>
+        <div class="where" data-lang="en">The differentiator</div><div class="where" data-lang="pt">O diferencial</div></div>
       <div class="pills">
         <span class="pill" data-lang="en">Nano-optics · polaritons</span><span class="pill" data-lang="pt">Nano-óptica · polaritons</span>
         <span class="pill">s-SNOM</span><span class="pill">FDTD</span>
@@ -573,18 +653,18 @@ footer .small { max-width: var(--measure); }
         <span class="pill" data-lang="en">Nanofabrication</span><span class="pill" data-lang="pt">Nanofabricação</span>
       </div>
     </div>
-    <div class="depth-row">
-      <div class="depth-k" data-lang="en">Studied, not shipped<br><span class="muted">stated up front</span></div>
-      <div class="depth-k" data-lang="pt">Estudado, não entregue<br><span class="muted">declarado de saída</span></div>
+    <div class="row">
+      <div class="k"><div class="who" data-lang="en">Studied, not shipped</div><div class="who" data-lang="pt">Estudado, não entregue</div>
+        <div class="where" data-lang="en">Stated up front</div><div class="where" data-lang="pt">Declarado de saída</div></div>
       <div>
-        <ul data-lang="en" style="margin-bottom:0">
-          <li><b>RAG</b> — certification and study, not production. In the systems I built, the data an agent needs is transactional and sensitive (a patient's status, a student's enrolment, a client's internal system), and for that the right answer was <i>a tool against the source</i>, not vector search over an indexed copy. A tool returns current state, respects authorisation, and is auditable. Where the corpus were large stable text, RAG would be the choice — it just wasn't the problem that showed up.</li>
-          <li><b>Kubernetes</b> — conceptual only. My deploys are managed container services, which solve the problem without a cluster to operate. If a role requires operating Kubernetes, that's a real gap of mine.</li>
-          <li><b>CI/CD pipelines, model/data versioning (MLflow, DVC), drift monitoring with automatic retraining</b> — not my terrain today. In agent systems, the MLOps axis that mattered was execution observability, not a retraining cycle.</li>
+        <ul data-lang="en" style="margin:0">
+          <li><b>RAG</b> — certification and study, not production. In the systems I built, the data an agent needs is transactional and sensitive: a patient's status, a student's enrolment, a client's internal system. For that, the right answer was a tool against the source, not vector search over an indexed copy — a tool returns current state, respects authorisation, and is auditable. Where the corpus were large stable text, RAG would be the choice. It just was not the problem that showed up.</li>
+          <li><b>Kubernetes</b> — conceptual only. My deploys are managed container services, which solve the problem without a cluster to operate. If a role requires operating Kubernetes, that is a real gap of mine.</li>
+          <li><b>CI/CD pipelines, model and data versioning (MLflow, DVC), drift monitoring with automatic retraining</b> — not my terrain today. In agent systems, the MLOps axis that mattered was execution observability, not a retraining cycle.</li>
           <li><b>LLM fine-tuning, computer-vision architectures, RL, end-to-end network training</b> — known, not shipped.</li>
         </ul>
-        <ul data-lang="pt" style="margin-bottom:0">
-          <li><b>RAG</b> — certificação e estudo, não produção. Nos sistemas que construí, o dado que o agente precisa é transacional e sensível (situação do paciente, matrícula do aluno, sistema interno do cliente), e para isso a resposta certa foi <i>tool contra a fonte</i>, não busca vetorial sobre cópia indexada. Tool devolve o estado atual, respeita a autorização e é auditável. Onde o corpus fosse texto grande e estável, RAG seria a escolha — só não foi o problema que apareceu.</li>
+        <ul data-lang="pt" style="margin:0">
+          <li><b>RAG</b> — certificação e estudo, não produção. Nos sistemas que construí, o dado que o agente precisa é transacional e sensível: situação do paciente, matrícula do aluno, sistema interno do cliente. Para isso, a resposta certa foi tool contra a fonte, não busca vetorial sobre cópia indexada — tool devolve o estado atual, respeita a autorização e é auditável. Onde o corpus fosse texto grande e estável, RAG seria a escolha. Só não foi o problema que apareceu.</li>
           <li><b>Kubernetes</b> — conhecimento conceitual. Meus deploys são em serviço gerenciado de container, que resolve o problema sem cluster para operar. Se a vaga exige operar Kubernetes, essa é uma lacuna real minha.</li>
           <li><b>Pipeline de CI/CD, versionamento de modelo e dado (MLflow, DVC), monitoramento de drift com retreino automático</b> — não é meu terreno hoje. Em sistemas de agentes, o eixo de MLOps que importou foi observabilidade de execução, não ciclo de retreino.</li>
           <li><b>Fine-tuning de LLM, arquiteturas de visão computacional, RL, treino de rede fim a fim</b> — conheço, não levei a produção.</li>
@@ -593,157 +673,199 @@ footer .small { max-width: var(--measure); }
     </div>
   </div>
 </div></section>
-
-<!-- ============================ EDUCATION ============================ -->
+<!-- ============================== EDUCATION ============================== -->
 <section><div class="wrap">
-  <p class="eyebrow" data-lang="en">Education &amp; publications</p>
-  <p class="eyebrow" data-lang="pt">Formação &amp; publicações</p>
+  <p class="label" data-lang="en">Education &amp; publications</p>
+  <p class="label" data-lang="pt">Formação &amp; publicações</p>
+  <h2 data-lang="en">Applied Physics at UNICAMP — and what it left behind</h2>
+  <h2 data-lang="pt">Física Aplicada na UNICAMP — e o que ficou</h2>
 
-  <h2 data-lang="en">Applied Physics, UNICAMP — and what it left behind</h2>
-  <h2 data-lang="pt">Física Aplicada, UNICAMP — e o que ficou</h2>
-
-  <div class="cards" style="margin-bottom:22px">
-    <div class="card">
-      <p class="tag">2021 – 2025</p>
-      <h3 data-lang="en">PhD, Applied Physics</h3>
-      <h3 data-lang="pt">Doutorado em Física Aplicada</h3>
-      <p class="small muted">UNICAMP · LNLS/CNPEM</p>
-      <p class="small" data-lang="en"><i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges.</i> Advisor: Prof. Dr. Raul de Oliveira Freitas. Includes a year at Stony Brook (2023).</p>
-      <p class="small" data-lang="pt"><i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges.</i> Orientador: Prof. Dr. Raul de Oliveira Freitas. Inclui um ano em Stony Brook (2023).</p>
+  <div style="margin-top:30px">
+    <div class="row">
+      <div class="k">
+        <div class="when">2021 — 2025</div>
+        <div class="who" data-lang="en">PhD, Applied Physics</div>
+        <div class="who" data-lang="pt">Doutorado em Física Aplicada</div>
+        <div class="where">UNICAMP · LNLS/CNPEM</div>
+      </div>
+      <div>
+        <p data-lang="en" style="margin:0"><i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges.</i> Advisor: Prof. Dr. Raul de Oliveira Freitas. Includes the research year at Stony Brook.</p>
+        <p data-lang="pt" style="margin:0"><i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges.</i> Orientador: Prof. Dr. Raul de Oliveira Freitas. Inclui o ano de pesquisa em Stony Brook.</p>
+      </div>
     </div>
-    <div class="card">
-      <p class="tag">2019 – 2021</p>
-      <h3 data-lang="en">MSc, Applied Physics</h3>
-      <h3 data-lang="pt">Mestrado em Física Aplicada</h3>
-      <p class="small muted">UNICAMP</p>
-      <p class="small" data-lang="en">FDTD simulation of optical antennas as polariton launchers in 2D materials. Public code: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</p>
-      <p class="small" data-lang="pt">Simulação FDTD de antenas ópticas como fontes de polaritons em materiais 2D. Código público: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</p>
+    <div class="row">
+      <div class="k">
+        <div class="when">2019 — 2021</div>
+        <div class="who" data-lang="en">MSc, Applied Physics</div>
+        <div class="who" data-lang="pt">Mestrado em Física Aplicada</div>
+        <div class="where">UNICAMP</div>
+      </div>
+      <div>
+        <p data-lang="en" style="margin:0">FDTD simulation of optical antennas as polariton launchers in 2D materials. Public code: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</p>
+        <p data-lang="pt" style="margin:0">Simulação FDTD de antenas ópticas como fontes de polaritons em materiais 2D. Código público: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</p>
+      </div>
     </div>
-    <div class="card">
-      <p class="tag">2013 – 2018</p>
-      <h3 data-lang="en">Engineering Physics &amp; BSc Physics</h3>
-      <h3 data-lang="pt">Engenharia Física &amp; Bacharelado em Física</h3>
-      <p class="small muted">UNICAMP</p>
-      <p class="small" data-lang="en">Includes a year at the Technical University of Munich (2015–2016), Ciência sem Fronteiras — also where the intermediate German comes from.</p>
-      <p class="small" data-lang="pt">Inclui um ano na Technical University of Munich (2015–2016), pelo Ciência sem Fronteiras — origem também do alemão intermediário.</p>
+    <div class="row">
+      <div class="k">
+        <div class="when">2013 — 2018</div>
+        <div class="who" data-lang="en">Engineering Physics &amp; BSc Physics</div>
+        <div class="who" data-lang="pt">Engenharia Física &amp; Bacharelado em Física</div>
+        <div class="where">UNICAMP · TUM (2015–16)</div>
+      </div>
+      <div>
+        <p data-lang="en" style="margin:0">Includes an academic year at the Technical University of Munich through Ciência sem Fronteiras — also where the intermediate German comes from.</p>
+        <p data-lang="pt" style="margin:0">Inclui um ano acadêmico na Technical University of Munich pelo Ciência sem Fronteiras — origem também do alemão intermediário.</p>
+      </div>
     </div>
-  </div>
-
-  <h3 style="margin-bottom:12px" data-lang="en">Publications</h3>
-  <h3 style="margin-bottom:12px" data-lang="pt">Publicações</h3>
-  <ul>
-    <li data-lang="en"><b>Nano Letters (2025)</b> — magnetically tunable polariton cavities in van der Waals heterostructures. <b>Front cover of the issue.</b> <a href="https://pubs.acs.org/doi/10.1021/acs.nanolett.5c02168" target="_blank" rel="noopener">doi ↗</a></li>
-    <li data-lang="pt"><b>Nano Letters (2025)</b> — cavidades polaritônicas magneticamente sintonizáveis em heteroestruturas de van der Waals. <b>Capa da edição.</b> <a href="https://pubs.acs.org/doi/10.1021/acs.nanolett.5c02168" target="_blank" rel="noopener">doi ↗</a></li>
-    <li><i>Accelerated Nano-Optical Imaging through Sparse Sampling</i> — Nano Letters <b>24</b>(7), 2149 (2024).</li>
-    <li data-lang="en"><i>Guidelines for Engineering Directional Polariton Launchers</i> — Physical Review Applied (2022); methodology implemented in <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</li>
-    <li data-lang="pt"><i>Guidelines for Engineering Directional Polariton Launchers</i> — Physical Review Applied (2022); metodologia implementada em <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</li>
-  </ul>
-
-  <h3 style="margin:26px 0 12px" data-lang="en">What it left behind, concretely</h3>
-  <h3 style="margin:26px 0 12px" data-lang="pt">O que ficou, concretamente</h3>
-  <ul data-lang="en">
-    <li><b>Distrust of an isolated metric.</b> In an experiment, a beautiful number is often an artefact. The next question is always "what else would explain this?"</li>
-    <li><b>Attention to data quality at the source.</b> Instrumentation teaches that heroic preprocessing does not recover a badly taken measurement.</li>
-    <li><b>Comfort without a recipe.</b> Nothing in the PhD had a tutorial. Agent architecture doesn't either, yet.</li>
-  </ul>
-  <ul data-lang="pt">
-    <li><b>Desconfiança de métrica isolada.</b> Em experimento, um número bonito frequentemente é artefato. A pergunta seguinte é sempre "o que mais explicaria esse resultado?".</li>
-    <li><b>Atenção à qualidade do dado na origem.</b> Instrumentação ensina que pré-processamento heróico não recupera medida mal feita.</li>
-    <li><b>Conforto com problema sem receita.</b> Nada do que fiz no doutorado tinha tutorial. Arquitetura agentic hoje também não.</li>
-  </ul>
-</div></section>
-
-<!-- ============================ CERTS & LANGUAGES ============================ -->
-<section><div class="wrap">
-  <p class="eyebrow" data-lang="en">Certifications &amp; languages</p>
-  <p class="eyebrow" data-lang="pt">Certificações &amp; idiomas</p>
-  <div class="cards">
-    <div class="card">
-      <h3 data-lang="en">Certifications</h3>
-      <h3 data-lang="pt">Certificações</h3>
-      <ul class="small">
-        <li><b>Claude Certified Architect — Foundations</b> · Anthropic · 2026 <span class="muted" data-lang="en">— AI agents, MCP, prompt engineering, LLM evaluation</span><span class="muted" data-lang="pt">— agentes, MCP, engenharia de prompt, avaliação de LLM</span></li>
-        <li><b>AWS Certified Machine Learning Engineer — Associate</b> · 2026 <span class="muted">— SageMaker, Bedrock, MLOps</span></li>
-        <li><b>OCI 2025 Generative AI Professional</b> · Oracle · 2025</li>
-        <li><b>OCI 2025 Data Science Professional</b> · Oracle · 2025</li>
-        <li><b>Data Scientist</b> · DataCamp · 2024</li>
-      </ul>
-      <p class="small muted" data-lang="en">Four of them between late 2025 and 2026, all in cloud, GenAI and agent architecture — the formalisation of a specialisation the work started demanding, not credential collecting.</p>
-      <p class="small muted" data-lang="pt">Quatro delas entre o fim de 2025 e 2026, todas em nuvem, GenAI e arquitetura de agentes — a formalização de uma especialização que o trabalho passou a exigir, não acúmulo de credencial.</p>
+    <div class="row">
+      <div class="k"><div class="who" data-lang="en">Publications</div><div class="who" data-lang="pt">Publicações</div></div>
+      <div>
+        <ul style="margin:0">
+          <li data-lang="en"><b>Nano Letters</b> (2025) — magnetically tunable polariton cavities in van der Waals heterostructures. <b>Front cover of the issue.</b> <a href="https://pubs.acs.org/doi/10.1021/acs.nanolett.5c02168" target="_blank" rel="noopener">doi</a></li>
+          <li data-lang="pt"><b>Nano Letters</b> (2025) — cavidades polaritônicas magneticamente sintonizáveis em heteroestruturas de van der Waals. <b>Capa da edição.</b> <a href="https://pubs.acs.org/doi/10.1021/acs.nanolett.5c02168" target="_blank" rel="noopener">doi</a></li>
+          <li><i>Accelerated Nano-Optical Imaging through Sparse Sampling</i> — Nano Letters <b>24</b>(7), 2149 (2024).</li>
+          <li><i>Guidelines for Engineering Directional Polariton Launchers</i> — Physical Review Applied (2022).</li>
+        </ul>
+      </div>
     </div>
-    <div class="card">
-      <h3 data-lang="en">Languages</h3>
-      <h3 data-lang="pt">Idiomas</h3>
-      <ul class="small" data-lang="en">
-        <li><b>Portuguese</b> — native.</li>
-        <li><b>English</b> — fluent. A research year in New York (2023), three childhood years in the US, peer-reviewed writing, an international conference talk, and daily English with an international client.</li>
-        <li><b>German</b> — intermediate, B1 certified in 2015; unused since.</li>
-      </ul>
-      <ul class="small" data-lang="pt">
-        <li><b>Português</b> — nativo.</li>
-        <li><b>Inglês</b> — fluente. Um ano de pesquisa em Nova York (2023), três anos de infância nos EUA, escrita revisada por pares, apresentação em conferência internacional e inglês diário com cliente internacional.</li>
-        <li><b>Alemão</b> — intermediário, B1 certificado em 2015; sem uso desde então.</li>
-      </ul>
+    <div class="row">
+      <div class="k">
+        <div class="who" data-lang="en">What it left behind</div><div class="who" data-lang="pt">O que ficou</div>
+        <div class="where" data-lang="en">Three habits, concretely</div><div class="where" data-lang="pt">Três hábitos, concretamente</div>
+      </div>
+      <div>
+        <ul data-lang="en" style="margin:0">
+          <li><b>Distrust of an isolated metric.</b> In an experiment, a beautiful number is usually an artefact. The next question is always "what else would explain this?"</li>
+          <li><b>Attention to data quality at the source.</b> Instrumentation teaches that heroic preprocessing never recovers a badly taken measurement.</li>
+          <li><b>Comfort without a recipe.</b> Nothing in the PhD had a tutorial. Agent architecture doesn't either, yet.</li>
+        </ul>
+        <ul data-lang="pt" style="margin:0">
+          <li><b>Desconfiança de métrica isolada.</b> Em experimento, um número bonito normalmente é artefato. A pergunta seguinte é sempre "o que mais explicaria esse resultado?".</li>
+          <li><b>Atenção à qualidade do dado na origem.</b> Instrumentação ensina que pré-processamento heróico nunca recupera medida mal feita.</li>
+          <li><b>Conforto com problema sem receita.</b> Nada do que fiz no doutorado tinha tutorial. Arquitetura agentic hoje também não.</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div></section>
 
-<!-- ============================ RECOMMENDATIONS ============================ -->
+<!-- =========================== CERTS & LANGUAGES =========================== -->
 <section><div class="wrap">
-  <p class="eyebrow" data-lang="en">Recommendations</p>
-  <p class="eyebrow" data-lang="pt">Recomendações</p>
+  <p class="label" data-lang="en">Certifications &amp; languages</p>
+  <p class="label" data-lang="pt">Certificações &amp; idiomas</p>
+
+  <div>
+    <div class="row">
+      <div class="k">
+        <div class="who" data-lang="en">Certifications</div><div class="who" data-lang="pt">Certificações</div>
+        <div class="where" data-lang="en">Four of them clustered in the months after joining Distrito — the formalisation of a specialisation the work started demanding, not credential collecting.</div>
+        <div class="where" data-lang="pt">Quatro delas concentradas nos meses após a entrada no Distrito — a formalização de uma especialização que o trabalho passou a exigir, não acúmulo de credencial.</div>
+      </div>
+      <div>
+        <ul style="margin:0">
+          <li><b>Claude Certified Architect — Foundations</b> · Anthropic · 2026<br><span class="muted" data-lang="en">AI agents, MCP, prompt engineering, LLM evaluation</span><span class="muted" data-lang="pt">Agentes de IA, MCP, engenharia de prompt, avaliação de LLM</span></li>
+          <li><b>AWS Certified Machine Learning Engineer — Associate</b> · 2026<br><span class="muted">SageMaker, Bedrock, MLOps</span></li>
+          <li><b>OCI 2025 Generative AI Professional</b> · Oracle · 2025</li>
+          <li><b>OCI 2025 Data Science Professional</b> · Oracle · 2025</li>
+          <li><b>Data Scientist</b> · DataCamp · 2024</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k"><div class="who" data-lang="en">Languages</div><div class="who" data-lang="pt">Idiomas</div></div>
+      <div>
+        <ul data-lang="en" style="margin:0">
+          <li><b>Portuguese</b> — native.</li>
+          <li><b>English</b> — fluent. A research year in New York, three childhood years in the US, peer-reviewed writing, an international conference talk, and daily English with an international client.</li>
+          <li><b>German</b> — intermediate, B1 certified in 2015; unused since.</li>
+        </ul>
+        <ul data-lang="pt" style="margin:0">
+          <li><b>Português</b> — nativo.</li>
+          <li><b>Inglês</b> — fluente. Um ano de pesquisa em Nova York, três anos de infância nos EUA, escrita revisada por pares, apresentação em conferência internacional e inglês diário com cliente internacional.</li>
+          <li><b>Alemão</b> — intermediário, B1 certificado em 2015; sem uso desde então.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =========================== RECOMMENDATIONS =========================== -->
+<section><div class="wrap">
+  <p class="label" data-lang="en">Recommendations</p>
+  <p class="label" data-lang="pt">Recomendações</p>
   <h2 data-lang="en">What other people say</h2>
   <h2 data-lang="pt">O que outras pessoas dizem</h2>
-  <div class="cards">
-    <div class="card">
-      <blockquote><p>“Rafael demonstrated an exceptional combination of scientific maturity, technical depth, and intellectual independence that is rare even among advanced doctoral researchers. […] He worked seamlessly across nanofabrication, near-field optical measurements, and data analysis, often taking initiative to push the project forward in creative and unexpected directions.”</p></blockquote>
-      <p class="attr"><b>Mengkun Liu</b> — Professor, Stony Brook University <span data-lang="en">· was his mentor</span><span data-lang="pt">· foi seu mentor</span></p>
+
+  <div style="margin-top:30px">
+    <div class="row">
+      <div class="k">
+        <div class="who">Mengkun Liu</div>
+        <div class="where" data-lang="en">Professor, Stony Brook University · was his mentor</div>
+        <div class="where" data-lang="pt">Professor, Stony Brook University · foi seu mentor</div>
+      </div>
+      <div><blockquote><p>“Rafael demonstrated an exceptional combination of scientific maturity, technical depth, and intellectual independence that is rare even among advanced doctoral researchers. […] He worked seamlessly across nanofabrication, near-field optical measurements, and data analysis, often taking initiative to push the project forward in creative and unexpected directions.”</p></blockquote></div>
     </div>
-    <div class="card">
-      <blockquote><p>“Rafael is one of the best and most reliable collaborators I've worked with. […] He can design and run rigorous experiments, build and validate simulations, and carry analyses through to clear conclusions. […] More recently, Rafael has transitioned into AI/ML, and he's brought the same rigor and drive to that work as well.”</p></blockquote>
-      <p class="attr"><b>Xinzhong (Tom) Chen</b> <span data-lang="en">· worked on the same team</span><span data-lang="pt">· trabalhou na mesma equipe</span></p>
+    <div class="row">
+      <div class="k">
+        <div class="who">Xinzhong (Tom) Chen</div>
+        <div class="where" data-lang="en">Worked on the same team</div>
+        <div class="where" data-lang="pt">Trabalhou na mesma equipe</div>
+      </div>
+      <div><blockquote><p>“Rafael is one of the best and most reliable collaborators I've worked with. […] He can design and run rigorous experiments, build and validate simulations, and carry analyses through to clear conclusions. […] More recently, Rafael has transitioned into AI/ML, and he's brought the same rigor and drive to that work as well.”</p></blockquote></div>
     </div>
-    <div class="card">
-      <blockquote data-lang="pt"><p>“Tive o privilégio e a honra de trabalhar e aprender muito com o Mayer. Excelente profissional, com vasto conhecimento na sua área seja de desenvolvimento de agentes de IA quanto em sua área de pesquisa científica, sempre disposto a ensinar, compartilhar conhecimentos e aprender junto com o time!”</p></blockquote>
-      <blockquote data-lang="en"><p>“I had the privilege and honour of working with and learning a great deal from Mayer. An excellent professional, with broad knowledge in his field — both in developing AI agents and in his scientific research — always willing to teach, share knowledge and learn together with the team.”</p></blockquote>
-      <p class="attr"><b>Gilberto Junior</b> — <span data-lang="en">Solutions Architect · worked with him</span><span data-lang="pt">Arquiteto de Soluções · trabalhou com ele</span></p>
+    <div class="row">
+      <div class="k">
+        <div class="who">Gilberto Junior</div>
+        <div class="where" data-lang="en">Solutions Architect · worked with him</div>
+        <div class="where" data-lang="pt">Arquiteto de Soluções · trabalhou com ele</div>
+      </div>
+      <div>
+        <blockquote data-lang="pt"><p>“Tive o privilégio e a honra de trabalhar e aprender muito com o Mayer. Excelente profissional, com vasto conhecimento na sua área seja de desenvolvimento de agentes de IA quanto em sua área de pesquisa científica, sempre disposto a ensinar, compartilhar conhecimentos e aprender junto com o time!”</p></blockquote>
+        <blockquote data-lang="en"><p>“I had the privilege and honour of working with and learning a great deal from Mayer. An excellent professional, with broad knowledge in his field — both in developing AI agents and in his scientific research — always willing to teach, share knowledge and learn together with the team.”</p></blockquote>
+      </div>
     </div>
   </div>
 </div></section>
 
-<!-- ============================ FOOTER ============================ -->
+<!-- ================================ FOOTER ================================ -->
 <footer><div class="wrap">
-  <h2 style="margin-bottom:14px" data-lang="en">What I'm looking for</h2>
-  <h2 style="margin-bottom:14px" data-lang="pt">O que eu busco</h2>
-  <ul data-lang="en">
-    <li>Solving real problems for real people — the purpose of a delivery is what keeps me working well on it.</li>
-    <li>A team where organisation and transparency are the default. When a client asks for project status, I'd rather surface the risk than sweep it under the rug: the project failing is my failure too.</li>
-    <li>A healthy balance between work and life, and a life rich in new experiences.</li>
-  </ul>
-  <ul data-lang="pt">
-    <li>Resolver problemas reais das pessoas — o propósito da entrega é o que me mantém trabalhando bem nela.</li>
-    <li>Um time onde organização e transparência sejam o padrão. Quando um cliente pergunta o status, prefiro expor o ponto de atenção a jogar para debaixo do tapete: o insucesso do projeto também é meu.</li>
-    <li>Um bom equilíbrio entre vida profissional e pessoal, e uma vida rica em experiências novas.</li>
-  </ul>
-
-  <div class="links" style="margin: 26px 0 30px">
-    <a href="https://www.linkedin.com/in/rafael-alves-mayer/" target="_blank" rel="noopener">LinkedIn ↗</a>
-    <a href="https://github.com/1rafaelmayer" target="_blank" rel="noopener">GitHub ↗</a>
+  <p class="label" data-lang="en">What I'm looking for</p>
+  <p class="label" data-lang="pt">O que eu busco</p>
+  <div class="row" style="border-bottom:0;padding-top:0">
+    <div class="k"></div>
+    <div>
+      <ul data-lang="en" style="margin:0">
+        <li>Solving real problems for real people — the purpose of a delivery is what keeps me working well on it.</li>
+        <li>A team where organisation and transparency are the default. When a client asks for status, I would rather surface the risk than sweep it under the rug: the project failing is my failure too.</li>
+        <li>A healthy balance between work and life, and a life rich in new experiences.</li>
+      </ul>
+      <ul data-lang="pt" style="margin:0">
+        <li>Resolver problemas reais das pessoas — o propósito da entrega é o que me mantém trabalhando bem nela.</li>
+        <li>Um time onde organização e transparência sejam o padrão. Quando um cliente pergunta o status, prefiro expor o risco a jogar para debaixo do tapete: o insucesso do projeto também é meu.</li>
+        <li>Um bom equilíbrio entre vida profissional e pessoal, e uma vida rica em experiências novas.</li>
+      </ul>
+    </div>
   </div>
 
-  <p class="small muted" data-lang="en">This page is also the demo. The agent at the top is a LangGraph graph over a FastAPI endpoint, running on Vercel with no database and no vector store: 26 markdown documents ship inside the bundle, each declaring in its frontmatter when it should be read, and the agent routes on that catalog. Source on <a href="https://github.com/1rafaelmayer/ask-rafael" target="_blank" rel="noopener">GitHub</a>.</p>
-  <p class="small muted" data-lang="pt">Esta página também é a demonstração. O agente do topo é um grafo em LangGraph sobre um endpoint FastAPI, rodando na Vercel sem banco e sem base vetorial: 26 documentos markdown viajam dentro do bundle, cada um declarando no frontmatter quando deve ser lido, e o agente roteia por esse catálogo. Código no <a href="https://github.com/1rafaelmayer/ask-rafael" target="_blank" rel="noopener">GitHub</a>.</p>
-</div></footer>
+  <div class="out">
+    <a href="https://www.linkedin.com/in/rafael-alves-mayer/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/1rafaelmayer" target="_blank" rel="noopener">GitHub</a>
+    <a href="#top" data-lang="en">Back to the top</a>
+    <a href="#top" data-lang="pt">Voltar ao topo</a>
+  </div>
 
+  <p class="colophon" data-lang="en">This page is also the demo. The agent above is a LangGraph graph behind a FastAPI endpoint on Vercel, with no database and no vector store: 26 markdown documents ship inside the bundle, each declaring in its frontmatter when it should be read, and the agent routes on that catalog alone. Source on <a href="https://github.com/1rafaelmayer/ask-rafael" target="_blank" rel="noopener">GitHub</a>.</p>
+  <p class="colophon" data-lang="pt">Esta página também é a demonstração. O agente acima é um grafo em LangGraph atrás de um endpoint FastAPI na Vercel, sem banco e sem base vetorial: 26 documentos markdown viajam dentro do bundle, cada um declarando no frontmatter quando deve ser lido, e o agente roteia só por esse catálogo. Código no <a href="https://github.com/1rafaelmayer/ask-rafael" target="_blank" rel="noopener">GitHub</a>.</p>
+</div></footer>
 <script>
 (function () {
   "use strict";
 
-  // ---------- language ----------
-  var STORE = "ask-rafael:lang";
   var root = document.documentElement;
   var input = document.getElementById("q");
+  var STORE = "ask-rafael:lang";
 
+  /* ---------- language ---------- */
   function setLang(lang, remember) {
     root.setAttribute("data-ui-lang", lang);
     root.setAttribute("lang", lang === "pt" ? "pt-BR" : "en");
@@ -764,24 +886,67 @@ footer .small { max-width: var(--measure); }
     b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang"), true); });
   });
 
-  // ---------- conversation ----------
+  /* ---------- the exchange ----------
+     One question and one answer on screen at a time. The previous exchange is
+     replaced, not stacked — but `history` keeps everything, so the agent still
+     follows "and what was the trade-off there?" even though the page has
+     forgotten it visually. */
   var MAX_QUESTIONS = 20;
   var form = document.getElementById("askform");
   var send = document.getElementById("send");
-  var thread = document.getElementById("thread");
-  var history = [];   // the whole conversation: the server keeps nothing
+  var qEl = document.getElementById("question");
+  var traceEl = document.getElementById("trace");
+  var aEl = document.getElementById("answer");
+  var history = [];
   var busy = false;
 
   function t(en, pt) { return root.getAttribute("data-ui-lang") === "pt" ? pt : en; }
 
-  function turn(cls, who) {
-    var el = document.createElement("div");
-    el.className = "turn " + cls;
-    el.innerHTML = '<div class="who"></div><div class="trace"></div><div class="body"></div>';
-    el.querySelector(".who").textContent = who;
-    thread.appendChild(el);
-    thread.classList.add("on");
-    return el;
+  function esc(text) {
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  /* Bullets, bold, italics and paragraphs — nothing else. Anything richer than
+     this is the agent misbehaving, not a feature to support. */
+  function render(text) {
+    var html = "", list = null;
+    esc(text).split("\n").forEach(function (line) {
+      var bullet = line.match(/^\s*[-*\u2022]\s+(.*)$/);
+      if (bullet) {
+        list = (list || "") + "<li>" + inline(bullet[1]) + "</li>";
+        return;
+      }
+      if (list) { html += "<ul>" + list + "</ul>"; list = null; }
+      if (line.trim()) html += "<p>" + inline(line) + "</p>";
+    });
+    if (list) html += "<ul>" + list + "</ul>";
+    return html;
+  }
+
+  function inline(text) {
+    return text
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[\s(])\*([^*\n]+)\*/g, "$1<em>$2</em>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>");
+  }
+
+  function show(question) {
+    document.body.setAttribute("data-state", "active");
+    qEl.textContent = question;
+    traceEl.textContent = "";
+    aEl.textContent = "";
+    // Re-triggers the entry animation on every question, so replacing an
+    // answer in place still reads as something new arriving.
+    var e = document.getElementById("exchange");
+    e.style.animation = "none";
+    void e.offsetWidth;
+    e.style.animation = "";
+  }
+
+  function fail(message) {
+    traceEl.textContent = "";
+    aEl.innerHTML = '<p class="err"></p>';
+    aEl.firstChild.textContent = message;
   }
 
   document.querySelectorAll(".chip").forEach(function (chip) {
@@ -798,30 +963,25 @@ footer .small { max-width: var(--measure); }
     if (!question || busy) return;
 
     if (history.filter(function (m) { return m.role === "user"; }).length >= MAX_QUESTIONS) {
-      var stop = turn("bot", t("Agent", "Agente"));
-      stop.querySelector(".body").innerHTML =
-        '<span class="err">' +
-        t("This conversation reached its 20-question limit. Reload the page to start over, or reach me on LinkedIn.",
-          "Esta conversa atingiu o limite de 20 perguntas. Recarregue a página para começar de novo, ou fale comigo no LinkedIn.") +
-        "</span>";
+      show(question);
+      fail(t("This conversation reached its 20-question limit. Reload the page to start over, or reach me on LinkedIn.",
+             "Esta conversa atingiu o limite de 20 perguntas. Recarregue a página para começar de novo, ou fale comigo no LinkedIn."));
       return;
     }
 
     busy = true;
     send.disabled = true;
     input.value = "";
-    turn("me", t("You", "Você")).querySelector(".body").textContent = question;
+    input.blur();
+    show(question);
     history.push({ role: "user", content: question });
     ask(history.slice());
   });
 
   function ask(messages) {
-    var el = turn("bot", t("Agent", "Agente"));
-    var body = el.querySelector(".body");
-    var trace = el.querySelector(".trace");
     var cursor = document.createElement("span");
     cursor.className = "cursor";
-    body.appendChild(cursor);
+    aEl.appendChild(cursor);
 
     var answer = "";
     var finish = function () {
@@ -831,13 +991,7 @@ footer .small { max-width: var(--measure); }
       if (answer.trim()) history.push({ role: "assistant", content: answer.trim() });
       else history.pop();   // nothing came back: don't poison the next turn
     };
-    var fail = function (message) {
-      trace.textContent = "";
-      body.innerHTML = '<span class="err"></span>';
-      body.firstChild.textContent = message;
-      answer = "";
-      finish();
-    };
+    var abort = function (message) { fail(message); answer = ""; finish(); };
 
     fetch("/api/chat", {
       method: "POST",
@@ -846,18 +1000,18 @@ footer .small { max-width: var(--measure); }
     }).then(function (res) {
       if (!res.ok) {
         return res.json().catch(function () { return {}; }).then(function (data) {
-          fail(data.error || t("Something broke while answering. Please try again.",
-                               "Algo quebrou ao responder. Tente novamente."));
+          abort(data.error || t("Something broke while answering. Please try again.",
+                                "Algo quebrou ao responder. Tente novamente."));
         });
       }
-      if (!res.body) { fail(t("This browser can't stream the answer.", "Este navegador não consegue receber a resposta.")); return; }
+      if (!res.body) { abort(t("This browser can't stream the answer.", "Este navegador não consegue receber a resposta.")); return; }
 
       var reader = res.body.getReader();
       var decoder = new TextDecoder();
       var buffer = "";
 
-      // Minimal SSE parse: frames are separated by a blank line, and we only
-      // ever emit single-line data, so there is no continuation to reassemble.
+      // Minimal SSE parse: frames are separated by a blank line, and the server
+      // only ever emits single-line data, so there is no continuation to join.
       function pump() {
         return reader.read().then(function (chunk) {
           if (chunk.done) { finish(); return; }
@@ -880,22 +1034,27 @@ footer .small { max-width: var(--measure); }
 
         if (event === "token") {
           answer += payload.t;
-          cursor.remove();
-          body.textContent = answer;
-          body.appendChild(cursor);
+          // Re-rendered whole on every token. An answer is a couple of
+          // kilobytes at most, so this is cheaper than tracking partial
+          // markdown state across chunk boundaries.
+          aEl.innerHTML = render(answer);
+          (aEl.lastElementChild || aEl).appendChild(cursor);
+          // Keeps the newest line in view while the answer is still growing
+          // past the height of its own area.
+          aEl.scrollTop = aEl.scrollHeight;
         } else if (event === "doc" && payload.slug) {
           var line = document.createElement("span");
           line.textContent = t("reading ", "lendo ") + payload.slug;
-          trace.appendChild(line);
+          traceEl.appendChild(line);
         } else if (event === "error") {
-          fail(payload.message || t("Something broke while answering. Please try again.",
-                                    "Algo quebrou ao responder. Tente novamente."));
+          abort(payload.message || t("Something broke while answering. Please try again.",
+                                     "Algo quebrou ao responder. Tente novamente."));
         }
       }
 
       return pump();
     }).catch(function () {
-      fail(t("Couldn't reach the agent. Please try again.", "Não foi possível alcançar o agente. Tente novamente."));
+      abort(t("Couldn't reach the agent. Please try again.", "Não foi possível alcançar o agente. Tente novamente."));
     });
   }
 })();
