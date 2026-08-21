@@ -108,6 +108,14 @@ stream — without which every document the agent reads is pasted into the reply
 4. Deploy. `/api/health` reports the document count and the active model, which
    is the fastest way to confirm the corpus made it into the bundle.
 
+One thing worth knowing before changing `vercel.json`: the rewrite **replaces**
+the request path, so the function is always invoked with `/api/index` regardless
+of the URL the visitor asked for. Every endpoint is therefore registered twice in
+`api/index.py` — at its public path, which is what the page calls and what
+uvicorn serves locally, and at `/api/index`, which is what production delivers.
+Registering only the public path makes the deployed function answer FastAPI's own
+404 to every request, and nothing about that failure points at routing.
+
 **Set a monthly spend cap on the OpenAI account.** The endpoint is public and
 unauthenticated. The in-process rate limit thins abuse, but every cold start gets
 a fresh counter, so it cannot be the last line of defence — the spend cap is.
