@@ -226,13 +226,45 @@ async def health():
 # --- local development -------------------------------------------------------
 #
 # In production Vercel serves the page and the photo statically and only routes
-# /api/* here. Mounting them too means `uvicorn api.index:app` is the whole
-# stack locally, with no second server and no CORS.
+# /api/* here. Serving them too means `uvicorn api.index:app` is the whole stack
+# locally, with no second server and no CORS.
+#
+# The photo is served at the root rather than under /public, because that is
+# where Vercel puts it: files in public/ are published at the root, and the page
+# has to reference one path that works in both places.
 
 if (ROOT / "public").is_dir():
     app.mount("/public", StaticFiles(directory=ROOT / "public"), name="public")
+
+    @app.get("/rafael.jpg", include_in_schema=False)
+    async def photo():
+        return FileResponse(ROOT / "public" / "rafael.jpg")
 
 
 @app.get("/")
 async def page():
     return FileResponse(ROOT / "index.html")
+
+
+# --- routing diagnostic ------------------------------------------------------
+#
+# TEMPORARY. Vercel's rewrite replaces the request path before it reaches this
+# function, so /api/chat arrived as something else and FastAPI answered its own
+# 404. This reports what actually arrives, so the fix can be the real path
+# rather than another guess. Remove once the routing is settled.
+
+
+@app.api_route("/{unmatched:path}", methods=["GET", "POST"], include_in_schema=False)
+async def whatever_arrived(request: Request, unmatched: str):
+    return JSONResponse(
+        {
+            "diagnostic": "no route matched",
+            "received_path": request.url.path,
+            "method": request.method,
+            "root_path": request.scope.get("root_path", ""),
+            "known_routes": sorted(
+                r.path for r in app.routes if getattr(r, "path", "").startswith("/api")
+            ),
+        },
+        status_code=404,
+    )
