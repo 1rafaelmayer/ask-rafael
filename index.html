@@ -137,7 +137,12 @@ b, strong { font-weight: 560; }
 
 /* --- left: identity ------------------------------------------------------ */
 .me img {
-  display: block; width: 100%; max-width: var(--col); aspect-ratio: 1;
+  display: block; width: 100%; max-width: var(--col);
+  /* height:auto is load-bearing, not tidiness: the height="296" attribute is a
+     presentational hint that wins whenever author CSS leaves height unset, so
+     narrowing the width alone stretched the portrait into a 92x296 sliver. It
+     only looked right on desktop because the width happened to be 296 too. */
+  height: auto; aspect-ratio: 1;
   object-fit: cover; border-radius: 3px; background: var(--paper-2);
   box-shadow: 0 0 0 1px var(--rule);
 }
@@ -304,12 +309,18 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
   :root { --col: 100%; }
   #top { min-height: 0; padding-top: 74px; }
   .stage { grid-template-columns: 1fr; gap: 30px; }
-  .me { display: grid; grid-template-columns: 92px 1fr; gap: 18px; align-items: center; }
-  .me img { max-width: 92px; border-radius: 3px; }
-  .me h1 { margin: 0; font-size: 27px; }
+  /* Side by side rather than stacked, because a portrait with real presence
+     plus the name plus the role would push the input below the fold — and the
+     agent being the first thing you see is the whole point of the page.
+     Aligned to the top, not centred: the text block is taller than the photo,
+     so centring floated the name above the top of the portrait. */
+  .me { display: grid; grid-template-columns: 116px 1fr; gap: 16px; align-items: start; }
+  .me img { max-width: 116px; }
+  .me h1 { margin: -3px 0 0; font-size: 25px; line-height: 1.1; }
   .me hr { display: none; }
-  .me .role { margin-top: 4px; }
-  .me .out { grid-column: 1 / -1; margin-top: 4px; }
+  .me .role { margin-top: 6px; line-height: 1.45; }
+  .me .out { grid-column: 1 / -1; margin-top: 10px; }
+  .trace { overflow-wrap: anywhere; }
   .agent { height: auto; }
   .exchange { min-height: 0; }
   .a { overflow: visible; mask-image: none; }
