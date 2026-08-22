@@ -14,9 +14,8 @@ when_to_use: >
 anos, atravessando três contextos diferentes: análise de dados científicos,
 simulação numérica e hoje backend e sistemas de agentes em produção.
 
-Além de Python, passei por linguagem compilada na formação em engenharia física e em
-trabalho de simulação numérica, mas não é competência que eu ofereça: hoje trabalho em
-Python e é nele que a profundidade está.
+Também passei por linguagem compilada na formação em engenharia física e em trabalho
+de simulação numérica — hoje trabalho em Python, e é nele que a profundidade está.
 
 ## Backend e APIs
 
@@ -49,7 +48,3 @@ Assumo o backend de um serviço de IA sozinho, fim a fim: API, modelo de dados, 
 persistência de estado, deploy e observabilidade. Não é aspiração — é o que já fiz em
 projeto de cliente em produção, em time pequeno, onde não havia engenheiro de backend
 separado para dividir a tarefa.
-
-O limite honesto: minha experiência é em serviço de IA, não em produto de larga escala
-com requisito de milhares de requisições por segundo. Decisão de arquitetura sob essa
-pressão é terreno onde eu buscaria par com engenheiro mais especializado.

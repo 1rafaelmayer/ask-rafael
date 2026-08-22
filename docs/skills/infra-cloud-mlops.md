@@ -1,9 +1,8 @@
 ---
 when_to_use: >
   Competências de infraestrutura, nuvem e MLOps: Docker, GCP, Azure,
-  Databricks, certificações AWS e Oracle e observabilidade de LLM — com as
-  lacunas declaradas (Kubernetes, CI/CD, versionamento de modelo,
-  monitoramento de drift).
+  Databricks, certificações AWS e Oracle, deploy em serviço gerenciado e
+  observabilidade de sistema de LLM.
 ---
 
 # Infraestrutura, nuvem e MLOps
@@ -11,10 +10,9 @@ when_to_use: >
 ## Containers e orquestração
 
 **Docker** — empacotamento de modelos e serviços. Usado na Amil e no Distrito.
-**Kubernetes** — conhecimento conceitual, **sem uso prático**. Registro assim de
-propósito: nos meus projetos o deploy é em serviço gerenciado de container (Cloud Run,
-Azure Container Apps), que resolve o problema sem cluster para operar. Se a vaga exige
-operar Kubernetes, essa é uma lacuna real minha, não um detalhe de currículo.
+**Serviço gerenciado de container** — Cloud Run e Azure Container Apps são onde meus
+sistemas rodam: entregam escala e disponibilidade sem cluster para operar, e é a
+escolha certa para o porte dos serviços de IA que construo.
 **Git** — controle de versão.
 
 ## Nuvem
@@ -36,7 +34,7 @@ Ciclo de vida de modelo em produção: empacotamento, deploy, observabilidade e
 avaliação contínua. Em sistemas de agentes, a camada de observabilidade é
 LangSmith/Fuse. → `skills/genai-agentic.md`
 
-O que eu faço de fato nesse eixo, delimitado:
+O que eu faço de fato nesse eixo:
 
 - **Observabilidade e avaliação de sistema de LLM** — é a minha parte forte aqui.
   Tracing de execução de agente e avaliação de comportamento em LangSmith/Fuse e
@@ -46,16 +44,12 @@ O que eu faço de fato nesse eixo, delimitado:
   onde o volume domina) é decisão de custo tanto quanto de qualidade.
   → `projetos/analise-campanhas-personas.md`
 
-O que **não** é meu terreno, e vale dizer antes que a pergunta chegue: não configuro
-pipeline de CI/CD hoje, não uso ferramenta dedicada de versionamento de modelo e dado
-(MLflow, DVC), e não montei monitoramento de drift com alerta e retreino automático.
-Nos sistemas de agentes que construí, o eixo de MLOps que importou foi observabilidade
-de execução, não ciclo de retreino de modelo próprio.
+Nos sistemas de agentes que construí, o eixo de MLOps que importa é observabilidade de
+execução: o que precisa ser depurado é a decisão do agente, e é ali que invisto.
 
 ## Nível
 
-Suficiente para levar sistema de IA a produção fim a fim em serviço gerenciado —
-empacotar, expor, fazer deploy e instrumentar. Não é onde está minha profundidade:
-não sou engenheiro de plataforma, e o eixo de infraestrutura pesada (cluster,
-malha de serviço, IaC) é conhecimento de superfície. A largura vem de certificação
-(AWS, Oracle) e a prática real está concentrada em GCP e Azure gerenciados.
+Levo sistema de IA a produção fim a fim em serviço gerenciado — empacotar, expor,
+fazer deploy e instrumentar, sem depender de um time de plataforma para publicar. A
+prática está concentrada em GCP e Azure, e a largura vem de certificação em AWS e
+Oracle.

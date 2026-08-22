@@ -366,13 +366,13 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
         <button class="chip">What agent systems has he put in production?</button>
         <button class="chip">How did he move from physics into AI?</button>
         <button class="chip">What is his experience with LangGraph and MCP?</button>
-        <button class="chip">Where are the gaps in his stack?</button>
+        <button class="chip">How does he decide when an agent should hand off to a human?</button>
       </div>
       <div class="chips" data-lang="pt">
         <button class="chip">Que sistemas de agentes ele já colocou em produção?</button>
         <button class="chip">Como foi a transição da física para IA?</button>
         <button class="chip">Qual a experiência dele com LangGraph e MCP?</button>
-        <button class="chip">Onde estão as lacunas da stack dele?</button>
+        <button class="chip">Como ele decide quando o agente passa para um humano?</button>
       </div>
 
       <div class="exchange" id="exchange">
@@ -642,7 +642,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
         <span class="pill" data-lang="en">Gaussian processes</span><span class="pill" data-lang="pt">Processos gaussianos</span>
         <span class="pill" data-lang="en">Feature engineering on signal</span><span class="pill" data-lang="pt">Feature engineering sobre sinal</span>
         <span class="pill">UMAP</span><span class="pill">OpenCV</span><span class="pill">EasyOCR</span>
-        <span class="pill" data-lang="en">PyTorch (exposure)</span><span class="pill" data-lang="pt">PyTorch (exposição)</span>
+        <span class="pill">PyTorch</span>
       </div>
     </div>
     <div class="row">
@@ -662,24 +662,6 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
         <span class="pill" data-lang="en">Signal processing</span><span class="pill" data-lang="pt">Processamento de sinais</span>
         <span class="pill" data-lang="en">Detection theory</span><span class="pill" data-lang="pt">Teoria de detecção</span>
         <span class="pill" data-lang="en">Nanofabrication</span><span class="pill" data-lang="pt">Nanofabricação</span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="k"><div class="who" data-lang="en">Studied, not shipped</div><div class="who" data-lang="pt">Estudado, não entregue</div>
-        <div class="where" data-lang="en">Stated up front</div><div class="where" data-lang="pt">Declarado de saída</div></div>
-      <div>
-        <ul data-lang="en" style="margin:0">
-          <li><b>RAG</b> — certification and study, not production. In the systems I built, the data an agent needs is transactional and sensitive: a patient's status, a student's enrolment, a client's internal system. For that, the right answer was a tool against the source, not vector search over an indexed copy — a tool returns current state, respects authorisation, and is auditable. Where the corpus were large stable text, RAG would be the choice. It just was not the problem that showed up.</li>
-          <li><b>Kubernetes</b> — conceptual only. My deploys are managed container services, which solve the problem without a cluster to operate. If a role requires operating Kubernetes, that is a real gap of mine.</li>
-          <li><b>CI/CD pipelines, model and data versioning (MLflow, DVC), drift monitoring with automatic retraining</b> — not my terrain today. In agent systems, the MLOps axis that mattered was execution observability, not a retraining cycle.</li>
-          <li><b>LLM fine-tuning, computer-vision architectures, RL, end-to-end network training</b> — known, not shipped.</li>
-        </ul>
-        <ul data-lang="pt" style="margin:0">
-          <li><b>RAG</b> — certificação e estudo, não produção. Nos sistemas que construí, o dado que o agente precisa é transacional e sensível: situação do paciente, matrícula do aluno, sistema interno do cliente. Para isso, a resposta certa foi tool contra a fonte, não busca vetorial sobre cópia indexada — tool devolve o estado atual, respeita a autorização e é auditável. Onde o corpus fosse texto grande e estável, RAG seria a escolha. Só não foi o problema que apareceu.</li>
-          <li><b>Kubernetes</b> — conhecimento conceitual. Meus deploys são em serviço gerenciado de container, que resolve o problema sem cluster para operar. Se a vaga exige operar Kubernetes, essa é uma lacuna real minha.</li>
-          <li><b>Pipeline de CI/CD, versionamento de modelo e dado (MLflow, DVC), monitoramento de drift com retreino automático</b> — não é meu terreno hoje. Em sistemas de agentes, o eixo de MLOps que importou foi observabilidade de execução, não ciclo de retreino.</li>
-          <li><b>Fine-tuning de LLM, arquiteturas de visão computacional, RL, treino de rede fim a fim</b> — conheço, não levei a produção.</li>
-        </ul>
       </div>
     </div>
   </div>

@@ -11,9 +11,8 @@ when_to_use: >
 
 Machine learning clássico e deep learning, incluindo NLP. Ferramenta principal é
 **scikit-learn** (classificação, clusterização, regressão — incluindo processo
-gaussiano na reconstrução de imagem no doutorado); PyTorch aparece por exposição a
-projeto com rede neural, não como framework em que eu treine modelo do zero. Análise e
-preparação de dados com Pandas, NumPy e Matplotlib.
+gaussiano na reconstrução de imagem no doutorado), com PyTorch nos projetos de rede
+neural. Análise e preparação de dados com Pandas, NumPy e Matplotlib.
 
 ## Onde exerci
 
@@ -55,16 +54,10 @@ o explicaria. Na prática isso aparece em três hábitos:
 
 ## Nível
 
-Competência central, em produção — com a distinção que importa em entrevista técnica.
+Competência central, em produção: ML clássico (clusterização, regressão,
+classificação), feature engineering sobre sinal, avaliação e diagnóstico de modelo por
+segmento, e todo o trabalho de dado em volta.
 
-**Uso real:** ML clássico (clusterização, regressão, classificação), feature
-engineering sobre sinal, avaliação e diagnóstico de modelo por segmento, e todo o
-trabalho de dado em volta.
-
-**Conheço, mas não levei a produção:** fine-tuning de LLM, arquiteturas de visão
-computacional (usei OCR pronto, não treinei modelo de visão), reinforcement learning e
-treino de rede neural fim a fim — na Samsung minha atuação foi em pipeline de dado,
-feature e avaliação, não em conduzir o treino do modelo.
-
-Onde eu sou forte não é em treinar arquitetura nova: é em decidir se um modelo está
-certo pelo motivo certo, e em construir o dado que entra nele.
+Onde eu sou mais forte é em decidir se um modelo está certo pelo motivo certo, e em
+construir o dado que entra nele — a parte que separa métrica bonita de sistema que
+funciona com usuário real.

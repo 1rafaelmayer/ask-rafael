@@ -1,8 +1,8 @@
 ---
 when_to_use: >
   Competências em GenAI e arquiteturas agentic: LangChain e LangGraph,
-  tracing em LangSmith/Fuse, MCP, e a delimitação honesta de RAG como
-  estudo e não produção, com os projetos onde cada uma foi exercida.
+  tracing em LangSmith/Fuse, MCP e a escolha de tool contra a fonte em vez
+  de RAG, com os projetos onde cada uma foi exercida.
 ---
 
 # GenAI e arquiteturas agentic
@@ -24,14 +24,13 @@ se o erro foi de roteamento, de recuperação de contexto ou de geração.
 Certificado pela Anthropic em arquitetura de agentes e MCP.
 → `certificacoes.md`
 
-**RAG** — conhecimento de certificação e estudo, **não de produção**. Vale registrar
-a distinção, e o motivo: nos sistemas que construí, o dado que o agente precisa é
-transacional e sensível (situação do paciente, matrícula do aluno, sistema interno do
-cliente), e para esse tipo de dado a resposta certa foi **tool contra a fonte**, não
-busca vetorial sobre cópia indexada. Tool devolve o estado atual, respeita a
-autorização e é auditável; índice vetorial responde com o que foi indexado. Onde o
-corpus fosse texto grande e estável, RAG seria a escolha — só não foi o problema que
-apareceu.
+**RAG** — coberto por certificação, e uma decisão de arquitetura que eu tomo de forma
+consciente. Nos sistemas que construí, o dado que o agente precisa é transacional e
+sensível (situação do paciente, matrícula do aluno, sistema interno do cliente), e
+para esse tipo de dado a resposta certa é **tool contra a fonte**, não busca vetorial
+sobre cópia indexada: tool devolve o estado atual, respeita a autorização e é
+auditável, enquanto índice vetorial responde com o que foi indexado. Onde o corpus for
+texto grande e estável, RAG é a escolha — é a mesma análise, com outra resposta.
 
 ## Onde exerci
 
