@@ -326,6 +326,135 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
   .a { overflow: visible; mask-image: none; }
   .row { grid-template-columns: 1fr; gap: 10px; padding: 22px 0; }
 }
+
+/* ============================================================
+   The timeline. One markup serves both layouts:
+
+   Wide — the items become `display:contents`, so each head lands
+   in its own grid column on row 1 (the line) and every body lands
+   in the same cell on row 2. Stacking them in one cell means the
+   panel is as tall as the tallest entry, with no measuring in JS
+   and no layout jump when the active point changes.
+
+   Narrow — the items are boxes again, stacked in column-reverse
+   (current role first) with a vertical rule, and the body is an
+   accordion: display:none until its own point is opened.
+   ============================================================ */
+.tl-hint {
+  font: 500 var(--t-micro) var(--mono);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-3); margin: 18px 0 0;
+}
+.tl-hint-tap { display: none; }
+
+.tl-head {
+  font: inherit; color: inherit; background: none; border: 0;
+  padding: 0; margin: 0; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; width: 100%;
+}
+.tl-head:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.tl-when { font: 500 var(--t-micro) var(--mono); letter-spacing: 0.06em; color: var(--ink-3); }
+.tl-who  { font-family: var(--serif); font-size: 17px; line-height: 1.2; margin-top: 5px; }
+.tl-what { font-size: 13px; line-height: 1.3; color: var(--ink-2); margin-top: 2px; }
+
+/* The dot sits on the axis; the axis itself is a 1px bar painted as this
+   cell's background, so it stays glued to the dot however tall the label
+   above it grows. The end cells paint only their inner half. */
+.tl-dotrow {
+  display: flex; align-items: center; justify-content: center;
+  background-image: linear-gradient(var(--rule), var(--rule));
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  background-position: center;
+}
+.tl-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--paper); box-shadow: 0 0 0 1.5px var(--rule-2);
+  transition: background-color .18s, box-shadow .18s, transform .18s;
+}
+.tl-head:hover .tl-dot { box-shadow: 0 0 0 1.5px var(--ink-3); }
+.tl-item.is-active .tl-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 1.5px var(--accent), 0 0 0 5px var(--accent-bg);
+  transform: scale(1.15);
+}
+.tl-item.is-active .tl-who { color: var(--ink); }
+.tl-item.is-active .tl-when { color: var(--accent); }
+
+.tl-body { font-size: var(--t-small); }
+.tl-text ul, .tl-text p { max-width: 60ch; margin: 0; }
+.tl-shot {
+  position: relative; margin: 0; overflow: hidden;
+  aspect-ratio: 4 / 3; border-radius: 3px;
+  background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule);
+}
+.tl-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tl-shot figcaption {
+  display: none; position: absolute; inset: 0;
+  place-items: center; text-align: center;
+  font: 500 var(--t-micro) var(--mono); color: var(--ink-3);
+}
+/* No file dropped in yet: show which one belongs here instead of a broken icon. */
+.tl-shot.is-missing img { display: none; }
+.tl-shot.is-missing figcaption { display: grid; }
+
+@media (min-width: 861px) {
+  .tl { margin-top: 26px; }
+  .tl-track {
+    display: grid;
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  }
+  .tl-item { display: contents; }
+  .tl-head { grid-row: 1; grid-column: var(--i); justify-content: flex-end; }
+  /* A floor under the label block keeps all eight dots on one line even
+     when a label wraps to a different number of lines than its neighbours. */
+  .tl-lab {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    min-height: 76px; padding: 0 10px 10px 0;
+  }
+  .tl-item:first-child .tl-dotrow { background-size: 50% 1px; background-position: right center; }
+  .tl-item:last-child  .tl-dotrow { background-size: 50% 1px; background-position: left center; }
+  .tl-dotrow { height: 20px; }
+
+  .tl-body {
+    grid-row: 2; grid-column: 1 / -1;
+    display: grid; grid-template-columns: minmax(0, 1fr) 320px;
+    gap: var(--gap); align-items: start;
+    margin-top: 26px; padding-top: 26px;
+    border-top: 1px solid var(--rule);
+    opacity: 0; visibility: hidden; transition: opacity .22s ease;
+  }
+  .tl-item.is-active .tl-body { opacity: 1; visibility: visible; }
+}
+
+@media (max-width: 860px) {
+  .tl { margin-top: 20px; }
+  .tl-hint-hover { display: none !important; }
+  .tl-hint-tap { display: inline; }
+  .tl-track { display: flex; flex-direction: column-reverse; }
+  .tl-item { position: relative; padding-left: 28px; }
+  .tl-item::before {
+    content: ""; position: absolute; left: 4px; top: 0; bottom: 0;
+    width: 1px; background: var(--rule);
+  }
+  /* column-reverse: the DOM's last item is the one drawn at the top. */
+  .tl-item:last-child::before  { top: 22px; }
+  .tl-item:first-child::before { bottom: auto; height: 22px; }
+  .tl-head { padding: 14px 0; }
+  .tl-lab { display: block; padding-right: 26px; }
+  .tl-dotrow {
+    position: absolute; left: 0; top: 22px;
+    width: 9px; height: 9px; background-image: none;
+  }
+  .tl-head::after {
+    content: "+"; position: absolute; right: 2px; top: 16px;
+    font: 400 16px/1 var(--mono); color: var(--ink-3);
+  }
+  .tl-item.is-active .tl-head::after { content: "–"; color: var(--accent); }
+  .tl-body { display: none; padding-bottom: 20px; }
+  .tl-item.is-active .tl-body { display: block; }
+  .tl-shot { margin-top: 16px; max-width: 420px; }
+}
 </style>
 </head>
 <body>
@@ -429,107 +558,256 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
   <p class="label" data-lang="pt">Experiência</p>
   <h2 data-lang="en">Ten years of research, then applied AI</h2>
   <h2 data-lang="pt">Dez anos de pesquisa, depois IA aplicada</h2>
+  <p class="tl-hint">
+    <span class="tl-hint-hover" data-lang="en">Hover a point on the line.</span>
+    <span class="tl-hint-hover" data-lang="pt">Passe o mouse por um ponto da linha.</span>
+    <span class="tl-hint-tap" data-lang="en">Tap a point to open it.</span>
+    <span class="tl-hint-tap" data-lang="pt">Toque em um ponto para abrir.</span>
+  </p>
 
-  <div style="margin-top:30px">
-    <div class="row">
-      <div class="k">
-        <div class="when" data-lang="en">Sep 2025 — present</div>
-        <div class="when" data-lang="pt">set/2025 — presente</div>
-        <div class="who">Distrito</div>
-        <div class="where" data-lang="en">AI/ML Engineer · AI Factory<br>Full-time · remote</div>
-        <div class="where" data-lang="pt">Engenheiro de IA/ML · AI Factory<br>Tempo integral · remoto</div>
-      </div>
-      <div>
-        <ul data-lang="en" style="margin:0">
-          <li>Agent systems in production across three sectors — healthcare, education, marketing — which means switching data domain often and never relying on prior familiarity with the business rules.</li>
-          <li>Sole AI engineer on the project: I decide the agent architecture. Teams are typically one engineer and a PO.</li>
-          <li>I talk to the client directly — translating business rules into agent behaviour, and explaining back what an LLM system can and cannot guarantee, including saying no when a request hides a risk the demo doesn't show.</li>
-        </ul>
-        <ul data-lang="pt" style="margin:0">
-          <li>Sistemas de agentes em produção em três setores — saúde, educação, marketing — o que significa trocar de domínio de dado com frequência e não poder depender de familiaridade prévia com a regra de negócio.</li>
-          <li>Engenheiro de IA único no projeto: decido a arquitetura do sistema de agentes. Time normalmente de um engenheiro e um PO.</li>
-          <li>Falo direto com o cliente — traduzindo regra de negócio em comportamento de agente e, na direção inversa, explicando o que um sistema de LLM pode e não pode garantir, inclusive dizer não quando o pedido esconde um risco que a demo não mostra.</li>
-        </ul>
-      </div>
-    </div>
+  <!-- One markup, two layouts. Chronological in the DOM (oldest first), which
+       is what the desktop line wants; the narrow layout reverses it visually
+       with column-reverse so the current role is the first thing on a phone. -->
+  <div class="tl" style="--n:8">
+   <div class="tl-track">
 
-    <div class="row">
-      <div class="k">
-        <div class="when" data-lang="en">Apr — Aug 2025</div>
-        <div class="when" data-lang="pt">abr — ago/2025</div>
-        <div class="who">Samsung Electronics</div>
-        <div class="where" data-lang="en">Senior AI Researcher<br>Samsung R&amp;D Institute Brazil</div>
-        <div class="where" data-lang="pt">Senior AI Researcher<br>Samsung R&amp;D Institute Brazil</div>
+    <article class="tl-item" style="--i:1">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-graduacao">
+        <span class="tl-lab">
+          <span class="tl-when">2013 — 2018</span>
+          <span class="tl-who">UNICAMP</span>
+          <span class="tl-what" data-lang="en">Engineering Physics</span>
+          <span class="tl-what" data-lang="pt">Engenharia Física</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-graduacao" role="region">
+        <div class="tl-text">
+          <ul data-lang="en">
+            <li>Two degrees at once — Engineering Physics (technological production) and a BSc in Physics.</li>
+            <li>An academic year at the <b>Technical University of Munich</b> through Ciência sem Fronteiras (2015–16), which is also where the intermediate German comes from.</li>
+            <li>First research work: optimising the electrodeposition of magnetic nanowires at LMBT–IFGW, under Prof. Dr. Kleber Pirota. Also built electric cars for energy-efficiency competitions with Ecocar UNICAMP.</li>
+          </ul>
+          <ul data-lang="pt">
+            <li>Dois cursos ao mesmo tempo — Engenharia Física (produção tecnológica) e Bacharelado em Física.</li>
+            <li>Um ano acadêmico na <b>Technical University of Munich</b> pelo Ciências sem Fronteiras (2015–16) — origem também do alemão intermediário.</li>
+            <li>Primeira pesquisa: otimização da eletrodeposição de nanofios magnéticos no LMBT–IFGW, com o Prof. Dr. Kleber Pirota. Também construí carros elétricos para competições de eficiência energética na Ecocar UNICAMP.</li>
+          </ul>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/graduacao.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/graduacao.jpg</figcaption>
+        </figure>
       </div>
-      <div>
-        <ul data-lang="en" style="margin:0">
-          <li>AI models for Samsung wearables, on the boundary between physical signal and model: the data comes from sensors in contact with the body.</li>
-          <li>Scalable data pipelines, signal analysis and feature engineering; segmented analysis of multitask networks to find the subpopulation a good average hides.</li>
-          <li>Sensor physics and detection theory applied to improve data quality <i>at the source</i>, instead of compensating for noise inside the model.</li>
-          <li class="muted">Detail deliberately limited by Samsung's confidentiality agreement.</li>
-        </ul>
-        <ul data-lang="pt" style="margin:0">
-          <li>Modelos de IA para os wearables da Samsung, na fronteira entre sinal físico e modelo: o dado vem de sensores em contato com o corpo.</li>
-          <li>Pipelines de dados escaláveis, análise de sinais e feature engineering; análise segmentada de redes multitarefa para achar a subpopulação que uma média boa esconde.</li>
-          <li>Física do sensor e teoria de detecção aplicadas para melhorar a qualidade do dado <i>na origem</i>, em vez de compensar ruído dentro do modelo.</li>
-          <li class="muted">Detalhe deliberadamente limitado pelo contrato de sigilo com a Samsung.</li>
-        </ul>
-      </div>
-    </div>
+    </article>
 
-    <div class="row">
-      <div class="k">
-        <div class="when" data-lang="en">Jan — Apr 2025</div>
-        <div class="when" data-lang="pt">jan — abr/2025</div>
-        <div class="who">Grupo Amil</div>
-        <div class="where" data-lang="en">Data Scientist<br>Via Cuboconnect · remote</div>
-        <div class="where" data-lang="pt">Cientista de Dados<br>Via Cuboconnect · remoto</div>
+    <article class="tl-item" style="--i:2">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-cnpem">
+        <span class="tl-lab">
+          <span class="tl-when">2017 — 2018</span>
+          <span class="tl-who">CNPEM</span>
+          <span class="tl-what" data-lang="en">Intern · Synchrotron</span>
+          <span class="tl-what" data-lang="pt">Estagiário · Síncrotron</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-cnpem" role="region">
+        <div class="tl-text">
+          <p data-lang="en">Two consecutive internships in different groups: benchmarking commercial nano-optics simulation software, and testing optical components against accelerator radiation. First contact with numerical simulation and Python data analysis — the technical base for everything after.</p>
+          <p data-lang="pt">Dois estágios consecutivos em grupos diferentes: benchmark de softwares comerciais de simulação em nano-óptica e teste de componentes ópticos contra a radiação do acelerador. Primeiro contato com simulação numérica e análise de dados em Python — a base técnica de tudo que veio depois.</p>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/cnpem.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/cnpem.jpg</figcaption>
+        </figure>
       </div>
-      <div>
-        <ul data-lang="en" style="margin:0">
-          <li>OCR for medical and administrative documents — handwritten forms, stamps over text, skewed scans, layouts that change per issuing unit.</li>
-          <li>The real problem was never character recognition: it was deciding when recognition is <i>not</i> trustworthy and has to go to human review.</li>
-          <li>Helped choose the OCR model that went into use; the project structured and supported fraud detection across thousands of reimbursement documents.</li>
-        </ul>
-        <ul data-lang="pt" style="margin:0">
-          <li>OCR para documentos médicos e administrativos — formulário manuscrito, carimbo sobre texto, digitalização torta, layout que muda por unidade emissora.</li>
-          <li>O problema real nunca foi reconhecimento de caractere: era decidir quando o reconhecimento <i>não</i> é confiável e precisa ir para revisão humana.</li>
-          <li>Ajudei a decidir o modelo de OCR que entrou em uso; o projeto estruturou e apoiou detecção de fraude em milhares de documentos de reembolso.</li>
-        </ul>
-      </div>
-    </div>
+    </article>
 
-    <div class="row">
-      <div class="k">
-        <div class="when">2023</div>
-        <div class="who">Stony Brook University</div>
-        <div class="where" data-lang="en">Doctoral Researcher · New York<br>A year abroad inside the UNICAMP PhD</div>
-        <div class="where" data-lang="pt">Doctoral Researcher · Nova York<br>Ano no exterior dentro do doutorado</div>
+    <article class="tl-item" style="--i:3">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-mestrado">
+        <span class="tl-lab">
+          <span class="tl-when">2019 — 2021</span>
+          <span class="tl-who">UNICAMP</span>
+          <span class="tl-what" data-lang="en">MSc, Applied Physics</span>
+          <span class="tl-what" data-lang="pt">Mestrado em Física Aplicada</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-mestrado" role="region">
+        <div class="tl-text">
+          <ul data-lang="en">
+            <li>FDTD simulation of optical antennas as efficient polariton launchers in 2D materials, borrowing directivity and radiation-pattern concepts from antenna theory.</li>
+            <li>Processed and analysed infrared s-SNOM data, comparing theory against experiment to validate the models — Fabry-Perot cavity modes and polariton acceleration.</li>
+            <li>Public code: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>. Advisor: Prof. Dr. Raul de Oliveira Freitas.</li>
+          </ul>
+          <ul data-lang="pt">
+            <li>Simulação FDTD de antenas ópticas como fontes eficientes de polaritons em materiais 2D, aproveitando conceitos de teoria de antenas como diretividade e padrão de radiação.</li>
+            <li>Tratamento e análise de dados experimentais de s-SNOM no infravermelho, comparando teoria e experimento para validar os modelos — modos de cavidade Fabry-Perot e aceleração de polaritons.</li>
+            <li>Código público: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>. Orientador: Prof. Dr. Raul de Oliveira Freitas.</li>
+          </ul>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/mestrado.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/mestrado.jpg</figcaption>
+        </figure>
       </div>
-      <div>
-        <ul data-lang="en" style="margin:0">
-          <li>Commissioned and optimised a new magneto-sNOM. Standing up a new instrument is its own kind of work: nothing has a baseline, and every unexpected result is either physics or the equipment.</li>
-          <li>Resulted in a peer-reviewed <b>Nano Letters</b> paper that took the <b>front cover of the issue</b>.</li>
-        </ul>
-        <ul data-lang="pt" style="margin:0">
-          <li>Comissionamento e otimização de um magneto-sNOM novo. Colocar instrumento novo para funcionar é um tipo específico de trabalho: nada tem baseline, e todo resultado inesperado pode ser física ou pode ser o equipamento.</li>
-          <li>Resultou em publicação revisada por pares no <b>Nano Letters</b>, que ganhou a <b>capa da edição</b>.</li>
-        </ul>
-      </div>
-    </div>
+    </article>
 
-    <div class="row">
-      <div class="k">
-        <div class="when">2017 — 2018</div>
-        <div class="who">CNPEM</div>
-        <div class="where" data-lang="en">Intern · Brazilian Synchrotron</div>
-        <div class="where" data-lang="pt">Estagiário · Síncrotron</div>
+    <article class="tl-item" style="--i:4">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-doutorado">
+        <span class="tl-lab">
+          <span class="tl-when">2021 — 2025</span>
+          <span class="tl-who">UNICAMP</span>
+          <span class="tl-what" data-lang="en">PhD, Applied Physics</span>
+          <span class="tl-what" data-lang="pt">Doutorado em Física Aplicada</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-doutorado" role="region">
+        <div class="tl-text">
+          <ul data-lang="en">
+            <li>Nanophotonics of low-dimensional metal oxides in the infrared and terahertz ranges, at the Brazilian Synchrotron Light Laboratory (LNLS/CNPEM) — near-field optical microscopy (s-SNOM) plus theoretical modelling and data analysis.</li>
+            <li>Beyond the physics: an <b>ML-accelerated microscopy technique</b> — sparse sampling that cuts acquisition time on a nano-optical image. Published in <i>Nano Letters</i> 24(7), 2149 (2024). This is where the transition to AI/ML started.</li>
+            <li>Thesis: <i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges</i>. Advisor: Prof. Dr. Raul de Oliveira Freitas. Defended Apr 2025.</li>
+          </ul>
+          <ul data-lang="pt">
+            <li>Nanofotônica de óxidos metálicos de baixa dimensionalidade nas faixas do infravermelho e terahertz, no Laboratório Nacional de Luz Síncrotron (LNLS/CNPEM) — microscopia óptica de campo próximo (s-SNOM), modelagem teórica e análise de dados.</li>
+            <li>Além da física: uma <b>técnica de microscopia acelerada por ML</b> — amostragem esparsa que reduz o tempo de aquisição de uma imagem nano-óptica. Publicada na <i>Nano Letters</i> 24(7), 2149 (2024). Foi aqui que a transição para IA/ML começou.</li>
+            <li>Tese: <i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges</i>. Orientador: Prof. Dr. Raul de Oliveira Freitas. Defesa em abr/2025.</li>
+          </ul>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/doutorado.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/doutorado.jpg</figcaption>
+        </figure>
       </div>
-      <div>
-        <p data-lang="en" style="margin:0">Two consecutive internships in different groups: benchmarking commercial nano-optics simulation software, and testing optical components against accelerator radiation. First contact with numerical simulation and Python data analysis — the technical base for everything after.</p>
-        <p data-lang="pt" style="margin:0">Dois estágios consecutivos em grupos diferentes: benchmark de softwares comerciais de simulação em nano-óptica e teste de componentes ópticos contra a radiação do acelerador. Primeiro contato com simulação numérica e análise de dados em Python — a base técnica de tudo que veio depois.</p>
+    </article>
+
+    <article class="tl-item" style="--i:5">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-stony">
+        <span class="tl-lab">
+          <span class="tl-when">2023</span>
+          <span class="tl-who">Stony Brook</span>
+          <span class="tl-what" data-lang="en">Doctoral Researcher · NY</span>
+          <span class="tl-what" data-lang="pt">Doctoral Researcher · NY</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-stony" role="region">
+        <div class="tl-text">
+          <ul data-lang="en">
+            <li>A research year abroad <i>inside</i> the UNICAMP PhD, in Prof. Mengkun Liu's group at Stony Brook University, New York.</li>
+            <li>Commissioned and optimised a new magneto-sNOM. Standing up a new instrument is its own kind of work: nothing has a baseline, and every unexpected result is either physics or the equipment.</li>
+            <li>Resulted in a peer-reviewed <b>Nano Letters</b> paper that took the <b>front cover of the issue</b>.</li>
+          </ul>
+          <ul data-lang="pt">
+            <li>Um ano de pesquisa no exterior <i>dentro</i> do doutorado da UNICAMP, no grupo do Prof. Mengkun Liu na Stony Brook University, Nova York.</li>
+            <li>Comissionamento e otimização de um magneto-sNOM novo. Colocar instrumento novo para funcionar é um tipo específico de trabalho: nada tem baseline, e todo resultado inesperado pode ser física ou pode ser o equipamento.</li>
+            <li>Resultou em publicação revisada por pares no <b>Nano Letters</b>, que ganhou a <b>capa da edição</b>.</li>
+          </ul>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/stony-brook.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/stony-brook.jpg</figcaption>
+        </figure>
       </div>
-    </div>
+    </article>
+
+    <article class="tl-item" style="--i:6">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-amil">
+        <span class="tl-lab">
+          <span class="tl-when" data-lang="en">Jan — Apr 2025</span>
+          <span class="tl-when" data-lang="pt">jan — abr/2025</span>
+          <span class="tl-who">Grupo Amil</span>
+          <span class="tl-what" data-lang="en">Data Scientist</span>
+          <span class="tl-what" data-lang="pt">Cientista de Dados</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-amil" role="region">
+        <div class="tl-text">
+          <ul data-lang="en">
+            <li>OCR for medical and administrative documents — handwritten forms, stamps over text, skewed scans, layouts that change per issuing unit. Via Cuboconnect, remote.</li>
+            <li>The real problem was never character recognition: it was deciding when recognition is <i>not</i> trustworthy and has to go to human review.</li>
+            <li>Helped choose the OCR model that went into use; the project structured and supported fraud detection across thousands of reimbursement documents.</li>
+          </ul>
+          <ul data-lang="pt">
+            <li>OCR para documentos médicos e administrativos — formulário manuscrito, carimbo sobre texto, digitalização torta, layout que muda por unidade emissora. Via Cuboconnect, remoto.</li>
+            <li>O problema real nunca foi reconhecimento de caractere: era decidir quando o reconhecimento <i>não</i> é confiável e precisa ir para revisão humana.</li>
+            <li>Ajudei a decidir o modelo de OCR que entrou em uso; o projeto estruturou e apoiou detecção de fraude em milhares de documentos de reembolso.</li>
+          </ul>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/amil.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/amil.jpg</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="tl-item" style="--i:7">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-samsung">
+        <span class="tl-lab">
+          <span class="tl-when" data-lang="en">Apr — Aug 2025</span>
+          <span class="tl-when" data-lang="pt">abr — ago/2025</span>
+          <span class="tl-who">Samsung</span>
+          <span class="tl-what">Senior AI Researcher</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-samsung" role="region">
+        <div class="tl-text">
+          <ul data-lang="en">
+            <li>AI models for Samsung wearables at Samsung R&amp;D Institute Brazil, on the boundary between physical signal and model: the data comes from sensors in contact with the body.</li>
+            <li>Scalable data pipelines, signal analysis and feature engineering; segmented analysis of multitask networks to find the subpopulation a good average hides.</li>
+            <li>Sensor physics and detection theory applied to improve data quality <i>at the source</i>, instead of compensating for noise inside the model.</li>
+            <li class="muted">Detail deliberately limited by Samsung's confidentiality agreement.</li>
+          </ul>
+          <ul data-lang="pt">
+            <li>Modelos de IA para os wearables da Samsung, no Samsung R&amp;D Institute Brazil, na fronteira entre sinal físico e modelo: o dado vem de sensores em contato com o corpo.</li>
+            <li>Pipelines de dados escaláveis, análise de sinais e feature engineering; análise segmentada de redes multitarefa para achar a subpopulação que uma média boa esconde.</li>
+            <li>Física do sensor e teoria de detecção aplicadas para melhorar a qualidade do dado <i>na origem</i>, em vez de compensar ruído dentro do modelo.</li>
+            <li class="muted">Detalhe deliberadamente limitado pelo contrato de sigilo com a Samsung.</li>
+          </ul>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/samsung.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/samsung.jpg</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="tl-item" style="--i:8">
+      <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-distrito">
+        <span class="tl-lab">
+          <span class="tl-when" data-lang="en">Sep 2025 — present</span>
+          <span class="tl-when" data-lang="pt">set/2025 — presente</span>
+          <span class="tl-who">Distrito</span>
+          <span class="tl-what" data-lang="en">AI/ML Engineer</span>
+          <span class="tl-what" data-lang="pt">Engenheiro de IA/ML</span>
+        </span>
+        <span class="tl-dotrow"><span class="tl-dot"></span></span>
+      </button>
+      <div class="tl-body" id="tl-distrito" role="region">
+        <div class="tl-text">
+          <ul data-lang="en">
+            <li>Agent systems in production across three sectors — healthcare, education, marketing — which means switching data domain often and never relying on prior familiarity with the business rules. AI Factory, full-time, remote.</li>
+            <li>Sole AI engineer on the project: I decide the agent architecture. Teams are typically one engineer and a PO.</li>
+            <li>I talk to the client directly — translating business rules into agent behaviour, and explaining back what an LLM system can and cannot guarantee, including saying no when a request hides a risk the demo doesn't show.</li>
+          </ul>
+          <ul data-lang="pt">
+            <li>Sistemas de agentes em produção em três setores — saúde, educação, marketing — o que significa trocar de domínio de dado com frequência e não poder depender de familiaridade prévia com a regra de negócio. AI Factory, tempo integral, remoto.</li>
+            <li>Engenheiro de IA único no projeto: decido a arquitetura do sistema de agentes. Time normalmente de um engenheiro e um PO.</li>
+            <li>Falo direto com o cliente — traduzindo regra de negócio em comportamento de agente e, na direção inversa, explicando o que um sistema de LLM pode e não pode garantir, inclusive dizer não quando o pedido esconde um risco que a demo não mostra.</li>
+          </ul>
+        </div>
+        <figure class="tl-shot">
+          <img src="/timeline/distrito.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
+          <figcaption>timeline/distrito.jpg</figcaption>
+        </figure>
+      </div>
+    </article>
+
+   </div>
   </div>
 </div></section>
 <!-- ============================== PROJECTS ============================== -->
@@ -666,59 +944,23 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
     </div>
   </div>
 </div></section>
-<!-- ============================== EDUCATION ============================== -->
+<!-- ============================== RESEARCH ============================== -->
 <section><div class="wrap">
-  <p class="label" data-lang="en">Education &amp; publications</p>
-  <p class="label" data-lang="pt">Formação &amp; publicações</p>
+  <p class="label" data-lang="en">Research</p>
+  <p class="label" data-lang="pt">Pesquisa</p>
   <h2 data-lang="en">Applied Physics at UNICAMP — and what it left behind</h2>
   <h2 data-lang="pt">Física Aplicada na UNICAMP — e o que ficou</h2>
 
   <div style="margin-top:30px">
     <div class="row">
       <div class="k">
-        <div class="when">2021 — 2025</div>
-        <div class="who" data-lang="en">PhD, Applied Physics</div>
-        <div class="who" data-lang="pt">Doutorado em Física Aplicada</div>
-        <div class="where">UNICAMP · LNLS/CNPEM</div>
+        <div class="who" data-lang="en">Publications</div><div class="who" data-lang="pt">Publicações</div>
+        <div class="where" data-lang="en">Peer-reviewed, in nano-optics</div>
+        <div class="where" data-lang="pt">Revisadas por pares, em nano-óptica</div>
       </div>
       <div>
-        <p data-lang="en" style="margin:0"><i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges.</i> Advisor: Prof. Dr. Raul de Oliveira Freitas. Includes the research year at Stony Brook.</p>
-        <p data-lang="pt" style="margin:0"><i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges.</i> Orientador: Prof. Dr. Raul de Oliveira Freitas. Inclui o ano de pesquisa em Stony Brook.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="k">
-        <div class="when">2019 — 2021</div>
-        <div class="who" data-lang="en">MSc, Applied Physics</div>
-        <div class="who" data-lang="pt">Mestrado em Física Aplicada</div>
-        <div class="where">UNICAMP</div>
-      </div>
-      <div>
-        <p data-lang="en" style="margin:0">FDTD simulation of optical antennas as polariton launchers in 2D materials. Public code: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</p>
-        <p data-lang="pt" style="margin:0">Simulação FDTD de antenas ópticas como fontes de polaritons em materiais 2D. Código público: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="k">
-        <div class="when">2013 — 2018</div>
-        <div class="who" data-lang="en">Engineering Physics &amp; BSc Physics</div>
-        <div class="who" data-lang="pt">Engenharia Física &amp; Bacharelado em Física</div>
-        <div class="where">UNICAMP · TUM (2015–16)</div>
-      </div>
-      <div>
-        <p data-lang="en" style="margin:0">Includes an academic year at the Technical University of Munich through Ciência sem Fronteiras — also where the intermediate German comes from.</p>
-        <p data-lang="pt" style="margin:0">Inclui um ano acadêmico na Technical University of Munich pelo Ciência sem Fronteiras — origem também do alemão intermediário.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="k"><div class="who" data-lang="en">Publications</div><div class="who" data-lang="pt">Publicações</div></div>
-      <div>
-        <ul style="margin:0">
-          <li data-lang="en"><b>Nano Letters</b> (2025) — magnetically tunable polariton cavities in van der Waals heterostructures. <b>Front cover of the issue.</b> <a href="https://pubs.acs.org/doi/10.1021/acs.nanolett.5c02168" target="_blank" rel="noopener">doi</a></li>
-          <li data-lang="pt"><b>Nano Letters</b> (2025) — cavidades polaritônicas magneticamente sintonizáveis em heteroestruturas de van der Waals. <b>Capa da edição.</b> <a href="https://pubs.acs.org/doi/10.1021/acs.nanolett.5c02168" target="_blank" rel="noopener">doi</a></li>
-          <li><i>Accelerated Nano-Optical Imaging through Sparse Sampling</i> — Nano Letters <b>24</b>(7), 2149 (2024).</li>
-          <li><i>Guidelines for Engineering Directional Polariton Launchers</i> — Physical Review Applied (2022).</li>
-        </ul>
+        <p data-lang="en" style="margin:0">Peer-reviewed work in nano-optics, including a <b>front cover of <i>Nano Letters</i></b> (2025) for magnetically tunable polariton cavities in van der Waals heterostructures, and the ML-accelerated microscopy technique from the PhD. Full list on <a href="https://scholar.google.com.br/citations?user=KrHO1lkAAAAJ&amp;hl" target="_blank" rel="noopener">Google Scholar</a>.</p>
+        <p data-lang="pt" style="margin:0">Trabalhos revisados por pares em nano-óptica, incluindo uma <b>capa de edição da <i>Nano Letters</i></b> (2025) sobre cavidades polaritônicas magneticamente sintonizáveis em heteroestruturas de van der Waals, e a técnica de microscopia acelerada por ML do doutorado. Lista completa no <a href="https://scholar.google.com.br/citations?user=KrHO1lkAAAAJ&amp;hl" target="_blank" rel="noopener">Google Scholar</a>.</p>
       </div>
     </div>
     <div class="row">
@@ -741,7 +983,6 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
     </div>
   </div>
 </div></section>
-
 <!-- =========================== CERTS & LANGUAGES =========================== -->
 <section><div class="wrap">
   <p class="label" data-lang="en">Certifications &amp; languages</p>
@@ -1050,6 +1291,38 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       abort(t("Couldn't reach the agent. Please try again.", "Não foi possível alcançar o agente. Tente novamente."));
     });
   }
+  /* ---------- the timeline ----------
+     Wide: hover (or keyboard focus) moves the panel, and leaving the section
+     falls back to the current role, so the panel is never empty.
+     Narrow: it is an accordion — a tap opens one point and closes the other. */
+  document.querySelectorAll(".tl").forEach(function (tl) {
+    var items = Array.prototype.slice.call(tl.querySelectorAll(".tl-item"));
+    if (!items.length) return;
+    var fallback = items[items.length - 1];   // DOM order is chronological
+    var wide = window.matchMedia("(min-width: 861px)");
+
+    function activate(target) {
+      items.forEach(function (it) {
+        var on = it === target;
+        it.classList.toggle("is-active", on);
+        it.querySelector(".tl-head").setAttribute("aria-expanded", String(on));
+      });
+    }
+
+    items.forEach(function (it) {
+      var head = it.querySelector(".tl-head");
+      head.addEventListener("mouseenter", function () { if (wide.matches) activate(it); });
+      head.addEventListener("focus", function () { if (wide.matches) activate(it); });
+      head.addEventListener("click", function () {
+        if (!wide.matches && it.classList.contains("is-active")) activate(null);
+        else activate(it);
+      });
+    });
+
+    tl.addEventListener("mouseleave", function () { if (wide.matches) activate(fallback); });
+    activate(fallback);
+  });
+
 })();
 </script>
 </body>
