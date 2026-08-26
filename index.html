@@ -522,26 +522,30 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 .tl-item.is-active .tl-who { color: var(--ink); }
 .tl-item.is-active .tl-when { color: var(--accent); }
 
-.tl-body { font-size: clamp(11.5px, 1.7vh, 14.5px); line-height: 1.4; }
+.tl-body { font-size: clamp(13.5px, 1.9vh, 14.5px); line-height: 1.42; }
 .tl-body li { margin-bottom: clamp(2px, 0.6vh, 6px); }
 /* No ch cap here: the column is already sized by the grid (the image takes
    a fixed width beside it), so let text use all of it — capping it below
    that just forces extra wrapped lines for no reason. */
 .tl-text ul, .tl-text p { max-width: none; margin: 0; }
-.tl-shot {
-  position: relative; margin: 0; overflow: hidden;
-  aspect-ratio: 4 / 3; max-height: 24vh; border-radius: 3px;
-  background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule);
+/* A hard height cap, on purpose: letting the photo's box size itself from
+   the row's own height (via stretch, with no cap) let the browser fall
+   back to the source photo's real pixel dimensions when sizing the grid
+   track — some of these are 4000px+ — which blew the section past one
+   view. A fixed cap is what actually guarantees it never happens.
+   No forced aspect-ratio box, no object-fit crop: the photo keeps its
+   original framing, just scaled down to fit the cap. */
+.tl-shot { margin: 0; display: flex; flex-direction: column; align-items: flex-start; }
+.tl-shot-img { position: relative; }
+.tl-shot-img img {
+  display: block; width: auto; height: auto; max-width: 100%; max-height: 34vh;
+  border-radius: 3px; background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule);
 }
-.tl-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .tl-shot figcaption {
-  display: none; position: absolute; inset: 0;
-  place-items: center; text-align: center;
-  font: 500 var(--t-micro) var(--mono); color: var(--ink-3);
+  margin-top: clamp(4px, 1vh, 8px);
+  font-size: clamp(11px, 1.5vh, 12.5px); line-height: 1.35;
+  font-style: italic; color: var(--ink-3);
 }
-/* No file dropped in yet: show which one belongs here instead of a broken icon. */
-.tl-shot.is-missing img { display: none; }
-.tl-shot.is-missing figcaption { display: grid; }
 
 @media (min-width: 861px) {
   .tl { margin-top: clamp(10px, 2.5vh, 26px); }
@@ -563,13 +567,16 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 
   .tl-body {
     grid-row: 2; grid-column: 1 / -1;
-    display: grid; grid-template-columns: minmax(0, 1fr) 280px;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--gap); align-items: start;
     margin-top: clamp(10px, 2.5vh, 26px); padding-top: clamp(10px, 2.5vh, 26px);
     border-top: 1px solid var(--rule);
     opacity: 0; visibility: hidden; transition: opacity .22s ease;
   }
   .tl-item.is-active .tl-body { opacity: 1; visibility: visible; }
+  /* No photo for this entry: let the text use the full row instead of
+     leaving the picture column an empty gap. */
+  .tl-body:not(:has(.tl-shot)) .tl-text { grid-column: 1 / -1; }
 }
 
 @media (max-width: 860px) {
@@ -846,8 +853,11 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
           </ul>
         </div>
         <figure class="tl-shot">
-          <img src="/timeline/graduacao.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/graduacao.jpg</figcaption>
+          <div class="tl-shot-img"><img src="/timeline/graduacao.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+          <figcaption>
+            <span data-lang="en">Competing in the Shell Eco-marathon, building high-efficiency electric cars.</span>
+            <span data-lang="pt">Participação na Shell Eco-marathon, construindo carros elétricos de alta eficiência energética.</span>
+          </figcaption>
         </figure>
       </div>
     </article>
@@ -868,8 +878,11 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
           <p data-lang="pt">Dois estágios — simulação em nano-óptica, depois teste de componentes ópticos. Primeiro contato com simulação numérica e Python, a base técnica de tudo que veio depois.</p>
         </div>
         <figure class="tl-shot">
-          <img src="/timeline/cnpem.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/cnpem.jpg</figcaption>
+          <div class="tl-shot-img"><img src="/timeline/cnpem.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+          <figcaption>
+            <span data-lang="en">Presenting work benchmarking numerical models for photonic component simulation.</span>
+            <span data-lang="pt">Apresentação de trabalho sobre benchmark de modelos numéricos para simulação de componentes fotônicos.</span>
+          </figcaption>
         </figure>
       </div>
     </article>
@@ -898,8 +911,11 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
           </ul>
         </div>
         <figure class="tl-shot">
-          <img src="/timeline/mestrado.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/mestrado.jpg</figcaption>
+          <div class="tl-shot-img"><img src="/timeline/mestrado.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+          <figcaption>
+            <span data-lang="en">Feeding the infrared detector with liquid N2 for the s-SNOM experiments.</span>
+            <span data-lang="pt">Alimentando o detector de infravermelho com N2 líquido para os experimentos de s-SNOM.</span>
+          </figcaption>
         </figure>
       </div>
     </article>
@@ -928,8 +944,11 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
           </ul>
         </div>
         <figure class="tl-shot">
-          <img src="/timeline/doutorado.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/doutorado.jpg</figcaption>
+          <div class="tl-shot-img"><img src="/timeline/doutorado.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+          <figcaption>
+            <span data-lang="en">The infrared beamline group at Sirius.</span>
+            <span data-lang="pt">Grupo da linha de infravermelho no Sirius.</span>
+          </figcaption>
         </figure>
       </div>
     </article>
@@ -958,8 +977,11 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
           </ul>
         </div>
         <figure class="tl-shot">
-          <img src="/timeline/stony-brook.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/stony-brook.jpg</figcaption>
+          <div class="tl-shot-img"><img src="/timeline/stony-brook.avif" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+          <figcaption>
+            <span data-lang="en">Prof. Mengkun Liu's group at Stony Brook, NY (2023).</span>
+            <span data-lang="pt">Grupo do Prof. Mengkun Liu em Stony Brook, NY (2023).</span>
+          </figcaption>
         </figure>
       </div>
     </article>
@@ -988,10 +1010,6 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
             <li>Ajudei a escolher o modelo em uso; apoiei detecção de fraude em milhares de documentos.</li>
           </ul>
         </div>
-        <figure class="tl-shot">
-          <img src="/timeline/amil.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/amil.jpg</figcaption>
-        </figure>
       </div>
     </article>
 
@@ -1019,8 +1037,11 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
           </ul>
         </div>
         <figure class="tl-shot">
-          <img src="/timeline/samsung.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/samsung.jpg</figcaption>
+          <div class="tl-shot-img"><img src="/timeline/samsung.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+          <figcaption>
+            <span data-lang="en">The AI Health group at SRBR – Samsung.</span>
+            <span data-lang="pt">Grupo de AI Health no SRBR – Samsung.</span>
+          </figcaption>
         </figure>
       </div>
     </article>
@@ -1050,8 +1071,8 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
           </ul>
         </div>
         <figure class="tl-shot">
-          <img src="/timeline/distrito.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
-          <figcaption>timeline/distrito.jpg</figcaption>
+          <div class="tl-shot-img"><img src="/timeline/distrito.webp" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+          <figcaption>Distrito Conference (2026).</figcaption>
         </figure>
       </div>
     </article>
