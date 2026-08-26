@@ -390,6 +390,11 @@ h2 { font-family: var(--serif); font-size: var(--t-h2); max-width: 30ch; }
 .group-label { font-family: var(--serif); font-size: var(--t-h3); }
 .skill-line { font-size: clamp(13px, 1.8vh, var(--t-small)); line-height: 1.45; color: var(--ink-2); }
 .skill-line b { color: var(--ink); }
+.skill-list { margin: 0; padding-left: 1.1em; }
+.skill-list li {
+  font-size: clamp(13px, 1.8vh, var(--t-small)); line-height: 1.45; color: var(--ink-2);
+  margin-bottom: clamp(2px, 0.6vh, 6px);
+}
 
 @media (max-width: 860px) {
   .skills-cols { grid-template-columns: 1fr; gap: clamp(14px, 3vh, 26px); }
@@ -720,11 +725,24 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
     <div class="skills-col">
       <h3 class="group-label" data-lang="en">Soft skills</h3>
       <h3 class="group-label" data-lang="pt">Habilidades interpessoais</h3>
-      <!-- TODO(Rafael): placeholder — send me the 4–6 soft skills you want
-           listed here (e.g. client communication, ownership, mentoring)
-           and I'll drop them in; nothing invented in the meantime. -->
-      <p class="skill-line" data-lang="en">[Add your soft skills — e.g. direct client communication, end-to-end ownership, translating business risk for non-technical stakeholders]</p>
-      <p class="skill-line" data-lang="pt">[Adicione suas habilidades interpessoais — ex.: comunicação direta com cliente, responsabilidade fim a fim, tradução de risco de negócio para quem não é técnico]</p>
+      <ul class="skill-list" data-lang="en">
+        <li>Excellent client communication</li>
+        <li>Project ownership</li>
+        <li>Agility in risk mitigation</li>
+        <li>Fast adaptation across business and scientific domains</li>
+        <li>Adaptive mindset during AI transformation</li>
+        <li>Rigor on data quality, compliance, and governance</li>
+        <li>Comfort working without a playbook</li>
+      </ul>
+      <ul class="skill-list" data-lang="pt">
+        <li>Comunicação excelente com clientes</li>
+        <li>Ownership de projetos</li>
+        <li>Agilidade na mitigação de riscos</li>
+        <li>Adaptação rápida entre domínios empresariais e científicos</li>
+        <li>Perfil adaptativo em tempos de transformação de IA</li>
+        <li>Rigor com qualidade de dado, compliance e governança</li>
+        <li>Conforto trabalhando sem manual ou receita pronta</li>
+      </ul>
     </div>
 
     <div class="skills-col">
