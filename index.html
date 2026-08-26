@@ -424,6 +424,8 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 @media (max-width: 860px) {
   :root { --col: 100%; }
   #top { min-height: 0; }
+  section.card-section { min-height: 0; padding: clamp(32px, 8vh, 56px) 0; }
+  section.card-section > .wrap { max-height: none; overflow-y: visible; }
   .topnav-inner { justify-content: flex-start; }
   .langs { position: static; transform: none; margin-left: auto; padding-left: 12px; }
   .stage { grid-template-columns: 1fr; gap: 30px; }
