@@ -61,3 +61,11 @@ doutorado**, em paralelo ao trabalho de pesquisa, antes de existir cargo meu na 
 Não foi treinamento de empresa nem virada de mercado — foi o mesmo movimento que me
 levou a usar ML dentro do doutorado. O que set/2025 marca é quando isso passou a ter
 usuário final e consequência em produção.
+
+## Como me mantenho atualizado
+
+Meus side projects de ML clássico e deep learning (`side-projects/`) são de uma fase
+anterior — 2022 e 2024, antes de GenAI e sistemas agentic virarem meu foco principal.
+Hoje me atualizo de outra forma: leio notícia sobre IA diariamente e testo o que
+aparece de novo direto nos projetos que já estão em andamento, em vez de fazer curso
+ou projeto isolado para aprender.

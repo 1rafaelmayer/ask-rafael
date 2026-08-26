@@ -1,15 +1,16 @@
 ---
 when_to_use: >
   Projeto de modelos de IA para wearables da Samsung: pipelines de dados,
-  feature engineering sobre sinal de sensor, diagnóstico de falha em redes
-  multitarefa por segmento e o trade-off entre feature física e capacidade
-  de rede.
+  qualidade de dado de sensor, diagnóstico de falha em redes multitarefa
+  por segmento, e a conexão pública com o recurso de sono do Galaxy Watch.
 ---
 
 # Modelos de IA para dispositivos wearables — Samsung
 
 **Onde:** Samsung R&D Institute Brazil (SRBR) · abr/2025 – ago/2025
 **Papel:** Senior AI Researcher / cientista de dados
+**Referência pública:** modelos de rede neural para melhora do sono numa geração
+de Galaxy Watches — [Samsung Newsroom](https://news.samsung.com/br/recurso-de-apneia-do-sono-desenvolvido-no-brasil-e-presente-no-galaxy-watch-da-samsung-e-o-primeiro-de-sua-categoria-autorizado-pela-fda-dos-eua)
 
 ## Contexto
 
@@ -23,20 +24,15 @@ variação entre pessoas.
 **Pipelines de dados escaláveis** para alimentar os modelos de rede neural,
 dimensionados para o volume e a cadência do time de modelagem.
 
-**Análise de sinais e feature engineering.** A contribuição principal: melhorar a
-qualidade das representações que entram no modelo. Em problema de sinal, uma
-feature bem construída a partir de entendimento físico do fenômeno frequentemente
-vale mais que capacidade extra de rede.
+**Qualidade de dado e feature engineering.** A contribuição principal: melhorar a
+qualidade dos dados e das representações que entram no modelo — a parte que mais
+pesa no resultado final, mais do que capacidade extra de rede.
 
 **Análise de redes multitarefa.** Modelo multitarefa esconde falha na média: ele
 pode ter desempenho agregado bom e errar sistematicamente numa subpopulação ou
 numa condição de uso específica. Meu trabalho foi segmentar os dados e procurar
 esses padrões de desempenho por segmento, produzindo o diagnóstico que orientava a
 próxima iteração dos modelos.
-
-**Física do sensor e teoria de detecção aplicadas à qualidade do dado.** Aqui a
-formação em física entrou direto: entender como o sinal é gerado e detectado permite
-atacar o ruído na origem, em vez de compensá-lo depois com modelo maior.
 
 Os padrões de falha que a segmentação expôs são de três tipos, e a distinção importa
 porque cada um pede correção diferente: erro sistemático em **subpopulação** (o
@@ -46,14 +42,12 @@ custas das demais cabeças do modelo multitarefa.
 
 ## Decisões técnicas e trade-offs
 
-**Feature construída sobre entendimento do fenômeno, em vez de mais capacidade de
-rede.** A alternativa padrão é entregar o sinal cru e deixar a rede aprender a
-representação. Em sinal de sensor corporal, isso funciona quando há dado abundante e
-homogêneo — não é o caso quando o ruído depende de posicionamento do dispositivo e de
-variação fisiológica entre pessoas. O custo assumido é que feature derivada de
-modelo físico carrega uma hipótese: se a hipótese não vale para um segmento, a
-feature degrada ali, e é preciso descobrir isso por análise segmentada em vez de
-esperar que a rede compense.
+**Investir em qualidade de dado, em vez de só mais capacidade de rede.** Em sinal
+de sensor corporal, jogar dado cru para a rede aprender a representação funciona
+quando há dado abundante e homogêneo — não é o caso quando o ruído depende de
+posicionamento do dispositivo e de variação fisiológica entre pessoas. O custo
+assumido é que melhoria de dado exige análise contínua por segmento, em vez de
+esperar que a rede compense sozinha.
 
 **Avaliar por segmento, não pela média.** Métrica agregada é o que reporta bem e o
 que esconde falha. Segmentar custa mais análise, mais fatias para acompanhar e
@@ -62,26 +56,25 @@ sistemático antes de o produto vê-lo.
 
 ## Confidencialidade
 
-Produto não lançado, sob contrato. O que **pode** ser dito é o que está neste
-arquivo: a classe de problema (modelagem sobre sinal de sensor corporal), o tipo de
-trabalho (pipeline de dados, feature engineering a partir de física do sensor,
-avaliação segmentada de rede multitarefa) e os tipos de padrão de falha encontrados.
+O vínculo público é este: os modelos em que trabalhei alimentam o recurso de
+melhora do sono presente numa geração de Galaxy Watches, noticiado pela própria
+Samsung (link acima). Isso pode ser dito porque é informação pública.
 
-O que **não** pode: qual sensor e qual sinal, quais e quantas tarefas o modelo
-cobria, arquitetura, dado, métrica e qualquer número. Em entrevista, a resposta a
-"que sensor era?" é que o contrato não permite entrar nisso — e seguir descrevendo o
-raciocínio, que é o que interessa de fato.
+O que **não** pode: arquitetura do modelo, quais e quantas tarefas ele cobria,
+dado, métrica e qualquer número específico do produto. Em entrevista, a resposta
+sobre esses detalhes é que o contrato não permite entrar neles — e seguir
+descrevendo o raciocínio do trabalho, que é o que interessa de fato.
 
 ## Resultado
 
-Não há resultado que eu possa reivindicar: saí da Samsung antes de acompanhar o
-desfecho dos modelos, então não sei quanto das features e das análises sobreviveu à
-iteração seguinte. O que entreguei foi diagnóstico — onde o modelo multitarefa errava
-de forma sistemática — e a representação de entrada melhorada. Se isso virou ganho de
-métrica no produto, eu não estava lá para medir.
+Os modelos que ajudei a alimentar com pipeline de dados e feature engineering
+integram um recurso de sono lançado numa geração de Galaxy Watches. Não
+acompanhei o desfecho de perto após sair da Samsung, então não tenho métrica de
+produto para citar — o que entreguei foi a melhoria de dado e o diagnóstico de
+onde o modelo multitarefa errava de forma sistemática.
 
 ## Por que esse projeto é bom em entrevista
 
-É a melhor evidência de que meu diferencial não é retórico. "Formação em física
-ajuda" é frase de currículo; aplicar óptica e teoria de detecção para melhorar
-dado de sensor em um produto de consumo é a coisa acontecendo.
+É evidência de contribuição em produto de consumo com escala real: o trabalho de
+dado e diagnóstico que fiz alimenta um recurso hoje disponível numa geração de
+Galaxy Watches, sob as restrições normais de um projeto sob contrato.

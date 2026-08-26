@@ -16,9 +16,9 @@ neural. Análise e preparação de dados com Pandas, NumPy e Matplotlib.
 
 ## Onde exerci
 
-**Redes neurais multitarefa em sinal de sensor** — Samsung. Feature engineering
-sobre sinal de wearable e análise segmentada de desempenho para achar falha que a
-média esconde. → `projetos/wearables-samsung-modelos.md`
+**Redes neurais multitarefa em sinal de sensor** — Samsung. Qualidade de dado e
+feature engineering sobre sinal de wearable, e análise segmentada de desempenho
+para achar falha que a média esconde. → `projetos/wearables-samsung-modelos.md`
 
 **Deep learning aplicado a OCR** — Amil. Reconhecimento em documento médico de
 qualidade ruim, com OpenCV no pré-processamento e a decisão central sendo
@@ -45,8 +45,8 @@ o explicaria. Na prática isso aparece em três hábitos:
 
 - **Segmentar antes de acreditar na média.** Modelo com boa métrica agregada e
   falha sistemática numa subpopulação é o caso comum, não a exceção.
-- **Atacar o dado na origem.** Na Samsung, usei física do sensor e teoria de detecção
-  para melhorar o sinal antes do modelo, em vez de compensar ruído com capacidade.
+- **Atacar o dado na origem.** Na Samsung, investi em qualidade de dado e feature
+  engineering antes do modelo, em vez de compensar ruído com capacidade extra de rede.
 - **Escolher a métrica pelo custo do erro.** Em risco de evasão, falso negativo e
   falso positivo têm custos completamente diferentes; onde colocar o corte é decisão
   de produto, não de código. Em OCR de documento médico é a mesma pergunta com outra

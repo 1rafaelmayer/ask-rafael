@@ -24,27 +24,21 @@ matriz de transferência, modelos de osciladores harmônicos acoplados. Também
 benchmark comparativo de softwares comerciais de simulação, no CNPEM.
 → `cargos/cnpem-estagios.md`
 
-**Processamento e análise de sinais** — da análise de dados experimentais de
-microscopia ao feature engineering sobre sinal de sensor em wearables.
-→ `projetos/wearables-samsung-modelos.md`
-
-**Óptica e técnicas de detecção** — aplicadas na Samsung para melhorar a
-qualidade do dado na origem.
+**Processamento e análise de sinais** — na análise de dados experimentais de
+microscopia, durante o doutorado.
 
 **Nanofabricação** — mencionada pelo Prof. Mengkun Liu como parte do meu
 trabalho de ponta a ponta. → `recomendacoes.md`
 
 ## Por que isso é competência profissional, e não passado
 
-Três transferências concretas, todas com evidência:
+Duas transferências concretas, com evidência:
 
-1. **Melhorar dado na origem em vez de compensar depois.** Entender geração e
-   detecção de sinal permitiu atacar a causa do ruído num produto de consumo.
-2. **Validar modelo que preenche o que não foi medido.** Reconstruir imagem de
+1. **Validar modelo que preenche o que não foi medido.** Reconstruir imagem de
    microscopia com ML apresenta o mesmo risco de um LLM gerando texto plausível:
    o resultado convence sem ser verdadeiro. Eu enfrentei essa questão antes de
    ela virar assunto de GenAI. → `projetos/microscopia-acelerada-ml.md`
-3. **Operar sem baseline.** Instrumento novo não tem referência de comparação;
+2. **Operar sem baseline.** Instrumento novo não tem referência de comparação;
    toda anomalia pode ser descoberta ou defeito. Essa é a situação de quem monta
    uma arquitetura que o time nunca montou.
 
