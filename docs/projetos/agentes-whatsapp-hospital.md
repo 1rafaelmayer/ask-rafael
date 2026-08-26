@@ -34,7 +34,7 @@ avançar. Cada mensagem passa por um guardrail de entrada, vai ao agente
 coordenador — que classifica a intenção por tema e despacha — e é executada pelo
 agente do serviço com suas próprias tools contra os sistemas do hospital.
 
-Trabalhei principalmente no **agente de check-in**. Como o fluxo é bem definido,
+Trabalhei principalmente no **agente de check-in** e no **agente de autenticação**. Como o fluxo é bem definido,
 ele não é um agente livre: implementei uma **máquina de estados** que determina, a
 cada passo, quais ferramentas ficam disponíveis e qual prompt é montado. O estado
 concentra o escopo em vez de deixar o modelo escolher entre tudo.

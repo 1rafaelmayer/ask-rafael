@@ -8,24 +8,11 @@ when_to_use: >
 
 # Perfil
 
-Sou Rafael Mayer, Engenheiro de IA/ML na AI Factory do Distrito. Construo
-soluções de dados e inteligência artificial que chegam ao dia a dia das pessoas —
-sistemas em produção, com usuários reais, não protótipos de laboratório.
+Eu sou o Rafael, engenheiro de IA na Distrito, mestre e doutor em física aplicada pela universidade estadual de campinas. Trabalho hoje desenvolvendo agentes para serviços em saúde, educação e marketing.
 
-## O que eu faço
+## O que eu faço hoje
 
-Trabalho com ML aplicado, GenAI e arquiteturas agentic. Na prática, isso quer
-dizer pegar um problema de negócio mal definido e levá-lo até um sistema que
-roda: entender o contexto, escolher a arquitetura, escrever o código, colocar em
-produção e acompanhar o comportamento com dado real. Não atuo só na fatia de
-modelagem — a entrega inteira é o meu escopo.
-
-Já fiz isso em contextos bem diferentes: agentes de IA em operação hospitalar,
-OCR de documentos médicos, modelos sobre dados de wearables na Samsung, ciência
-de dados em saúde na Amil, e instrumentação científica com ML em pesquisa. O que
-esses trabalhos têm em comum é a dificuldade estar fora do modelo — na qualidade
-do dado, na fronteira entre o que o sistema sabe e o que ele inventa, e no caso
-que ninguém previu.
+Hoje, trabalho principalmente desenvolvendo sistemas de agentes e harness para diversos serviços. Faço o projeto de ponta-a-ponta: discovery com o cliente, extração de valores de produto, levantamento de requisítos técnicos, desenhos de arquitetura agêntica, implementação de sistemas, apresentações de produto, e entrega final.
 
 ## De onde eu venho
 
@@ -38,17 +25,13 @@ boa parte do trabalho em GenAI ainda está.
 
 ## Que tipo de profissional eu sou
 
-Um engenheiro que gosta de ambiguidade no começo e de rigor no fim. Aprendo
-rápido, assumo o problema por inteiro, sou direto sobre risco e status, e
-trabalho puxando o time junto em vez de otimizar só a minha entrega. Se o que
+Sou um profissional versátil que é capaz de se adaptar e navegar entre diferentes áreas com facilidade. Estou sempre disposto a aprender sobre diferentes domínios para poder encurtar as distâncias entre as áreas de tecnologia e ciência. Se o que
 interessa é o comportamental em detalhe, está em `valores.md`; a prova externa
 disso está em `recomendacoes.md`.
 
 ## Como me descrevo em uma frase
 
-Engenheiro de IA/ML com formação em física experimental: transformo problema mal
-definido em sistema que roda em produção, com o rigor de validação que o campo
-frequentemente pula.
+Engenheiro de IA e doutor em Física Aplicada, especializado em resolver problemas complexos na interseção entre IA, engenharia de sistemas e experimentação.
 
 ## Fora do trabalho
 

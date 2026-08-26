@@ -400,32 +400,12 @@ h2 { font-family: var(--serif); font-size: var(--t-h2); max-width: 30ch; }
   .skills-cols { grid-template-columns: 1fr; gap: clamp(14px, 3vh, 26px); }
 }
 
-/* Projects: compact cards. The whole card is the link; hover is the only
-   hint it's clickable — elevation plus the title picking up the accent. */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: clamp(10px, 2vh, 22px); margin-top: clamp(10px, 2.5vh, 30px); }
-.proj-card {
-  display: flex; flex-direction: column; border: 0;
-  background: var(--paper); border-radius: 14px;
-  box-shadow: 0 0 0 1px var(--rule);
-  overflow: hidden; transition: transform 160ms ease, box-shadow 160ms ease;
-}
-.proj-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 0 1px var(--rule-2), 0 10px 24px -14px rgba(13, 36, 68, 0.45);
-  color: inherit;
-}
-.proj-thumb {
-  display: flex; align-items: flex-end; aspect-ratio: 16 / 10; max-height: 14vh;
-  padding: clamp(8px, 1.4vh, 12px) 14px; font: 500 var(--t-micro) var(--mono); color: var(--paper);
-  background: linear-gradient(155deg, var(--accent) 0%, var(--accent-2) calc(50% + var(--i, 1) * 6%), var(--bubble) 100%);
-}
-.proj-tag { font: 500 var(--t-micro) var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); padding: clamp(8px, 1.4vh, 14px) 16px 0; }
-.proj-card h3 { font-family: var(--serif); font-size: var(--t-h3); padding: 6px 16px 0; }
-.proj-card:hover h3 { color: var(--accent); }
-.proj-card p {
-  font-size: var(--t-small); color: var(--ink-2); padding: 6px 16px clamp(8px, 1.4vh, 16px); margin: 0;
-  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-}
+/* Projects: plain stacked text blocks, no cards, no imagery. */
+.proj-list { display: flex; flex-direction: column; gap: clamp(10px, 2vh, 18px); margin-top: clamp(10px, 2.5vh, 24px); }
+.proj-block { padding-top: clamp(10px, 2vh, 18px); border-top: 1px solid var(--rule); }
+.proj-block:first-child { padding-top: 0; border-top: 0; }
+.proj-block h3 { font-family: var(--serif); font-size: var(--t-h3); margin-bottom: 4px; }
+.proj-block p { font-size: var(--t-small); color: var(--ink-2); margin: 0; max-width: none; }
 
 blockquote { margin: 0; font-family: var(--serif); font-size: 17px; line-height: 1.55; color: var(--ink-2); }
 blockquote p { max-width: none; }
@@ -522,7 +502,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 .tl-item.is-active .tl-who { color: var(--ink); }
 .tl-item.is-active .tl-when { color: var(--accent); }
 
-.tl-body { font-size: clamp(13.5px, 1.9vh, 14.5px); line-height: 1.42; }
+.tl-body { font-size: clamp(15px, 2.2vh, 16.5px); line-height: 1.45; }
 .tl-body li { margin-bottom: clamp(2px, 0.6vh, 6px); }
 /* No ch cap here: the column is already sized by the grid (the image takes
    a fixed width beside it), so let text use all of it — capping it below
@@ -638,8 +618,8 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div>
         <h1>Rafael Mayer</h1>
         <hr>
-        <p class="role" data-lang="en"><em>AI/ML Engineer</em><br>Agentic systems in production.<br>Ten years in experimental physics before that.</p>
-        <p class="role" data-lang="pt"><em>Engenheiro de IA/ML</em><br>Sistemas agentic em produção.<br>Dez anos em física experimental antes disso.</p>
+        <p class="role" data-lang="en"><em>PhD, AI Engineer</em><br>AWS &amp; Claude Certified</p>
+        <p class="role" data-lang="pt"><em>PhD, Engenheiro de IA</em><br>AWS &amp; Claude Certified</p>
         <div class="out">
           <a href="https://www.linkedin.com/in/rafael-alves-mayer/" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://github.com/1rafaelmayer" target="_blank" rel="noopener">GitHub</a>
@@ -701,23 +681,25 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
     <div class="split-col">
       <h2 data-lang="en">About me</h2>
       <h2 data-lang="pt">Sobre mim</h2>
-      <p data-lang="en">AI/ML engineer with a physicist's validation habits. My scope is the whole delivery: taking an ill-defined business problem, choosing the architecture, writing the code, shipping it, and watching how it behaves on real data. Ten years in experimental physics came before that.</p>
-      <p data-lang="pt">Engenheiro de IA/ML com hábitos de validação de físico. Meu escopo é a entrega inteira: pegar um problema de negócio mal definido, escolher a arquitetura, escrever o código, colocar no ar e acompanhar o comportamento com dado real. Antes disso, dez anos em física experimental.</p>
+      <p data-lang="en">AI engineer at Distrito, building agent systems end-to-end — discovery, architecture, implementation, and delivery — for clients in healthcare, education, and marketing. A versatile professional comfortable moving across technical and business domains.</p>
+      <p data-lang="en">I bring strong client communication, project ownership, and comfort working without a playbook. Outside of work, I play guitar in a rock band, play volleyball, write about philosophy, and tinker with 3D printing.</p>
+      <p data-lang="pt">Engenheiro de IA na Distrito, desenvolvo sistemas de agentes de ponta a ponta — discovery, arquitetura, implementação e entrega — para clientes em saúde, educação e marketing. Sou um profissional versátil, confortável transitando entre domínios técnicos e de negócio.</p>
+      <p data-lang="pt">Combino comunicação forte com cliente, ownership de projeto e conforto trabalhando sem manual de instruções. Fora do trabalho, toco guitarra numa banda de rock, jogo vôlei, escrevo sobre filosofia e mexo com impressão 3D.</p>
     </div>
     <div class="split-col split-col-divider">
       <h2 data-lang="en">Milestones</h2>
       <h2 data-lang="pt">Marcos</h2>
       <ul data-lang="en">
-        <li><b>Multi-agent systems in production</b> — a WhatsApp check-in agent serving thousands of hospital patients a month.</li>
-        <li><b>End-to-end ownership</b> — sole AI engineer on client projects: architecture, implementation, deploy, observability, and the client conversation itself.</li>
-        <li><b>Where the hard part actually is</b> — not the model, but data quality, the boundary between what a system knows and what it invents, and the case nobody planned for.</li>
-        <li><b>Ten years of research behind it</b> — PhD in Applied Physics, a year at Stony Brook, a Nano Letters issue cover, and an ML-accelerated microscopy technique.</li>
+        <li>I build <a href="https://www.distrito.me/blog/case-ai-factory-multiagentes-ia-rede-hospitalar?utm_source=site-distrito&utm_medium=&utm_campaign=&utm_term=&utm_content=home-botao" target="_blank" rel="noopener"><b>multi-agent systems in production</b></a>, including a WhatsApp agent serving thousands of hospital patients a month.</li>
+        <li>Built data pipelines and evaluation frameworks that shipped <a href="https://news.samsung.com/br/recurso-de-apneia-do-sono-desenvolvido-no-brasil-e-presente-no-galaxy-watch-da-samsung-e-o-primeiro-de-sua-categoria-autorizado-pela-fda-dos-eua" target="_blank" rel="noopener"><b>sleep-detection neural network models on a generation of Galaxy Watches</b></a>.</li>
+        <li>Developed an ML technique that <a href="https://pubs.acs.org/nalefd/article-abstract/24/7/2149/148520/Accelerated-Nano-Optical-Imaging-through-Sparse?redirectedFrom=fulltext" target="_blank" rel="noopener"><b>sped up by 10x</b></a> the extraction of physical properties from sensitive materials.</li>
+        <li>Frontier experimental physics: commissioned the <a href="https://pubmed.ncbi.nlm.nih.gov/38630437/" target="_blank" rel="noopener"><b>Imbuia beamline at Sirius</b></a> and a <a href="https://pubs.acs.org/nalefd/article-abstract/25/35/13079/3753020/Magnetically-Tunable-Polariton-Cavities-in-van-der?redirectedFrom=fulltext" target="_blank" rel="noopener"><b>magnetic s-SNOM</b></a> at Stony Brook (NY).</li>
       </ul>
       <ul data-lang="pt">
-        <li><b>Sistemas multiagente em produção</b> — agente de check-in via WhatsApp atendendo milhares de pacientes por mês.</li>
-        <li><b>Responsabilidade fim a fim</b> — engenheiro de IA único em projeto de cliente: arquitetura, implementação, deploy, observabilidade e a conversa com o cliente.</li>
-        <li><b>Onde a dificuldade realmente está</b> — não no modelo, mas na qualidade do dado, na fronteira entre o que o sistema sabe e o que ele inventa, e no caso que ninguém previu.</li>
-        <li><b>Dez anos de pesquisa por trás</b> — doutorado em física aplicada, um ano em Stony Brook, capa de edição do Nano Letters e uma técnica de microscopia acelerada por ML.</li>
+        <li>Desenvolvo <a href="https://www.distrito.me/blog/case-ai-factory-multiagentes-ia-rede-hospitalar?utm_source=site-distrito&utm_medium=&utm_campaign=&utm_term=&utm_content=home-botao" target="_blank" rel="noopener"><b>sistemas multiagente em produção</b></a>, incluindo um agente de WhatsApp que atende milhares de pacientes por mês em um hospital.</li>
+        <li>Construí pipelines de dados e frameworks de avaliação que embarcaram <a href="https://news.samsung.com/br/recurso-de-apneia-do-sono-desenvolvido-no-brasil-e-presente-no-galaxy-watch-da-samsung-e-o-primeiro-de-sua-categoria-autorizado-pela-fda-dos-eua" target="_blank" rel="noopener"><b>modelos de redes neurais para detecção de sono em uma geração de Galaxy Watches</b></a>.</li>
+        <li>Desenvolvi uma técnica de ML que <a href="https://pubs.acs.org/nalefd/article-abstract/24/7/2149/148520/Accelerated-Nano-Optical-Imaging-through-Sparse?redirectedFrom=fulltext" target="_blank" rel="noopener"><b>acelerou em 10x</b></a> a extração de propriedades físicas de materiais sensíveis.</li>
+        <li>Pesquisa de ponta em física experimental: comissionamento da <a href="https://pubmed.ncbi.nlm.nih.gov/38630437/" target="_blank" rel="noopener"><b>Linha de Luz Imbuia no Sirius</b></a> e <a href="https://pubs.acs.org/nalefd/article-abstract/25/35/13079/3753020/Magnetically-Tunable-Polariton-Cavities-in-van-der?redirectedFrom=fulltext" target="_blank" rel="noopener"><b>s-SNOM magnético</b></a> em Stony Brook (NY).</li>
       </ul>
     </div>
   </div>
@@ -768,46 +750,34 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
   <p class="label" data-lang="en">Selected projects</p>
   <p class="label" data-lang="pt">Projetos em destaque</p>
 
-  <div class="projects-grid">
+  <div class="proj-list">
 
-    <a class="proj-card" href="/projects/hospital-agents.html" target="_blank" rel="noopener" data-lang="en">
-      <span class="proj-thumb" style="--i:1" aria-hidden="true">01</span>
-      <span class="proj-tag">Distrito · in production</span>
+    <div class="proj-block" data-lang="en">
       <h3>Hospital agents over WhatsApp</h3>
-      <p>A large São Paulo hospital needed routine services on WhatsApp. The dominant challenge isn't conversation: each service touches a different internal system with its own rules, and the patient doesn't know — and shouldn't have to know — which service they are asking for.</p>
-    </a>
-    <a class="proj-card" href="/projects/hospital-agents.html" target="_blank" rel="noopener" data-lang="pt">
-      <span class="proj-thumb" style="--i:1" aria-hidden="true">01</span>
-      <span class="proj-tag">Distrito · em produção</span>
+      <p>A large São Paulo hospital needed to offer routine services (check-in, quotes, exams, appointments) over WhatsApp, without the patient needing to know which internal system handles their request. I designed a multi-agent system with a coordinator that routes by intent to service-specific agents; for the check-in agent, my main focus, I built a state machine that scopes tools and prompt at each step, with state persisted in PostgreSQL. <b>Stack:</b> LangChain/LangGraph, LangSmith, FastAPI, PostgreSQL, Azure Container Apps. In production, serving thousands of patients a month.</p>
+    </div>
+    <div class="proj-block" data-lang="pt">
       <h3>Agentes hospitalares no WhatsApp</h3>
-      <p>Um hospital de grande porte em São Paulo precisava oferecer serviços de rotina por WhatsApp. O desafio dominante não é conversar: cada serviço toca um sistema interno diferente, com regra própria, e o paciente não sabe — nem deveria saber — qual serviço está pedindo.</p>
-    </a>
+      <p>Um hospital de grande porte em São Paulo precisava oferecer serviços de rotina (check-in, orçamento, exame, consulta) por WhatsApp, sem que o paciente precisasse saber qual sistema interno atende seu pedido. Desenhei um sistema multiagente com um coordenador que roteia por intenção e agentes especializados por serviço; no agente de check-in, minha parte principal, implementei uma máquina de estados que restringe ferramentas e prompt a cada etapa, com estado persistido no PostgreSQL. <b>Stack:</b> LangChain/LangGraph, LangSmith, FastAPI, PostgreSQL, Azure Container Apps. Em produção, atendendo milhares de pacientes por mês.</p>
+    </div>
 
-    <a class="proj-card" href="/projects/synthetic-jury.html" target="_blank" rel="noopener" data-lang="en">
-      <span class="proj-thumb" style="--i:2" aria-hidden="true">02</span>
-      <span class="proj-tag">Distrito · daily use</span>
-      <h3>Synthetic jury</h3>
-      <p>A campaign research platform: clustering the audience base to find profiles that actually exist in the data, personas anchored to those clusters rather than invented, and simulated interviews against advertising stimuli.</p>
-    </a>
-    <a class="proj-card" href="/projects/synthetic-jury.html" target="_blank" rel="noopener" data-lang="pt">
-      <span class="proj-thumb" style="--i:2" aria-hidden="true">02</span>
-      <span class="proj-tag">Distrito · uso diário</span>
-      <h3>Júri sintético</h3>
-      <p>Plataforma de pesquisa de campanha: clusterização da base de audiência para achar perfis que existem no dado, personas ancoradas nesses clusters em vez de inventadas, e entrevistas simuladas contra estímulos publicitários.</p>
-    </a>
+    <div class="proj-block" data-lang="en">
+      <h3>Synthetic jury for campaign analysis</h3>
+      <p>Testing an ad campaign with a real audience is expensive and slow. I built the entire AI pipeline of a synthetic-jury platform, blending ML and GenAI: k-modes clustering (scikit-learn) finds the audience profiles that actually exist in the data, each synthetic persona is anchored to one of those real clusters, and an AI agent handles the enrichment — biography and campaign-specific personalization — before it enters simulated interviews. <b>Stack:</b> FastAPI, PostgreSQL, Celery + Redis, scikit-learn, Google Gemini (pro/flash per step). In daily use for real campaigns.</p>
+    </div>
+    <div class="proj-block" data-lang="pt">
+      <h3>Júri sintético para análise de campanhas</h3>
+      <p>Testar campanha publicitária com público real é caro e lento. Construí o fluxo de IA completo de uma plataforma de júri sintético, que mistura ML e GenAI: k-modes (scikit-learn) clusteriza a audiência para achar os perfis que de fato existem nos dados, cada persona sintética é ancorada em um desses clusters reais, e um agente de IA faz o enriquecimento — biografia e personalização da persona com os dados da campanha — antes de ela entrar nas entrevistas simuladas. <b>Stack:</b> FastAPI, PostgreSQL, Celery + Redis, scikit-learn, Google Gemini (pro/flash por etapa). Em uso diário para campanhas reais.</p>
+    </div>
 
-    <a class="proj-card" href="/projects/ml-microscopy.html" target="_blank" rel="noopener" data-lang="en">
-      <span class="proj-thumb" style="--i:3" aria-hidden="true">03</span>
-      <span class="proj-tag">PhD · published</span>
+    <div class="proj-block" data-lang="en">
       <h3>ML-accelerated microscopy</h3>
-      <p>Sparse sampling plus Gaussian-process regression to reconstruct s-SNOM images from a fraction of the measurements — published in Nano Letters 24(7), 2149 (2024).</p>
-    </a>
-    <a class="proj-card" href="/projects/ml-microscopy.html" target="_blank" rel="noopener" data-lang="pt">
-      <span class="proj-thumb" style="--i:3" aria-hidden="true">03</span>
-      <span class="proj-tag">Doutorado · publicado</span>
-      <h3>Microscopia acelerada por ML</h3>
-      <p>Amostragem esparsa com regressão por processo gaussiano para reconstruir imagens de s-SNOM a partir de uma fração das medidas — publicada na Nano Letters 24(7), 2149 (2024).</p>
-    </a>
+      <p>High-resolution microscopy images are built point by point, which makes each scan slow and competes for time on expensive, high-demand equipment. I used machine learning to speed this up: measuring only a fraction of the points and using a Gaussian process model to reconstruct the rest of the image, with a statistical read on where the model is more or less confident. I ran a hyperparameter search to pick the kernel that best captured the pattern for each sample type, which was decisive for reconstruction quality. Published in <i>Nano Letters</i> 24(7), 2149 (2024).</p>
+    </div>
+    <div class="proj-block" data-lang="pt">
+      <h3>Microscopia acelerada por machine learning</h3>
+      <p>Imagens de microscopia em altíssima resolução são feitas ponto a ponto, e por isso demoram — cada imagem nova disputa tempo de um equipamento caro e concorrido. Usei machine learning para acelerar esse processo: medindo só uma fração dos pontos e usando um modelo de processos gaussianos para reconstruir o restante da imagem, com uma medida estatística de onde o modelo está mais ou menos confiante. Rodei uma otimização de hiperparâmetros para escolher o kernel que melhor captura o padrão de cada tipo de amostra, decisiva para a qualidade da reconstrução. Publicado na <i>Nano Letters</i> 24(7), 2149 (2024).</p>
+    </div>
 
   </div>
 </div></section>
@@ -1010,6 +980,9 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
             <li>Ajudei a escolher o modelo em uso; apoiei detecção de fraude em milhares de documentos.</li>
           </ul>
         </div>
+        <figure class="tl-shot">
+          <div class="tl-shot-img"><img src="/timeline/amil.jpg" alt="" loading="lazy" onerror="this.closest('figure').remove()"></div>
+        </figure>
       </div>
     </article>
 
