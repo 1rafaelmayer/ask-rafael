@@ -11,28 +11,41 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
 /* ============================================================
    Tokens. Light is the base; dark redefines only what changes.
+   Palette and single-face type system carried over from the
+   approved hero mockup, applied across the whole page.
    ============================================================ */
 :root {
-  --paper:      #f5f9fc;
-  --paper-2:    #eaf1f8;
+  --paper:      #cdd6dd;
+  --paper-2:    #dfeaf5;
   --card:       #c9dced;
-  --card-border:#0d2444;
-  --ink:        #0d2038;
-  --ink-2:      #3c5978;
-  --ink-3:      #7891ab;
-  --rule:       #9fbedb;
-  --rule-2:     #7fa2c4;
-  --accent:     #1c4074;
-  --accent-2:   #4c6f96;
-  --accent-bg:  #dfeaf5;
-  --bubble:     #588ea2;
+  --card-border:#233557;
+  --ink:        #071d3a;
+  --ink-2:      #1c4074;
+  --ink-3:      #51769f;
+  --rule:       #a9bdd0;
+  --rule-2:     #7f97ac;
+  --accent:     #1b3f6f;
+  --accent-2:   #1c4074;
+  --accent-bg:  #c1d8e9;
+  --bubble:     #51769f;
 
-  --serif: "Newsreader", Iowan Old Style, Charter, Georgia, serif;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  --nav-bg:     #071d3a;
+  --nav-ink:    #c1d8e9;
+  --btn-bg:     #1b3f6f;
+  --btn-ink:    #c1d8e9;
+  --input-outline: #233557;
+  --input-fill:    #2d4b6e;
+  --input-ink:     #eaf1f8;
+
+  /* One face for the whole page, standing in for the Corbel of the original
+     mockup; --serif is kept as a token (rather than rewritten at each call
+     site) so every heading that reached for it gets the new face too. */
+  --serif: "Nunito Sans", Corbel, Candara, "Segoe UI", Optima, sans-serif;
+  --sans:  "Nunito Sans", Corbel, Candara, "Segoe UI", Optima, sans-serif;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   /* One typographic scale, used everywhere. */
@@ -51,17 +64,25 @@
   :root {
     --paper:      #06101d;
     --paper-2:    #0b1826;
-    --card:       #12233a;
-    --card-border:#2d4b6e;
+    --card:       #0d2444;
+    --card-border:#3c6090;
     --ink:        #eaf1f8;
     --ink-2:      #a9c0d6;
     --ink-3:      #6f8aa8;
     --rule:       #2a4568;
     --rule-2:     #3c6090;
-    --accent:     #7fb2e8;
-    --accent-2:   #5c86ab;
+    --accent:     #2d4b6e;
+    --accent-2:   #3c6090;
     --accent-bg:  #16273f;
-    --bubble:     #6fa8c2;
+    --bubble:     #5c86ab;
+
+    --nav-bg:     #050f1c;
+    --nav-ink:    #c1d8e9;
+    --btn-bg:     #2d4b6e;
+    --btn-ink:    #eaf1f8;
+    --input-outline: #3c6090;
+    --input-fill:    #16273f;
+    --input-ink:     #eaf1f8;
   }
 }
 
@@ -84,6 +105,8 @@ body {
 html[data-ui-lang="en"] [data-lang="pt"],
 html[data-ui-lang="pt"] [data-lang="en"] { display: none !important; }
 
+#top, section[id] { scroll-margin-top: var(--nav-h); }
+
 a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule-2); }
 a:hover { border-bottom-color: var(--accent); color: var(--accent); }
 h1, h2, h3 { margin: 0; font-weight: 400; letter-spacing: -0.012em; line-height: 1.18; }
@@ -105,26 +128,39 @@ b, strong { font-weight: 560; }
 }
 
 /* ============================================================
-   Language switch
+   Top nav — persistent dark-navy bar, per the mockup: the five
+   sections always reachable, the language switch folded into it.
    ============================================================ */
-.langs { position: absolute; top: 22px; right: clamp(20px, 4vw, 44px); z-index: 30; display: flex; gap: 3px; }
+:root { --nav-h: 64px; }
+.topnav {
+  position: sticky; top: 0; z-index: 40;
+  height: var(--nav-h);
+  background: var(--nav-bg);
+}
+.topnav-inner { height: 100%; display: flex; align-items: center; justify-content: center; gap: clamp(16px, 3vw, 28px); }
+.topnav-links { display: flex; align-items: center; gap: clamp(10px, 2vw, 20px); font-size: 15px; color: var(--nav-ink); overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+.topnav-links::-webkit-scrollbar { display: none; }
+.topnav-links a { border: 0; color: var(--nav-ink); opacity: 0.85; }
+.topnav-links a:hover { color: #ffffff; opacity: 1; }
+.topnav-links .dot { opacity: 0.4; }
+.langs { position: absolute; top: 50%; right: clamp(20px, 4vw, 44px); transform: translateY(-50%); display: flex; gap: 3px; }
 .langbtn {
   font: 500 var(--t-micro) var(--mono); letter-spacing: 0.1em;
-  background: none; border: 0; color: var(--ink-3);
+  background: none; border: 0; color: var(--nav-ink); opacity: 0.7;
   padding: 5px 8px; border-radius: 6px; cursor: pointer;
 }
-.langbtn[aria-pressed="true"] { color: var(--ink); background: var(--paper-2); }
+.langbtn[aria-pressed="true"] { opacity: 1; background: rgba(255,255,255,0.12); }
 
 /* ============================================================
-   Hero — exactly one viewport. Nothing here moves when a
-   question is asked: only the right column's content changes.
+   Hero — exactly one viewport (minus the nav). Nothing here
+   moves when a question is asked: only the right column changes.
    ============================================================ */
 #top {
   position: relative;
-  min-height: 100svh;
+  min-height: calc(100svh - var(--nav-h));
   display: flex;
   flex-direction: column;
-  padding: clamp(64px, 9vh, 104px) 0 0;
+  padding: clamp(28px, 5vh, 56px) 0 0;
 }
 #top > .wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 
@@ -145,24 +181,31 @@ b, strong { font-weight: 560; }
 
 /* --- left: identity ------------------------------------------------------ */
 .me img {
-  display: block; width: 100%; max-width: var(--col);
+  display: block; width: 100%;
+  /* Capped by viewport height too, not just the column width: on a short
+     screen the portrait shrinks so the whole hero still fits in one view
+     instead of pushing the chat column below the fold. */
+  max-width: min(var(--col), 32vh);
   /* height:auto is load-bearing, not tidiness: the height="296" attribute is a
      presentational hint that wins whenever author CSS leaves height unset, so
      narrowing the width alone stretched the portrait into a 92x296 sliver. It
      only looked right on desktop because the width happened to be 296 too. */
   height: auto; aspect-ratio: 1;
   object-fit: cover; border-radius: 50%; background: var(--paper-2);
-  box-shadow: 0 0 0 1px var(--rule);
+  /* A solid ring plus a soft cast shadow, so a light or washed-out photo
+     still reads as a distinct disc against the page rather than fading
+     into it. */
+  box-shadow: 0 0 0 3px var(--ink), 0 10px 26px -14px rgba(7, 29, 58, 0.45);
 }
 .me h1 {
   font-family: var(--serif);
   font-size: var(--t-display);
-  margin: 20px 0 0;
+  margin: clamp(8px, 2.2vh, 20px) 0 0;
 }
-.me hr { border: 0; border-top: 1px solid var(--rule); margin: 16px 0; }
+.me hr { border: 0; border-top: 1px solid var(--rule); margin: clamp(8px, 1.8vh, 16px) 0; }
 .me .role { font-size: var(--t-small); color: var(--ink-2); line-height: 1.5; }
 .me .role em { font-style: normal; color: var(--ink); }
-.me .out { margin-top: 18px; display: flex; gap: 14px; font-size: var(--t-small); }
+.me .out { margin-top: clamp(8px, 2vh, 18px); display: flex; gap: 14px; font-size: var(--t-small); }
 .me .out a { border-bottom: 0; color: var(--ink-2); }
 .me .out a:hover { color: var(--accent); }
 
@@ -173,39 +216,39 @@ form.ask { position: relative; flex: none; }
 form.ask input {
   width: 100%;
   font: 400 clamp(17px, 1.5vw, 19px) var(--sans);
-  color: var(--ink);
-  background: var(--paper-2);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  padding: 18px 60px 18px 20px;
+  color: var(--input-ink);
+  background: var(--input-fill);
+  border: 2px solid var(--input-outline);
+  border-radius: 999px;
+  padding: clamp(12px, 2.2vh, 18px) 64px clamp(12px, 2.2vh, 18px) 26px;
   transition: border-color 140ms ease, background 140ms ease;
 }
-form.ask input::placeholder { color: var(--ink-3); }
+form.ask input::placeholder { color: var(--input-ink); opacity: 0.65; }
 form.ask input:focus {
   outline: none;
-  border-color: var(--accent);
-  background: var(--paper);
+  border-color: var(--rule-2);
 }
 form.ask button {
-  position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
-  width: 38px; height: 38px; border-radius: 50%;
-  border: 0; background: var(--accent); color: var(--paper);
+  position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 0; background: var(--btn-bg); color: var(--btn-ink);
   font-size: 17px; line-height: 1; cursor: pointer;
   transition: opacity 140ms ease;
 }
-form.ask button:disabled { opacity: 0.28; cursor: default; }
+/* Dimmed both while a question is in flight and while the box is empty, so
+   an idle send button never looks clickable when nothing would happen. */
+form.ask button:disabled { opacity: 0.35; cursor: default; }
 
-/* Suggestions: visible until the first question, then gone for good. */
-.chips { margin-top: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+/* Suggestions: visible until the first question, then gone for good. Filled
+   pills rather than a quiet link list — this is most people's actual first
+   move, not a fallback to the input above it. */
+.chips { margin-top: clamp(8px, 2vh, 16px); display: flex; flex-direction: column; align-items: stretch; gap: clamp(6px, 1.4vh, 10px); }
 .chip {
-  font: 400 var(--t-small) var(--sans);
-  color: var(--ink-2); background: none; border: 0;
-  padding: 7px 0; cursor: pointer; text-align: left;
-  border-bottom: 1px solid transparent;
+  font: 600 var(--t-small) var(--sans);
+  color: var(--btn-ink); background: var(--btn-bg); border: 0;
+  padding: clamp(8px, 1.6vh, 13px) 22px; border-radius: 999px; cursor: pointer; text-align: left;
 }
-.chip { max-width: 100%; }
-.chip::before { content: "→ "; color: var(--accent-2); }
-.chip:hover { color: var(--accent); }
+.chip:hover { background: var(--accent-2); color: var(--btn-ink); }
 body[data-state="active"] .chips { display: none; }
 
 /* The exchange. One at a time: a new question replaces the last. */
@@ -254,20 +297,32 @@ body[data-state="active"] .exchange { display: flex; }
 .err { color: #b3261e; }
 @media (prefers-color-scheme: dark) { .err { color: #ff9382; } }
 
-.notice { flex: none; padding-top: 18px; font-size: var(--t-micro); color: var(--ink-3); max-width: 56ch; }
+.notice { flex: none; padding-top: clamp(8px, 2vh, 18px); font-size: var(--t-micro); color: var(--ink-3); max-width: 56ch; }
 
-/* --- the affordance down to the CV -------------------------------------- */
-.down { flex: none; padding: clamp(20px, 4vh, 40px) 0 26px; }
-.down a {
-  border: 0; font: 500 var(--t-micro) var(--mono); letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--ink-2);
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 11px 18px 11px 15px; border-radius: 999px;
-  background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule);
+/* --- the affordance down to the CV --------------------------------------
+   Icon-only, on purpose: the chat is the primary move on this page, so the
+   CV link stays a quiet secondary action. Hovering (or focusing) it names
+   itself via a tooltip instead of carrying a permanent text label. */
+.down { flex: none; padding: clamp(10px, 2.5vh, 40px) 0 clamp(10px, 2vh, 26px); display: flex; }
+.down .cv-link { position: relative; display: inline-flex; }
+.down .cv-btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--btn-bg); color: var(--btn-ink); cursor: pointer;
 }
-.down a:hover { color: var(--ink); box-shadow: 0 0 0 1px var(--rule-2); }
-.down .arrow { animation: nudge 2.6s ease-in-out infinite; }
+.down .cv-btn svg { animation: nudge 2.6s ease-in-out infinite; }
 @keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+.down .cv-tip {
+  position: absolute; bottom: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--nav-bg); color: var(--nav-ink);
+  font: 500 var(--t-micro) var(--mono); letter-spacing: 0.1em; text-transform: uppercase;
+  white-space: nowrap; padding: 8px 14px; border-radius: 999px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+.down .cv-link:hover .cv-tip,
+.down .cv-btn:focus-visible ~ .cv-tip { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ============================================================
    The CV. No boxes: a two-column meta/content grid, hairlines
@@ -276,20 +331,33 @@ body[data-state="active"] .exchange { display: flex; }
 section { border-top: 1px solid var(--rule); padding: clamp(46px, 7vh, 76px) 0; }
 section > .wrap > .label { margin-bottom: clamp(24px, 4vh, 38px); }
 
-/* The five card sections: Home, Summary, Skills, Projects, Timeline. Each is
-   a solid blue panel floating on the paper background, per the wireframe —
-   the rest of the page (footer) keeps the plain hairline treatment above. */
-section.card-section { border-top: 0; padding: clamp(20px, 4vh, 40px) 0; }
-.section-card {
-  background: var(--card);
-  border: 1.5px solid var(--card-border);
-  border-radius: 20px;
-  padding: clamp(32px, 6vw, 64px) clamp(24px, 5vw, 56px);
-  box-shadow: 0 1px 0 rgba(13, 36, 68, 0.05);
+/* Home, Summary, Skills, Projects, Timeline: flat on the page background,
+   like the mockup — no floating boxed panels.
+
+   Each is also capped at one viewport (minus the nav): the outer <section>
+   is exactly that tall and centers its content, so scrolling the page moves
+   between sections rather than through one. Every margin/gap/padding inside
+   is a vh-based clamp for the same reason — a section's content has to
+   shrink to fit that fixed box rather than push past it. The .wrap itself
+   keeps a max-height + auto-scroll only as a last resort on a viewport too
+   short for even the smallest sizes below to hold everything at once. */
+section.card-section {
+  border-top: 1px solid var(--rule);
+  padding: 0;
+  min-height: calc(100svh - var(--nav-h));
+  display: flex;
+  align-items: center;
 }
-.section-card > .label { margin-bottom: clamp(24px, 4vh, 38px); }
+section.card-section > .wrap {
+  width: 100%;
+  max-height: calc(100svh - var(--nav-h) - 2px);
+  overflow-y: auto;
+  padding-top: clamp(20px, 4vh, 44px);
+  padding-bottom: clamp(20px, 4vh, 44px);
+}
+.section-card > .label { margin-bottom: clamp(10px, 2vh, 24px); }
 h2 { font-family: var(--serif); font-size: var(--t-h2); max-width: 30ch; }
-.lede { font-family: var(--serif); font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 54ch; margin-top: 14px; }
+.lede { font-family: var(--serif); font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 54ch; margin-top: clamp(6px, 1.5vh, 14px); }
 
 .row {
   display: grid;
@@ -304,8 +372,8 @@ h2 { font-family: var(--serif); font-size: var(--t-h2); max-width: 30ch; }
 .row ul, .row p { font-size: var(--t-small); }
 
 /* Summary: About me / Milestones, two equal columns on a shared vertical rule. */
-.split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-top: 8px; }
-.split h2 { font-size: var(--t-h3); margin-bottom: 14px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-top: clamp(4px, 1vh, 8px); }
+.split h2 { font-size: var(--t-h3); margin-bottom: clamp(6px, 1.4vh, 14px); }
 .split-col-divider { border-left: 1px solid var(--card-border); padding-left: var(--gap); }
 .split ul { margin: 0; }
 .split ul li { font-size: var(--t-small); }
@@ -314,38 +382,22 @@ h2 { font-family: var(--serif); font-size: var(--t-h2); max-width: 30ch; }
   .split-col-divider { border-left: 0; padding-left: 0; border-top: 1px solid var(--card-border); padding-top: 20px; }
 }
 
-/* Skills: floating bubbles in up to three groups, certificates and languages
-   in a smaller column beside them. */
-.skills-layout { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: var(--gap); align-items: start; margin-top: 30px; }
-.skill-groups { display: flex; flex-wrap: wrap; gap: 34px 44px; }
-.skill-group { flex: 1 1 260px; }
+/* Skills: a dense two-column list — soft skills beside the technical stack —
+   rather than floating tag bubbles, which wrap unpredictably and cost far
+   more vertical space than the same words in a line of text. */
+.skills-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); align-items: start; margin-top: clamp(10px, 2.5vh, 30px); }
+.skills-col { display: flex; flex-direction: column; gap: clamp(6px, 1.4vh, 14px); }
 .group-label { font-family: var(--serif); font-size: var(--t-h3); }
-.bubble-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
-.bubble {
-  display: inline-flex; align-items: center; justify-content: center;
-  border: 1.5px solid var(--bubble); border-radius: 999px;
-  color: var(--ink); font-size: var(--t-small); line-height: 1.2;
-  padding: 8px 16px; background: var(--paper);
-  animation: bubble-float 4.6s ease-in-out infinite;
-}
-.bubble.hot { border-width: 2px; font-weight: 560; padding: 11px 20px; font-size: var(--t-body); background: var(--accent-bg); }
-.bubble-cluster .bubble:nth-child(3n) { animation-delay: .3s; }
-.bubble-cluster .bubble:nth-child(3n+1) { animation-delay: .9s; }
-.bubble-cluster .bubble:nth-child(3n+2) { animation-delay: 1.5s; }
-@keyframes bubble-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-
-.skills-side { display: flex; flex-direction: column; gap: 30px; }
-.skills-side h3 { font-family: var(--serif); font-size: var(--t-h3); margin-bottom: 10px; }
-.skills-side ul { margin: 0; }
-.skills-side li { font-size: var(--t-small); margin-bottom: 6px; }
+.skill-line { font-size: clamp(13px, 1.8vh, var(--t-small)); line-height: 1.45; color: var(--ink-2); }
+.skill-line b { color: var(--ink); }
 
 @media (max-width: 860px) {
-  .skills-layout { grid-template-columns: 1fr; }
+  .skills-cols { grid-template-columns: 1fr; gap: clamp(14px, 3vh, 26px); }
 }
 
 /* Projects: compact cards. The whole card is the link; hover is the only
    hint it's clickable — elevation plus the title picking up the accent. */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; margin-top: 30px; }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: clamp(10px, 2vh, 22px); margin-top: clamp(10px, 2.5vh, 30px); }
 .proj-card {
   display: flex; flex-direction: column; border: 0;
   background: var(--paper); border-radius: 14px;
@@ -358,15 +410,15 @@ h2 { font-family: var(--serif); font-size: var(--t-h2); max-width: 30ch; }
   color: inherit;
 }
 .proj-thumb {
-  display: flex; align-items: flex-end; aspect-ratio: 16 / 10;
-  padding: 12px 14px; font: 500 var(--t-micro) var(--mono); color: var(--paper);
+  display: flex; align-items: flex-end; aspect-ratio: 16 / 10; max-height: 14vh;
+  padding: clamp(8px, 1.4vh, 12px) 14px; font: 500 var(--t-micro) var(--mono); color: var(--paper);
   background: linear-gradient(155deg, var(--accent) 0%, var(--accent-2) calc(50% + var(--i, 1) * 6%), var(--bubble) 100%);
 }
-.proj-tag { font: 500 var(--t-micro) var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); padding: 14px 16px 0; }
+.proj-tag { font: 500 var(--t-micro) var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); padding: clamp(8px, 1.4vh, 14px) 16px 0; }
 .proj-card h3 { font-family: var(--serif); font-size: var(--t-h3); padding: 6px 16px 0; }
 .proj-card:hover h3 { color: var(--accent); }
 .proj-card p {
-  font-size: var(--t-small); color: var(--ink-2); padding: 6px 16px 16px; margin: 0;
+  font-size: var(--t-small); color: var(--ink-2); padding: 6px 16px clamp(8px, 1.4vh, 16px); margin: 0;
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 
@@ -386,7 +438,9 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
    ============================================================ */
 @media (max-width: 860px) {
   :root { --col: 100%; }
-  #top { min-height: 0; padding-top: 74px; }
+  #top { min-height: 0; }
+  .topnav-inner { justify-content: flex-start; }
+  .langs { position: static; transform: none; margin-left: auto; padding-left: 12px; }
   .stage { grid-template-columns: 1fr; gap: 30px; }
   /* Side by side rather than stacked, because a portrait with real presence
      plus the name plus the role would push the input below the fold — and the
@@ -422,7 +476,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 .tl-hint {
   font: 500 var(--t-micro) var(--mono);
   letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ink-3); margin: 18px 0 0;
+  color: var(--ink-3); margin: clamp(6px, 1.5vh, 18px) 0 0;
 }
 .tl-hint-tap { display: none; }
 
@@ -434,6 +488,9 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 .tl-head:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .tl-when { font: 500 var(--t-micro) var(--mono); letter-spacing: 0.06em; color: var(--ink-3); }
 .tl-who  { font-family: var(--serif); font-size: 17px; line-height: 1.2; margin-top: 5px; }
+/* Institution mark beside the name — hides itself via onerror if the file
+   isn't there yet, rather than showing a broken-image icon. */
+.tl-logo { width: 18px; height: 18px; object-fit: contain; vertical-align: -3px; margin-right: 6px; }
 .tl-what { font-size: 13px; line-height: 1.3; color: var(--ink-2); margin-top: 2px; }
 
 /* The dot sits on the axis; the axis itself is a 1px bar painted as this
@@ -460,11 +517,15 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 .tl-item.is-active .tl-who { color: var(--ink); }
 .tl-item.is-active .tl-when { color: var(--accent); }
 
-.tl-body { font-size: var(--t-small); }
-.tl-text ul, .tl-text p { max-width: 60ch; margin: 0; }
+.tl-body { font-size: clamp(11.5px, 1.7vh, 14.5px); line-height: 1.4; }
+.tl-body li { margin-bottom: clamp(2px, 0.6vh, 6px); }
+/* No ch cap here: the column is already sized by the grid (the image takes
+   a fixed width beside it), so let text use all of it — capping it below
+   that just forces extra wrapped lines for no reason. */
+.tl-text ul, .tl-text p { max-width: none; margin: 0; }
 .tl-shot {
   position: relative; margin: 0; overflow: hidden;
-  aspect-ratio: 4 / 3; border-radius: 3px;
+  aspect-ratio: 4 / 3; max-height: 24vh; border-radius: 3px;
   background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule);
 }
 .tl-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -478,7 +539,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 .tl-shot.is-missing figcaption { display: grid; }
 
 @media (min-width: 861px) {
-  .tl { margin-top: 26px; }
+  .tl { margin-top: clamp(10px, 2.5vh, 26px); }
   .tl-track {
     display: grid;
     grid-template-columns: repeat(var(--n), minmax(0, 1fr));
@@ -489,7 +550,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
      when a label wraps to a different number of lines than its neighbours. */
   .tl-lab {
     display: flex; flex-direction: column; justify-content: flex-end;
-    min-height: 76px; padding: 0 10px 10px 0;
+    min-height: clamp(48px, 8vh, 76px); padding: 0 10px clamp(4px, 1vh, 10px) 0;
   }
   .tl-item:first-child .tl-dotrow { background-size: 50% 1px; background-position: right center; }
   .tl-item:last-child  .tl-dotrow { background-size: 50% 1px; background-position: left center; }
@@ -497,9 +558,9 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 
   .tl-body {
     grid-row: 2; grid-column: 1 / -1;
-    display: grid; grid-template-columns: minmax(0, 1fr) 320px;
+    display: grid; grid-template-columns: minmax(0, 1fr) 280px;
     gap: var(--gap); align-items: start;
-    margin-top: 26px; padding-top: 26px;
+    margin-top: clamp(10px, 2.5vh, 26px); padding-top: clamp(10px, 2.5vh, 26px);
     border-top: 1px solid var(--rule);
     opacity: 0; visibility: hidden; transition: opacity .22s ease;
   }
@@ -507,7 +568,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 }
 
 @media (max-width: 860px) {
-  .tl { margin-top: 20px; }
+  .tl { margin-top: clamp(8px, 2vh, 20px); }
   .tl-hint-hover { display: none !important; }
   .tl-hint-tap { display: inline; }
   .tl-track { display: flex; flex-direction: column-reverse; }
@@ -519,7 +580,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
   /* column-reverse: the DOM's last item is the one drawn at the top. */
   .tl-item:last-child::before  { top: 22px; }
   .tl-item:first-child::before { bottom: auto; height: 22px; }
-  .tl-head { padding: 14px 0; }
+  .tl-head { padding: clamp(8px, 1.8vh, 14px) 0; }
   .tl-lab { display: block; padding-right: 26px; }
   .tl-dotrow {
     position: absolute; left: 0; top: 22px;
@@ -530,18 +591,31 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
     font: 400 16px/1 var(--mono); color: var(--ink-3);
   }
   .tl-item.is-active .tl-head::after { content: "–"; color: var(--accent); }
-  .tl-body { display: none; padding-bottom: 20px; }
+  .tl-body { display: none; padding-bottom: clamp(8px, 1.8vh, 20px); }
   .tl-item.is-active .tl-body { display: block; }
-  .tl-shot { margin-top: 16px; max-width: 420px; }
+  .tl-shot { margin-top: clamp(8px, 1.8vh, 16px); max-width: 420px; }
 }
 </style>
 </head>
 <body>
 
-<div class="langs">
-  <button class="langbtn" data-set-lang="en" aria-pressed="true">EN</button>
-  <button class="langbtn" data-set-lang="pt" aria-pressed="false">PT</button>
-</div>
+<nav class="topnav" aria-label="Sections"><div class="wrap topnav-inner">
+  <div class="topnav-links">
+    <a href="#top" data-lang="en">Home</a><a href="#top" data-lang="pt">Início</a>
+    <span class="dot" aria-hidden="true">&bull;</span>
+    <a href="#cv" data-lang="en">Summary</a><a href="#cv" data-lang="pt">Resumo</a>
+    <span class="dot" aria-hidden="true">&bull;</span>
+    <a href="#skills" data-lang="en">Skills</a><a href="#skills" data-lang="pt">Habilidades</a>
+    <span class="dot" aria-hidden="true">&bull;</span>
+    <a href="#projects" data-lang="en">Projects</a><a href="#projects" data-lang="pt">Projetos</a>
+    <span class="dot" aria-hidden="true">&bull;</span>
+    <a href="#timeline" data-lang="en">Timeline</a><a href="#timeline" data-lang="pt">Linha do tempo</a>
+  </div>
+  <div class="langs">
+    <button class="langbtn" data-set-lang="en" aria-pressed="true">EN</button>
+    <button class="langbtn" data-set-lang="pt" aria-pressed="false">PT</button>
+  </div>
+</div></nav>
 
 <!-- ======================= THE AGENT — one viewport ======================= -->
 <header id="top"><div class="wrap">
@@ -596,7 +670,13 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
   </div>
 
   <div class="down">
-    <a href="#cv"><span class="arrow">↓</span><span data-lang="en">Read the CV</span><span data-lang="pt">Ler o CV</span></a>
+    <span class="cv-link">
+      <a class="cv-btn" href="#cv" aria-label="Read the CV">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+      </a>
+      <span class="cv-tip" data-lang="en">Read the CV</span>
+      <span class="cv-tip" data-lang="pt">Ler o CV</span>
+    </span>
   </div>
 </div></header>
 
@@ -632,136 +712,73 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 </div></section>
 
 <!-- ================================ SKILLS ================================ -->
-<section class="card-section"><div class="wrap section-card">
+<section id="skills" class="card-section"><div class="wrap section-card">
   <p class="label" data-lang="en">Skills</p>
   <p class="label" data-lang="pt">Habilidades</p>
-  <h2 data-lang="en">Grouped by depth, not by logo count</h2>
-  <h2 data-lang="pt">Agrupado por profundidade, não por quantidade de logo</h2>
-  <p class="lede" data-lang="en">Three clusters: agents &amp; AI, backend &amp; data, and the physics that still shapes how I validate a result.</p>
-  <p class="lede" data-lang="pt">Três grupos: agentes &amp; IA, backend &amp; dados, e a física que ainda molda como eu valido um resultado.</p>
 
-  <div class="skills-layout">
-    <div class="skill-groups">
-      <div class="skill-group">
-        <span class="group-label" data-lang="en">Agents &amp; AI</span>
-        <span class="group-label" data-lang="pt">Agentes &amp; IA</span>
-        <div class="bubble-cluster">
-          <span class="bubble hot">LangGraph</span><span class="bubble hot">MCP</span><span class="bubble hot">LangChain</span>
-          <span class="bubble hot">LangSmith · Langfuse</span>
-          <span class="bubble" data-lang="en">Prompt engineering</span><span class="bubble" data-lang="pt">Engenharia de prompt</span>
-          <span class="bubble" data-lang="en">LLM evaluation</span><span class="bubble" data-lang="pt">Avaliação de LLM</span>
-          <span class="bubble hot">scikit-learn</span><span class="bubble">PyTorch</span>
-          <span class="bubble" data-lang="en">Gaussian processes</span><span class="bubble" data-lang="pt">Processos gaussianos</span>
-          <span class="bubble">UMAP</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="group-label" data-lang="en">Backend &amp; Data</span>
-        <span class="group-label" data-lang="pt">Backend &amp; Dados</span>
-        <div class="bubble-cluster">
-          <span class="bubble hot">Python</span><span class="bubble hot">FastAPI</span><span class="bubble hot">Docker</span>
-          <span class="bubble">PostgreSQL</span><span class="bubble">SQLAlchemy</span><span class="bubble">Celery</span>
-          <span class="bubble">Redis</span><span class="bubble">pandas</span><span class="bubble">pytest</span>
-          <span class="bubble">GCP · Cloud Run</span><span class="bubble">Azure · Container Apps</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="group-label" data-lang="en">Physics &amp; Instrumentation</span>
-        <span class="group-label" data-lang="pt">Física &amp; Instrumentação</span>
-        <div class="bubble-cluster">
-          <span class="bubble hot" data-lang="en">Nano-optics · polaritons</span><span class="bubble hot" data-lang="pt">Nano-óptica · polaritons</span>
-          <span class="bubble">s-SNOM</span><span class="bubble">FDTD</span>
-          <span class="bubble" data-lang="en">Signal processing</span><span class="bubble" data-lang="pt">Processamento de sinais</span>
-          <span class="bubble" data-lang="en">Detection theory</span><span class="bubble" data-lang="pt">Teoria de detecção</span>
-        </div>
-      </div>
+  <div class="skills-cols">
+    <div class="skills-col">
+      <h3 class="group-label" data-lang="en">Soft skills</h3>
+      <h3 class="group-label" data-lang="pt">Habilidades interpessoais</h3>
+      <!-- TODO(Rafael): placeholder — send me the 4–6 soft skills you want
+           listed here (e.g. client communication, ownership, mentoring)
+           and I'll drop them in; nothing invented in the meantime. -->
+      <p class="skill-line" data-lang="en">[Add your soft skills — e.g. direct client communication, end-to-end ownership, translating business risk for non-technical stakeholders]</p>
+      <p class="skill-line" data-lang="pt">[Adicione suas habilidades interpessoais — ex.: comunicação direta com cliente, responsabilidade fim a fim, tradução de risco de negócio para quem não é técnico]</p>
     </div>
 
-    <div class="skills-side">
-      <div>
-        <h3 data-lang="en">Certificates</h3>
-        <h3 data-lang="pt">Certificações</h3>
-        <ul>
-          <li><b>Claude Certified Architect — Foundations</b> · Anthropic · 2026</li>
-          <li><b>AWS Certified ML Engineer — Associate</b> · 2026</li>
-          <li><b>OCI 2025 Generative AI Professional</b> · Oracle</li>
-          <li><b>OCI 2025 Data Science Professional</b> · Oracle</li>
-          <li><b>Data Scientist</b> · DataCamp · 2024</li>
-        </ul>
-      </div>
-      <div>
-        <h3 data-lang="en">Languages</h3>
-        <h3 data-lang="pt">Idiomas</h3>
-        <ul data-lang="en">
-          <li><b>Portuguese</b> — native.</li>
-          <li><b>English</b> — fluent.</li>
-          <li><b>German</b> — intermediate (B1).</li>
-        </ul>
-        <ul data-lang="pt">
-          <li><b>Português</b> — nativo.</li>
-          <li><b>Inglês</b> — fluente.</li>
-          <li><b>Alemão</b> — intermediário (B1).</li>
-        </ul>
-      </div>
+    <div class="skills-col">
+      <h3 class="group-label" data-lang="en">Technical skills</h3>
+      <h3 class="group-label" data-lang="pt">Habilidades técnicas</h3>
+      <p class="skill-line"><b data-lang="en">Agents &amp; AI</b><b data-lang="pt">Agentes &amp; IA</b> — LangGraph, MCP, LangChain, LangSmith · Langfuse, <span data-lang="en">prompt engineering</span><span data-lang="pt">engenharia de prompt</span>, <span data-lang="en">LLM evaluation</span><span data-lang="pt">avaliação de LLM</span>, scikit-learn, PyTorch, <span data-lang="en">Gaussian processes</span><span data-lang="pt">processos gaussianos</span>, UMAP.</p>
+      <p class="skill-line"><b data-lang="en">Backend &amp; Data</b><b data-lang="pt">Backend &amp; Dados</b> — Python, FastAPI, Docker, PostgreSQL, SQLAlchemy, Celery, Redis, pandas, pytest, GCP · Cloud Run, Azure · Container Apps.</p>
+      <p class="skill-line"><b data-lang="en">Certificates</b><b data-lang="pt">Certificações</b> — Claude Certified Architect – Foundations (Anthropic, 2026) · AWS Certified ML Engineer – Associate (2026) · OCI 2025 Generative AI Professional · OCI 2025 Data Science Professional · Data Scientist, DataCamp (2024).</p>
+      <p class="skill-line" data-lang="en"><b>Languages</b> — Portuguese (native) · English (fluent) · German (B1).</p>
+      <p class="skill-line" data-lang="pt"><b>Idiomas</b> — Português (nativo) · Inglês (fluente) · Alemão (B1).</p>
     </div>
   </div>
 </div></section>
 <!-- ============================== PROJECTS ============================== -->
-<section class="card-section"><div class="wrap section-card">
+<section id="projects" class="card-section"><div class="wrap section-card">
   <p class="label" data-lang="en">Selected projects</p>
   <p class="label" data-lang="pt">Projetos em destaque</p>
-  <h2 data-lang="en">Four systems, and the decision that shaped each</h2>
-  <h2 data-lang="pt">Quatro sistemas, e a decisão que moldou cada um</h2>
 
   <div class="projects-grid">
 
-    <a class="proj-card" href="#" data-lang="en">
+    <a class="proj-card" href="/projects/hospital-agents.html" target="_blank" rel="noopener" data-lang="en">
       <span class="proj-thumb" style="--i:1" aria-hidden="true">01</span>
       <span class="proj-tag">Distrito · in production</span>
       <h3>Hospital agents over WhatsApp</h3>
       <p>A large São Paulo hospital needed routine services on WhatsApp. The dominant challenge isn't conversation: each service touches a different internal system with its own rules, and the patient doesn't know — and shouldn't have to know — which service they are asking for.</p>
     </a>
-    <a class="proj-card" href="#" data-lang="pt">
+    <a class="proj-card" href="/projects/hospital-agents.html" target="_blank" rel="noopener" data-lang="pt">
       <span class="proj-thumb" style="--i:1" aria-hidden="true">01</span>
       <span class="proj-tag">Distrito · em produção</span>
       <h3>Agentes hospitalares no WhatsApp</h3>
       <p>Um hospital de grande porte em São Paulo precisava oferecer serviços de rotina por WhatsApp. O desafio dominante não é conversar: cada serviço toca um sistema interno diferente, com regra própria, e o paciente não sabe — nem deveria saber — qual serviço está pedindo.</p>
     </a>
 
-    <a class="proj-card" href="#" data-lang="en">
+    <a class="proj-card" href="/projects/synthetic-jury.html" target="_blank" rel="noopener" data-lang="en">
       <span class="proj-thumb" style="--i:2" aria-hidden="true">02</span>
-      <span class="proj-tag">Distrito · in development</span>
-      <h3>Academic coaching agent</h3>
-      <p>For an international education network: a conversational coach over a tool service that exposes institutional data by REST and MCP — the same access logic behind both, so other client systems consume it without going through the agent.</p>
-    </a>
-    <a class="proj-card" href="#" data-lang="pt">
-      <span class="proj-thumb" style="--i:2" aria-hidden="true">02</span>
-      <span class="proj-tag">Distrito · em desenvolvimento</span>
-      <h3>Agente de coaching acadêmico</h3>
-      <p>Para uma rede de ensino internacional: um coach conversacional sobre um serviço de tools que expõe dado institucional por REST e MCP — a mesma lógica de acesso atrás das duas, então outros sistemas do cliente consomem sem passar pelo agente.</p>
-    </a>
-
-    <a class="proj-card" href="#" data-lang="en">
-      <span class="proj-thumb" style="--i:3" aria-hidden="true">03</span>
       <span class="proj-tag">Distrito · daily use</span>
       <h3>Synthetic jury</h3>
       <p>A campaign research platform: clustering the audience base to find profiles that actually exist in the data, personas anchored to those clusters rather than invented, and simulated interviews against advertising stimuli.</p>
     </a>
-    <a class="proj-card" href="#" data-lang="pt">
-      <span class="proj-thumb" style="--i:3" aria-hidden="true">03</span>
+    <a class="proj-card" href="/projects/synthetic-jury.html" target="_blank" rel="noopener" data-lang="pt">
+      <span class="proj-thumb" style="--i:2" aria-hidden="true">02</span>
       <span class="proj-tag">Distrito · uso diário</span>
       <h3>Júri sintético</h3>
       <p>Plataforma de pesquisa de campanha: clusterização da base de audiência para achar perfis que existem no dado, personas ancoradas nesses clusters em vez de inventadas, e entrevistas simuladas contra estímulos publicitários.</p>
     </a>
 
-    <a class="proj-card" href="#" data-lang="en">
-      <span class="proj-thumb" style="--i:4" aria-hidden="true">04</span>
+    <a class="proj-card" href="/projects/ml-microscopy.html" target="_blank" rel="noopener" data-lang="en">
+      <span class="proj-thumb" style="--i:3" aria-hidden="true">03</span>
       <span class="proj-tag">PhD · published</span>
       <h3>ML-accelerated microscopy</h3>
       <p>Sparse sampling plus Gaussian-process regression to reconstruct s-SNOM images from a fraction of the measurements — published in Nano Letters 24(7), 2149 (2024).</p>
     </a>
-    <a class="proj-card" href="#" data-lang="pt">
-      <span class="proj-thumb" style="--i:4" aria-hidden="true">04</span>
+    <a class="proj-card" href="/projects/ml-microscopy.html" target="_blank" rel="noopener" data-lang="pt">
+      <span class="proj-thumb" style="--i:3" aria-hidden="true">03</span>
       <span class="proj-tag">Doutorado · publicado</span>
       <h3>Microscopia acelerada por ML</h3>
       <p>Amostragem esparsa com regressão por processo gaussiano para reconstruir imagens de s-SNOM a partir de uma fração das medidas — publicada na Nano Letters 24(7), 2149 (2024).</p>
@@ -771,11 +788,9 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
 </div></section>
 
 <!-- ============================== TIMELINE ============================== -->
-<section class="card-section"><div class="wrap section-card">
+<section id="timeline" class="card-section"><div class="wrap section-card">
   <p class="label" data-lang="en">Timeline</p>
   <p class="label" data-lang="pt">Linha do tempo</p>
-  <h2 data-lang="en">Ten years of research, then applied AI</h2>
-  <h2 data-lang="pt">Dez anos de pesquisa, depois IA aplicada</h2>
   <p class="tl-hint">
     <span class="tl-hint-hover" data-lang="en">Hover a point on the line.</span>
     <span class="tl-hint-hover" data-lang="pt">Passe o mouse por um ponto da linha.</span>
@@ -793,7 +808,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-graduacao">
         <span class="tl-lab">
           <span class="tl-when">2013 — 2018</span>
-          <span class="tl-who">UNICAMP</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/unicamp.png" alt="" onerror="this.remove()">UNICAMP</span>
           <span class="tl-what" data-lang="en">Engineering Physics</span>
           <span class="tl-what" data-lang="pt">Engenharia Física</span>
         </span>
@@ -802,14 +817,14 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div class="tl-body" id="tl-graduacao" role="region">
         <div class="tl-text">
           <ul data-lang="en">
-            <li>Two degrees at once — Engineering Physics (technological production) and a BSc in Physics.</li>
-            <li>An academic year at the <b>Technical University of Munich</b> through Ciência sem Fronteiras (2015–16), which is also where the intermediate German comes from.</li>
-            <li>First research work: optimising the electrodeposition of magnetic nanowires at LMBT–IFGW, under Prof. Dr. Kleber Pirota. Also built electric cars for energy-efficiency competitions with Ecocar UNICAMP.</li>
+            <li>Two degrees at once — Engineering Physics and a BSc in Physics.</li>
+            <li>A year at the <b>Technical University of Munich</b> (2015–16) — also where the intermediate German comes from.</li>
+            <li>First research: magnetic-nanowire electrodeposition at LMBT–IFGW; also built electric cars with Ecocar UNICAMP.</li>
           </ul>
           <ul data-lang="pt">
-            <li>Dois cursos ao mesmo tempo — Engenharia Física (produção tecnológica) e Bacharelado em Física.</li>
-            <li>Um ano acadêmico na <b>Technical University of Munich</b> pelo Ciências sem Fronteiras (2015–16) — origem também do alemão intermediário.</li>
-            <li>Primeira pesquisa: otimização da eletrodeposição de nanofios magnéticos no LMBT–IFGW, com o Prof. Dr. Kleber Pirota. Também construí carros elétricos para competições de eficiência energética na Ecocar UNICAMP.</li>
+            <li>Dois cursos ao mesmo tempo — Engenharia Física e Bacharelado em Física.</li>
+            <li>Um ano na <b>Technical University of Munich</b> (2015–16) — origem também do alemão intermediário.</li>
+            <li>Primeira pesquisa: eletrodeposição de nanofios magnéticos no LMBT–IFGW; também construí carros elétricos na Ecocar UNICAMP.</li>
           </ul>
         </div>
         <figure class="tl-shot">
@@ -823,7 +838,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-cnpem">
         <span class="tl-lab">
           <span class="tl-when">2017 — 2018</span>
-          <span class="tl-who">CNPEM</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/cnpem.png" alt="" onerror="this.remove()">CNPEM</span>
           <span class="tl-what" data-lang="en">Intern · Synchrotron</span>
           <span class="tl-what" data-lang="pt">Estagiário · Síncrotron</span>
         </span>
@@ -831,8 +846,8 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       </button>
       <div class="tl-body" id="tl-cnpem" role="region">
         <div class="tl-text">
-          <p data-lang="en">Two consecutive internships in different groups: benchmarking commercial nano-optics simulation software, and testing optical components against accelerator radiation. First contact with numerical simulation and Python data analysis — the technical base for everything after.</p>
-          <p data-lang="pt">Dois estágios consecutivos em grupos diferentes: benchmark de softwares comerciais de simulação em nano-óptica e teste de componentes ópticos contra a radiação do acelerador. Primeiro contato com simulação numérica e análise de dados em Python — a base técnica de tudo que veio depois.</p>
+          <p data-lang="en">Two internships — nano-optics simulation, then optical-component testing. First contact with numerical simulation and Python, the technical base for everything after.</p>
+          <p data-lang="pt">Dois estágios — simulação em nano-óptica, depois teste de componentes ópticos. Primeiro contato com simulação numérica e Python, a base técnica de tudo que veio depois.</p>
         </div>
         <figure class="tl-shot">
           <img src="/timeline/cnpem.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')">
@@ -845,7 +860,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-mestrado">
         <span class="tl-lab">
           <span class="tl-when">2019 — 2021</span>
-          <span class="tl-who">UNICAMP</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/unicamp.png" alt="" onerror="this.remove()">UNICAMP</span>
           <span class="tl-what" data-lang="en">MSc, Applied Physics</span>
           <span class="tl-what" data-lang="pt">Mestrado em Física Aplicada</span>
         </span>
@@ -854,13 +869,13 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div class="tl-body" id="tl-mestrado" role="region">
         <div class="tl-text">
           <ul data-lang="en">
-            <li>FDTD simulation of optical antennas as efficient polariton launchers in 2D materials, borrowing directivity and radiation-pattern concepts from antenna theory.</li>
-            <li>Processed and analysed infrared s-SNOM data, comparing theory against experiment to validate the models — Fabry-Perot cavity modes and polariton acceleration.</li>
+            <li>FDTD simulation of optical antennas as polariton launchers in 2D materials.</li>
+            <li>Infrared s-SNOM data analysis, validating models against experiment.</li>
             <li>Public code: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>. Advisor: Prof. Dr. Raul de Oliveira Freitas.</li>
           </ul>
           <ul data-lang="pt">
-            <li>Simulação FDTD de antenas ópticas como fontes eficientes de polaritons em materiais 2D, aproveitando conceitos de teoria de antenas como diretividade e padrão de radiação.</li>
-            <li>Tratamento e análise de dados experimentais de s-SNOM no infravermelho, comparando teoria e experimento para validar os modelos — modos de cavidade Fabry-Perot e aceleração de polaritons.</li>
+            <li>Simulação FDTD de antenas ópticas como fontes de polaritons em materiais 2D.</li>
+            <li>Análise de dados de s-SNOM no infravermelho, validando os modelos.</li>
             <li>Código público: <a href="https://github.com/1rafaelmayer/nanoantenna-patterns" target="_blank" rel="noopener">nanoantenna-patterns</a>. Orientador: Prof. Dr. Raul de Oliveira Freitas.</li>
           </ul>
         </div>
@@ -875,7 +890,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-doutorado">
         <span class="tl-lab">
           <span class="tl-when">2021 — 2025</span>
-          <span class="tl-who">UNICAMP</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/unicamp.png" alt="" onerror="this.remove()">UNICAMP</span>
           <span class="tl-what" data-lang="en">PhD, Applied Physics</span>
           <span class="tl-what" data-lang="pt">Doutorado em Física Aplicada</span>
         </span>
@@ -884,18 +899,14 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div class="tl-body" id="tl-doutorado" role="region">
         <div class="tl-text">
           <ul data-lang="en">
-            <li>Nanophotonics of low-dimensional metal oxides in the infrared and terahertz ranges, at the Brazilian Synchrotron Light Laboratory (LNLS/CNPEM) — near-field optical microscopy (s-SNOM) plus theoretical modelling and data analysis.</li>
-            <li>Beyond the physics: an <b>ML-accelerated microscopy technique</b> — sparse sampling that cuts acquisition time on a nano-optical image. Published in <i>Nano Letters</i> 24(7), 2149 (2024). This is where the transition to AI/ML started.</li>
-            <li>Thesis: <i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges</i>. Advisor: Prof. Dr. Raul de Oliveira Freitas. Defended Apr 2025.</li>
-            <li>Full publication list, including the 2025 <b>Nano Letters</b> front cover on magnetically tunable polariton cavities, on <a href="https://scholar.google.com.br/citations?user=KrHO1lkAAAAJ&amp;hl" target="_blank" rel="noopener">Google Scholar</a>.</li>
-            <li>What ten years of research left behind: <b>distrust of an isolated metric</b> — a beautiful number is usually an artefact; <b>attention to data quality at the source</b> — no preprocessing recovers a badly taken measurement; and <b>comfort without a recipe</b> — nothing here had a tutorial, and agent architecture doesn't either, yet.</li>
+            <li>Nanophotonics of low-dimensional metal oxides at the Brazilian Synchrotron (LNLS/CNPEM) — near-field microscopy plus modelling.</li>
+            <li><b>ML-accelerated microscopy technique</b>, published in <i>Nano Letters</i> 24(7), 2149 (2024) — where the transition to AI/ML started.</li>
+            <li>Thesis defended Apr 2025, advised by Prof. Dr. Raul de Oliveira Freitas; full publications on <a href="https://scholar.google.com.br/citations?user=KrHO1lkAAAAJ&amp;hl" target="_blank" rel="noopener">Google Scholar</a>.</li>
           </ul>
           <ul data-lang="pt">
-            <li>Nanofotônica de óxidos metálicos de baixa dimensionalidade nas faixas do infravermelho e terahertz, no Laboratório Nacional de Luz Síncrotron (LNLS/CNPEM) — microscopia óptica de campo próximo (s-SNOM), modelagem teórica e análise de dados.</li>
-            <li>Além da física: uma <b>técnica de microscopia acelerada por ML</b> — amostragem esparsa que reduz o tempo de aquisição de uma imagem nano-óptica. Publicada na <i>Nano Letters</i> 24(7), 2149 (2024). Foi aqui que a transição para IA/ML começou.</li>
-            <li>Tese: <i>Nanophotonics of low-dimensional semiconductor oxides in the infrared and Terahertz ranges</i>. Orientador: Prof. Dr. Raul de Oliveira Freitas. Defesa em abr/2025.</li>
-            <li>Lista completa de publicações, incluindo a capa da <b>Nano Letters</b> de 2025 sobre cavidades polaritônicas magneticamente sintonizáveis, no <a href="https://scholar.google.com.br/citations?user=KrHO1lkAAAAJ&amp;hl" target="_blank" rel="noopener">Google Scholar</a>.</li>
-            <li>O que dez anos de pesquisa deixaram: <b>desconfiança de métrica isolada</b> — um número bonito normalmente é artefato; <b>atenção à qualidade do dado na origem</b> — pré-processamento nunca recupera medida mal feita; e <b>conforto com problema sem receita</b> — nada aqui tinha tutorial, e arquitetura agentic hoje também não.</li>
+            <li>Nanofotônica de óxidos metálicos de baixa dimensionalidade no Laboratório Nacional de Luz Síncrotron (LNLS/CNPEM) — microscopia de campo próximo e modelagem.</li>
+            <li><b>Técnica de microscopia acelerada por ML</b>, publicada na <i>Nano Letters</i> 24(7), 2149 (2024) — início da transição para IA/ML.</li>
+            <li>Tese defendida em abr/2025, orientação do Prof. Dr. Raul de Oliveira Freitas; publicações completas no <a href="https://scholar.google.com.br/citations?user=KrHO1lkAAAAJ&amp;hl" target="_blank" rel="noopener">Google Scholar</a>.</li>
           </ul>
         </div>
         <figure class="tl-shot">
@@ -909,7 +920,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <button class="tl-head" type="button" aria-expanded="false" aria-controls="tl-stony">
         <span class="tl-lab">
           <span class="tl-when">2023</span>
-          <span class="tl-who">Stony Brook</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/stony-brook.png" alt="" onerror="this.remove()">Stony Brook</span>
           <span class="tl-what" data-lang="en">Doctoral Researcher · NY</span>
           <span class="tl-what" data-lang="pt">Doctoral Researcher · NY</span>
         </span>
@@ -918,13 +929,13 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div class="tl-body" id="tl-stony" role="region">
         <div class="tl-text">
           <ul data-lang="en">
-            <li>A research year abroad <i>inside</i> the UNICAMP PhD, in Prof. Mengkun Liu's group at Stony Brook University, New York.</li>
-            <li>Commissioned and optimised a new magneto-sNOM. Standing up a new instrument is its own kind of work: nothing has a baseline, and every unexpected result is either physics or the equipment.</li>
+            <li>A research year <i>inside</i> the UNICAMP PhD, in Prof. Mengkun Liu's group at Stony Brook University, NY.</li>
+            <li>Commissioned and optimised a new magneto-sNOM instrument.</li>
             <li>Resulted in a peer-reviewed <b>Nano Letters</b> paper that took the <b>front cover of the issue</b>.</li>
           </ul>
           <ul data-lang="pt">
-            <li>Um ano de pesquisa no exterior <i>dentro</i> do doutorado da UNICAMP, no grupo do Prof. Mengkun Liu na Stony Brook University, Nova York.</li>
-            <li>Comissionamento e otimização de um magneto-sNOM novo. Colocar instrumento novo para funcionar é um tipo específico de trabalho: nada tem baseline, e todo resultado inesperado pode ser física ou pode ser o equipamento.</li>
+            <li>Um ano de pesquisa <i>dentro</i> do doutorado da UNICAMP, no grupo do Prof. Mengkun Liu na Stony Brook University, NY.</li>
+            <li>Comissionamento e otimização de um magneto-sNOM novo.</li>
             <li>Resultou em publicação revisada por pares no <b>Nano Letters</b>, que ganhou a <b>capa da edição</b>.</li>
           </ul>
         </div>
@@ -940,7 +951,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
         <span class="tl-lab">
           <span class="tl-when" data-lang="en">Jan — Apr 2025</span>
           <span class="tl-when" data-lang="pt">jan — abr/2025</span>
-          <span class="tl-who">Grupo Amil</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/amil.png" alt="" onerror="this.remove()">Grupo Amil</span>
           <span class="tl-what" data-lang="en">Data Scientist</span>
           <span class="tl-what" data-lang="pt">Cientista de Dados</span>
         </span>
@@ -949,14 +960,14 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div class="tl-body" id="tl-amil" role="region">
         <div class="tl-text">
           <ul data-lang="en">
-            <li>OCR for medical and administrative documents — handwritten forms, stamps over text, skewed scans, layouts that change per issuing unit. Via Cuboconnect, remote.</li>
-            <li>The real problem was never character recognition: it was deciding when recognition is <i>not</i> trustworthy and has to go to human review.</li>
-            <li>Helped choose the OCR model that went into use; the project structured and supported fraud detection across thousands of reimbursement documents.</li>
+            <li>OCR for medical/administrative documents — handwritten forms, skewed scans. Via Cuboconnect, remote.</li>
+            <li>The real problem: deciding when OCR isn't trustworthy and needs human review.</li>
+            <li>Helped choose the OCR model in production; supported fraud detection across thousands of documents.</li>
           </ul>
           <ul data-lang="pt">
-            <li>OCR para documentos médicos e administrativos — formulário manuscrito, carimbo sobre texto, digitalização torta, layout que muda por unidade emissora. Via Cuboconnect, remoto.</li>
-            <li>O problema real nunca foi reconhecimento de caractere: era decidir quando o reconhecimento <i>não</i> é confiável e precisa ir para revisão humana.</li>
-            <li>Ajudei a decidir o modelo de OCR que entrou em uso; o projeto estruturou e apoiou detecção de fraude em milhares de documentos de reembolso.</li>
+            <li>OCR para documentos médicos e administrativos — formulário manuscrito, digitalização torta. Via Cuboconnect, remoto.</li>
+            <li>O problema real: decidir quando o OCR não é confiável e precisa de revisão humana.</li>
+            <li>Ajudei a escolher o modelo em uso; apoiei detecção de fraude em milhares de documentos.</li>
           </ul>
         </div>
         <figure class="tl-shot">
@@ -971,7 +982,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
         <span class="tl-lab">
           <span class="tl-when" data-lang="en">Apr — Aug 2025</span>
           <span class="tl-when" data-lang="pt">abr — ago/2025</span>
-          <span class="tl-who">Samsung</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/samsung.png" alt="" onerror="this.remove()">Samsung</span>
           <span class="tl-what">Senior AI Researcher</span>
         </span>
         <span class="tl-dotrow"><span class="tl-dot"></span></span>
@@ -979,16 +990,14 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div class="tl-body" id="tl-samsung" role="region">
         <div class="tl-text">
           <ul data-lang="en">
-            <li>AI models for Samsung wearables at Samsung R&amp;D Institute Brazil, on the boundary between physical signal and model: the data comes from sensors in contact with the body.</li>
-            <li>Scalable data pipelines, signal analysis and feature engineering; segmented analysis of multitask networks to find the subpopulation a good average hides.</li>
-            <li>Sensor physics and detection theory applied to improve data quality <i>at the source</i>, instead of compensating for noise inside the model.</li>
-            <li class="muted">Detail deliberately limited by Samsung's confidentiality agreement.</li>
+            <li>AI models for Samsung wearables, Samsung R&amp;D Institute Brazil — signal from sensors in contact with the body.</li>
+            <li>Scalable data pipelines, signal analysis, and feature engineering.</li>
+            <li class="muted">Sensor physics applied to improve data quality at the source; detail limited by Samsung's confidentiality agreement.</li>
           </ul>
           <ul data-lang="pt">
-            <li>Modelos de IA para os wearables da Samsung, no Samsung R&amp;D Institute Brazil, na fronteira entre sinal físico e modelo: o dado vem de sensores em contato com o corpo.</li>
-            <li>Pipelines de dados escaláveis, análise de sinais e feature engineering; análise segmentada de redes multitarefa para achar a subpopulação que uma média boa esconde.</li>
-            <li>Física do sensor e teoria de detecção aplicadas para melhorar a qualidade do dado <i>na origem</i>, em vez de compensar ruído dentro do modelo.</li>
-            <li class="muted">Detalhe deliberadamente limitado pelo contrato de sigilo com a Samsung.</li>
+            <li>Modelos de IA para wearables da Samsung, Samsung R&amp;D Institute Brazil — sinal de sensores em contato com o corpo.</li>
+            <li>Pipelines de dados escaláveis, análise de sinais e feature engineering.</li>
+            <li class="muted">Física do sensor aplicada para melhorar a qualidade do dado na origem; detalhe limitado pelo contrato de sigilo com a Samsung.</li>
           </ul>
         </div>
         <figure class="tl-shot">
@@ -1003,7 +1012,7 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
         <span class="tl-lab">
           <span class="tl-when" data-lang="en">Sep 2025 — present</span>
           <span class="tl-when" data-lang="pt">set/2025 — presente</span>
-          <span class="tl-who">Distrito</span>
+          <span class="tl-who"><img class="tl-logo" src="/timeline/logos/distrito.png" alt="" onerror="this.remove()">Distrito</span>
           <span class="tl-what" data-lang="en">AI/ML Engineer</span>
           <span class="tl-what" data-lang="pt">Engenheiro de IA/ML</span>
         </span>
@@ -1012,14 +1021,14 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
       <div class="tl-body" id="tl-distrito" role="region">
         <div class="tl-text">
           <ul data-lang="en">
-            <li>Agent systems in production across three sectors — healthcare, education, marketing — which means switching data domain often and never relying on prior familiarity with the business rules. AI Factory, full-time, remote.</li>
-            <li>Sole AI engineer on the project: I decide the agent architecture. Teams are typically one engineer and a PO.</li>
-            <li>I talk to the client directly — translating business rules into agent behaviour, and explaining back what an LLM system can and cannot guarantee, including saying no when a request hides a risk the demo doesn't show.</li>
+            <li>Agent systems in production across healthcare, education, and marketing. AI Factory, full-time, remote.</li>
+            <li>Sole AI engineer: I decide the agent architecture, usually with one PO.</li>
+            <li>Direct client conversations — translating business rules into agent behaviour, and saying no when a request hides a risk.</li>
           </ul>
           <ul data-lang="pt">
-            <li>Sistemas de agentes em produção em três setores — saúde, educação, marketing — o que significa trocar de domínio de dado com frequência e não poder depender de familiaridade prévia com a regra de negócio. AI Factory, tempo integral, remoto.</li>
-            <li>Engenheiro de IA único no projeto: decido a arquitetura do sistema de agentes. Time normalmente de um engenheiro e um PO.</li>
-            <li>Falo direto com o cliente — traduzindo regra de negócio em comportamento de agente e, na direção inversa, explicando o que um sistema de LLM pode e não pode garantir, inclusive dizer não quando o pedido esconde um risco que a demo não mostra.</li>
+            <li>Sistemas de agentes em produção em saúde, educação e marketing. AI Factory, tempo integral, remoto.</li>
+            <li>Engenheiro de IA único: decido a arquitetura do sistema de agentes, normalmente com um PO.</li>
+            <li>Falo direto com o cliente — traduzindo regra de negócio em comportamento de agente, e dizendo não quando o pedido esconde um risco.</li>
           </ul>
         </div>
         <figure class="tl-shot">
@@ -1105,6 +1114,12 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
   var history = [];
   var busy = false;
 
+  /* The send button looks clickable only when it would actually do
+     something: not mid-answer, and not with an empty box. */
+  function syncSend() { send.disabled = busy || !input.value.trim(); }
+  input.addEventListener("input", syncSend);
+  syncSend();
+
   function t(en, pt) { return root.getAttribute("data-ui-lang") === "pt" ? pt : en; }
 
   function esc(text) {
@@ -1175,8 +1190,8 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
     }
 
     busy = true;
-    send.disabled = true;
     input.value = "";
+    syncSend();
     input.blur();
     show(question);
     history.push({ role: "user", content: question });
@@ -1191,8 +1206,8 @@ footer .out { display: flex; gap: 18px; margin: 28px 0 34px; font-size: var(--t-
     var answer = "";
     var finish = function () {
       cursor.remove();
-      send.disabled = false;
       busy = false;
+      syncSend();
       if (answer.trim()) history.push({ role: "assistant", content: answer.trim() });
       else history.pop();   // nothing came back: don't poison the next turn
     };
